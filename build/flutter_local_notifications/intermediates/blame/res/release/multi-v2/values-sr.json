@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\flutter_local_notifications\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-sr\\values-sr.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\6b14c0e44227e49b0dd7f07b3ddefcd4\\core-1.3.0\\res\\values-sr\\values-sr.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\flutter_local_notifications\\intermediates\\res\\merged\\release\\values-sr\\values-sr.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\6b14c0e44227e49b0dd7f07b3ddefcd4\\core-1.3.0\\res\\values-sr\\values-sr.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

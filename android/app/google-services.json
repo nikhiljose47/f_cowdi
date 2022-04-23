@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "602640086425",
+    "firebase_url": "https://gigtodo-3c96c.firebaseio.com",
+    "project_id": "gigtodo-3c96c",
+    "storage_bucket": "gigtodo-3c96c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602640086425:android:a215dabe33215f58d70f08",
+        "android_client_info": {
+          "package_name": "gigtodo.teamtweaks.com.gigtodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602640086425-frb8l0gr9llslerqnhrb5uvfhidc7ifp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD69QGnVcl4-5CGLd3dwbIqTleEdS6w3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602640086425-frb8l0gr9llslerqnhrb5uvfhidc7ifp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "602640086425-li8oe2lqqskg60ue12dljqcgq8sugbai.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gtg.flutterApps"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,4 @@
+#Thu Feb 03 17:55:36 IST 2022
+base.0=C\:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\app\\intermediates\\transforms\\r8\\release\\0\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

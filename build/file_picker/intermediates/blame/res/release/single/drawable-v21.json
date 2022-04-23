@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\file_picker\\intermediates\\res\\merged\\release\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\b8327bdcc2df7fc572745442410630c9\\appcompat-1.0.0-beta01\\res\\drawable-v21\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\file_picker\\intermediates\\res\\merged\\release\\drawable-v21\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\b8327bdcc2df7fc572745442410630c9\\appcompat-1.0.0-beta01\\res\\drawable-v21\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\file_picker\\intermediates\\res\\merged\\release\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\90008f531450ee67d126c31b1b659794\\core-1.1.0\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\file_picker\\intermediates\\res\\merged\\release\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\b8327bdcc2df7fc572745442410630c9\\appcompat-1.0.0-beta01\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\file_picker\\intermediates\\res\\merged\\release\\drawable-v21\\abc_list_divider_material.xml",
+        "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\b8327bdcc2df7fc572745442410630c9\\appcompat-1.0.0-beta01\\res\\drawable-v21\\abc_list_divider_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\file_picker\\intermediates\\res\\merged\\release\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\b8327bdcc2df7fc572745442410630c9\\appcompat-1.0.0-beta01\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    }
+]

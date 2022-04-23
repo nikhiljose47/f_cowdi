@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\flutter_inappwebview\\intermediates\\res\\merged\\release\\xml\\image_share_filepaths.xml",
+        "source": "C:\\Users\\casperon124\\.gradle\\caches\\transforms-2\\files-2.1\\113e106a298cf815ccd8f9371f031d56\\browser-1.2.0\\res\\xml\\image_share_filepaths.xml"
+    },
+    {
+        "merged": "C:\\Users\\casperon124\\StudioProjects\\GigToDo\\build\\flutter_inappwebview\\intermediates\\res\\merged\\release\\xml\\provider_paths.xml",
+        "source": "E:\\Flutter\\flutter_windows_2.2.3-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_inappwebview-4.0.0+4\\android\\src\\main\\res\\xml\\provider_paths.xml"
+    }
+]
