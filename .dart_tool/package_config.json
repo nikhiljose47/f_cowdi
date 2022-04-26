@@ -153,7 +153,7 @@
     },
     {
       "name": "firebase_messaging",
-      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16",
+      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/firebase_messaging-7.0.3",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -231,9 +231,9 @@
     },
     {
       "name": "fluttertoast",
-      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/fluttertoast-3.1.0",
+      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/fluttertoast-5.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.7"
     },
     {
       "name": "forceupdate",
@@ -363,9 +363,9 @@
     },
     {
       "name": "platform",
-      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/platform-2.2.1",
+      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/platform-3.1.0",
       "packageUri": "lib/",
-      "languageVersion": "1.24"
+      "languageVersion": "2.12"
     },
     {
       "name": "plugin_platform_interface",
@@ -507,9 +507,9 @@
     },
     {
       "name": "win32",
-      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/win32-2.2.10",
+      "rootUri": "file:///C:/Users/lenovo/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/win32-2.5.1",
       "packageUri": "lib/",
-      "languageVersion": "2.13"
+      "languageVersion": "2.15"
     },
     {
       "name": "xdg_directories",
@@ -536,7 +536,7 @@
       "languageVersion": "2.6"
     }
   ],
-  "generated": "2022-04-23T14:34:49.977154Z",
+  "generated": "2022-04-25T16:26:40.264512Z",
   "generator": "pub",
-  "generatorVersion": "2.16.0-134.5.beta"
+  "generatorVersion": "2.16.2"
 }

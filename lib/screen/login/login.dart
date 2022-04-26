@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
     }
   }
   loginToast(String toast) {
-    return Fluttertoast.showToast(
+    return FlutterToast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,

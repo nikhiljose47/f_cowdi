@@ -105,7 +105,7 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
         });
 
         Response response = await Dio().post(
-          baseurl+version+inboxsend,
+          baseurl + version + inboxsend,
           data: formData,
           options: Options(
             headers: {
@@ -135,7 +135,7 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
         });
 
         Response response = await Dio().post(
-         baseurl+version+inboxsend,
+          baseurl + version + inboxsend,
           data: formData,
           options: Options(
             headers: {
@@ -172,8 +172,8 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
     print("jjjk");
     print(linkdata);
     print(baseurl + version + inboxdetails);
-    final responseData = await http
-        .post(baseurl+version+inboxdetails, body: {
+    final responseData =
+        await http.post(baseurl + version + inboxdetails, body: {
       'message_group_id': widget.messagegropid,
     }, headers: {
       'Auth': token
@@ -288,12 +288,12 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
                                               ),
                                             )
                                           : Container(
-                            height: 0,
-                            ),
+                                              height: 0,
+                                            ),
                                       listcat.filetype == "image"
                                           ? Container(
-                                                  width: 100,
-                                                  height: 100,
+                                              width: 100,
+                                              height: 100,
                                               decoration: new BoxDecoration(
                                                   image: new DecorationImage(
                                                       fit: BoxFit.fill,

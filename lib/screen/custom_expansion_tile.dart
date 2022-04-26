@@ -166,7 +166,8 @@ class _ExpansionTileState extends State<ExpansionTile>
                 title: DefaultTextStyle(
                   style: Theme.of(context)
                       .textTheme
-                      .subhead
+                      //N-.subhead
+                      .subtitle2
                       .copyWith(color: titleColor),
                   child: widget.title,
                 ),
@@ -197,7 +198,8 @@ class _ExpansionTileState extends State<ExpansionTile>
     final ThemeData theme = Theme.of(context);
     _borderColorTween..end = theme.dividerColor;
     _headerColorTween
-      ..begin = theme.textTheme.subhead.color
+    //N-..begin = theme.textTheme.subhead.color
+      ..begin = theme.textTheme.subtitle2.color
       ..end = theme.accentColor;
     _iconColorTween
       ..begin = theme.unselectedWidgetColor

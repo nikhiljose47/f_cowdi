@@ -1,4 +1,0 @@
-flutter/moum/open_appstore/BuildConfig.java
- flutter.moum.open_appstore.BuildConfig
-flutter/moum/open_appstore/OpenAppstorePlugin.java
- flutter.moum.open_appstore.OpenAppstorePlugin

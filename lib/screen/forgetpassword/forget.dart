@@ -42,7 +42,7 @@ class _forgetpassState extends State<forgetpass> {
   }
 
   loginToast(String toast) {
-    return Fluttertoast.showToast(
+    return FlutterToast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,

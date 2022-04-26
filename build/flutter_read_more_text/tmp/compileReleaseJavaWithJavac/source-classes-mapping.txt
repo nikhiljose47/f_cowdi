@@ -1,4 +1,0 @@
-com/example/flutter_read_more_text/BuildConfig.java
- com.example.flutter_read_more_text.BuildConfig
-com/example/flutter_read_more_text/FlutterReadMoreTextPlugin.java
- com.example.flutter_read_more_text.FlutterReadMoreTextPlugin

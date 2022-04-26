@@ -108,11 +108,12 @@ class _helpState extends State<help>{
         type: BottomNavigationBarType.fixed,
         fixedColor: primarycolor,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home",style: TextStyle(color: Colors.black87),)),
-          BottomNavigationBarItem(icon: Icon(Icons.mail_outline), title: Text("Inbox",style: TextStyle(color: Colors.black87),)),
-          BottomNavigationBarItem(icon: Icon(Icons.search), title: Text("Explore",style: TextStyle(color: Colors.black87),)),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_none), title: Text("Notifications",style: TextStyle(color: Colors.black87),)),
-          BottomNavigationBarItem(icon: Icon(Icons.more_horiz), title: Text("Others",style: TextStyle(color: Colors.black87),)),
+          //N-title:Text()
+          BottomNavigationBarItem(icon: Icon(Icons.home), activeIcon: Text("Home",style: TextStyle(color: Colors.black87),)),
+          BottomNavigationBarItem(icon: Icon(Icons.mail_outline), activeIcon: Text("Inbox",style: TextStyle(color: Colors.black87),)),
+          BottomNavigationBarItem(icon: Icon(Icons.search), activeIcon: Text("Explore",style: TextStyle(color: Colors.black87),)),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications_none), activeIcon: Text("Notifications",style: TextStyle(color: Colors.black87),)),
+          BottomNavigationBarItem(icon: Icon(Icons.more_horiz), activeIcon: Text("Others",style: TextStyle(color: Colors.black87),)),
         ],
       ),
     );

@@ -143,7 +143,7 @@ class MyBottomNavigationBar extends StatefulWidget {
   }) : assert(items != null),
         assert(items.length >= 2),
         assert(
-        items.every((BottomNavigationBarItem item) => item.title != null) == true,
+        items.every((BottomNavigationBarItem item) => item.activeIcon != null) == true,  //N-item.title
         'Every item must have a non-null title',
         ),
         assert(0 <= currentIndex && currentIndex < items.length),
@@ -266,7 +266,8 @@ class _BottomNavigationTile extends StatelessWidget {
           // font rendering works, it doesn't grow smoothly if we just animate
           // the font size, so we use a transform instead.
           /// 这里是放大字体的地方，直接返回weiget
-          child: item.title,
+          //N-item.title
+          child: item.activeIcon,
 //          child: Transform(
 //            transform: Matrix4.diagonal3(
 //              Vector3.all(
@@ -307,7 +308,8 @@ class _BottomNavigationTile extends StatelessWidget {
               fontSize: _kActiveFontSize,
               color: Colors.white,
             ),
-            child: item.title,
+            //N-item.title
+            child: item.activeIcon
           ),
         ),
       ),

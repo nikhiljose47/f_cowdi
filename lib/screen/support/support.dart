@@ -195,7 +195,7 @@ class _supportState extends State<support>{
     }
   }
   registerToast(String toast) {
-    return Fluttertoast.showToast(
+    return FlutterToast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
