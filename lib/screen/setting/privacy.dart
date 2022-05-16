@@ -15,14 +15,17 @@ class privacyState extends State<privacy> {
   Completer<WebViewController> _controller = Completer<WebViewController>();
   @override
   Widget build(BuildContext context) {
-    print(baseurl+version+privacypolicy);
+    print(baseurl + version + privacypolicy);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        title: Text("Privacy Policy",style: TextStyle(
-          color: Colors.black,
-        ),),
+        title: Text(
+          "Privacy Policy",
+          style: TextStyle(
+            color: Color.fromARGB(3, 0, 0, 0),
+          ),
+        ),
         centerTitle: true,
       ),
       body: WebView(
@@ -33,6 +36,5 @@ class privacyState extends State<privacy> {
         },
       ),
     );
-
   }
 }

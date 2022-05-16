@@ -194,7 +194,7 @@ class _HomeState extends State<Home> {
     final checkVersion = CheckVersion(context: context);
     final appStatus = await checkVersion.getVersionStatus();
     if (appStatus.canUpdate) {
-      checkVersion.showUpdateDialog("gigtodo.teamtweaks.com.gigtodo", "id1533802270");
+      checkVersion.showUpdateDialog("com.cowdiar.mobileapp", "id1533802270");
       print("canUpdate ${appStatus.canUpdate}");
       print("localVersion ${appStatus.localVersion}");
       print("appStoreLink ${appStatus.appStoreUrl}");
@@ -963,7 +963,7 @@ class _HomeState extends State<Home> {
           Column(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(left: 20.00, right: 20.00),
+                margin: EdgeInsets.only(left: 20.00, right: 20.00, top: 10.0),
                 decoration: new BoxDecoration(
                     color: Colors.white,
                     border: new Border.all(
@@ -1132,7 +1132,7 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.only(bottom: 0, top: 5),
                 // alignment: FractionalOffset(1.0, 1.0),
                 width: MediaQuery.of(context).size.width,
-                height: Theme.of(context).textTheme.displayLarge.fontSize * 1.1 + 104.0,
+                height: Theme.of(context).textTheme.displayLarge.fontSize * 1.1 +  25,
                 child: loading
                     ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(primarycolor)))
                     : ListView.builder(
@@ -1168,7 +1168,7 @@ class _HomeState extends State<Home> {
                                 children: <Widget>[
                                   Image(
                                     image: new NetworkImage(
-                                      nplacesList.image != null ? nplacesList.image :"https://www.gigtodo.com//cat_images/p8.png",
+                                      nplacesList.image != null ? nplacesList.image :"https://www.cowdiar.com//cat_images/p8.png",
                                     ),width: 50,
                                     height: 50,
 

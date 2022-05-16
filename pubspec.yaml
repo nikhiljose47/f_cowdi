@@ -66,6 +66,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/ca/
+    - assets/logo/cowdiar_logo.png
     - assets/1.jpg
     - assets/2.jpg
     - assets/7.jpg
@@ -92,7 +94,6 @@ flutter:
     - assets/icons/search.png
     - assets/icons/searchact.png
     - assets/icons/cat.png
-    - assets/logo1.png
     - assets/data.json
   fonts:
     - family: SophiaNubian

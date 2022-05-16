@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/appinfo.dart';
+import 'package:flutter_app/util/showalertdialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/screen/mainscreen.dart';
@@ -16,9 +17,10 @@ class forgetpass extends StatefulWidget {
 
 class _forgetpassState extends State<forgetpass> {
   final _key = new GlobalKey<FormState>();
-  String username;
+  String email;
   FocusNode emailFocusNode = new FocusNode();
   List<AppInfo> apiinforlist = [];
+  bool shouldShowDialog = false;
 
   var loading = false;
   check() {
@@ -30,15 +32,11 @@ class _forgetpassState extends State<forgetpass> {
   }
 
   forgetpass() async {
-    final response = await http.post(baseurl + version + forgetpasslink);
+    final response = await http
+        .post(baseurl + version + forgetpasslink, body: {"email": email});
     final data = jsonDecode(response.body);
     String value = data['status'];
-    String message = data['message'];
-    if (value == '1') {
-      loginToast(message);
-    } else {
-      loginToast(message);
-    }
+    showAlertDialog(context, value);
   }
 
   loginToast(String toast) {
@@ -49,11 +47,13 @@ class _forgetpassState extends State<forgetpass> {
         backgroundColor: secondercolor,
         textColor: Colors.white);
   }
+
   Future<Null> getData() async {
-    final responseDataappinfo = await http.post( baseurl + version + sitedetails,body: {'mobile_type':Platform.isAndroid?'android':'ios'});
+    final responseDataappinfo = await http.post(baseurl + version + sitedetails,
+        body: {'mobile_type': Platform.isAndroid ? 'android' : 'ios'});
     if (responseDataappinfo.statusCode == 200) {
       final dataapinfo = responseDataappinfo.body;
-      var datalist = jsonDecode(dataapinfo)['content']['app_info']  as List;
+      var datalist = jsonDecode(dataapinfo)['content']['app_info'] as List;
       setState(() {
         for (Map i in datalist) {
           apiinforlist.add(AppInfo.fromMap(i));
@@ -62,11 +62,61 @@ class _forgetpassState extends State<forgetpass> {
       });
     }
   }
+
+  bool validateEmail(String email) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    return regex.hasMatch(email);
+    // if (!regex.hasMatch(email)) {
+    //   loginToast("Incorrect Email");
+    // }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    //  getData();
+  }
+
+  showAlertDialog(BuildContext context, String value) {
+    String title;
+    String content;
+    if (value == '1') {
+      title = "Success!";
+      content =
+          "An email has been sent to your email address with instructions on how to change your password.";
+    } else {
+      title = "Oops!";
+      content = "We don't seem to have this email in our system.";
+    }
+
+    Widget okButton = ElevatedButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => MyHomePage(0)));
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
@@ -75,120 +125,70 @@ class _forgetpassState extends State<forgetpass> {
         backgroundColor: Colors.white,
         body: ListView(
           children: <Widget>[
-            Stack(
-              children: <Widget>[
-                ClipPath(
-                  clipper: WaveClipper2(),
-                  child: Container(
-                    child: Column(),
-                    width: double.infinity,
-                    height: 300,
-                    decoration: BoxDecoration(
-                        gradient:
-                            LinearGradient(colors: [wavefirst, wavefirst])),
-                  ),
-                ),
-                ClipPath(
-                  clipper: WaveClipper3(),
-                  child: Container(
-                    child: Column(),
-                    width: double.infinity,
-                    height: 300,
-                    decoration: BoxDecoration(
-                        gradient:
-                            LinearGradient(colors: [wavesecond, wavesecond])),
-                  ),
-                ),
-                ClipPath(
-                  clipper: WaveClipper1(),
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 100,
-                        ),
-                        apiinforlist.length != 0
-                            ? Image.network(
-                                apiinforlist[0].appLogo,
-                                color: Colors.white,
-                              )
-                            : Text(
-                                "GigToDo",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 30),
-                              ),
-                      ],
-                    ),
-                    width: double.infinity,
-                    height: 300,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [primarycolor, primarycolor])),
-                  ),
-                ),
-              ],
-            ),
+            ClipRect(
+                child: Align(
+                    alignment: Alignment.center,
+                    heightFactor: 0.7,
+                    child: Image.asset('assets/logo/cowdiar_logo.png'))),
             SizedBox(
               height: 30,
             ),
             Form(
               key: _key,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
+                  Container(
                     padding: EdgeInsets.symmetric(horizontal: 32),
-                    child: Material(
-                      elevation: 0.0,
-                      child: TextFormField(
-                        validator: (e) {
-                          if (e.isEmpty) {
-                            return "Please Insert Email";
-                          }
-                        },
-                        onSaved: (e) => username = e,
-                        style: TextStyle(
-                          color: primarycolor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
-                        ),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: primarycolor),
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: primarycolor),
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: primarycolor),
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.only(left: 20, right: 15),
-                              child: Icon(Icons.person, color: primarycolor),
-                            ),
-                            // contentPadding: EdgeInsets.all(18),
-                            labelText: "username",
-                            labelStyle: TextStyle(
-                                color: emailFocusNode.hasFocus
-                                    ? Colors.black
-                                    : primarycolor)),
+                    child: TextFormField(
+                      validator: (e) {
+                        if (e.isEmpty || !validateEmail(e)) {
+                          return "Please enter email id";
+                        }
+                        return null;
+                      },
+                      onSaved: (e) => email = e,
+                      style: TextStyle(
+                        color: primarycolor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
                       ),
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 10),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: primarycolor),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: primarycolor),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: primarycolor),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.only(left: 20, right: 15),
+                            child: Icon(Icons.person, color: primarycolor),
+                          ),
+                          // contentPadding: EdgeInsets.all(18),
+                          labelText: "Email id",
+                          labelStyle: TextStyle(
+                              color: emailFocusNode.hasFocus
+                                  ? Colors.black
+                                  : primarycolor)),
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 10,
                   ),
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 32),
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
+                                  BorderRadius.all(Radius.circular(8)),
                               color: primarycolor),
                           child: SizedBox(
                             width: double.infinity,
@@ -206,24 +206,24 @@ class _forgetpassState extends State<forgetpass> {
                             ),
                           ))),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Center(
                     child: SizedBox(
-                      width: 250,
+                      width: 280,
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          InkWell(
+                          TextButton(
                             child: Text(
                               "<< Login",
                               style: TextStyle(
                                   color: primarycolor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600),
                             ),
-                            onTap: () {
+                            onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -231,15 +231,15 @@ class _forgetpassState extends State<forgetpass> {
                               );
                             },
                           ),
-                          InkWell(
+                          TextButton(
                             child: Text(
                               "Skip >>",
                               style: TextStyle(
                                   color: primarycolor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600),
                             ),
-                            onTap: () {
+                            onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -252,7 +252,7 @@ class _forgetpassState extends State<forgetpass> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -261,16 +261,16 @@ class _forgetpassState extends State<forgetpass> {
                         "Don't have an Account ? ",
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.normal),
                       ),
-                      InkWell(
+                      TextButton(
                         child: Text("Sign Up ",
                             style: TextStyle(
                                 color: primarycolor,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12)),
-                        onTap: () {
+                                fontSize: 14)),
+                        onPressed: () {
                           {
                             Navigator.push(
                               context,
@@ -278,7 +278,6 @@ class _forgetpassState extends State<forgetpass> {
                                   builder: (context) => Register()),
                             );
                           }
-                          ;
                         },
                       ),
                     ],

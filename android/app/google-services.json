@@ -1,41 +1,76 @@
 {
   "project_info": {
-    "project_number": "602640086425",
-    "firebase_url": "https://gigtodo-3c96c.firebaseio.com",
-    "project_id": "gigtodo-3c96c",
-    "storage_bucket": "gigtodo-3c96c.appspot.com"
+    "project_number": "413744857306",
+    "project_id": "cowdiar-mobile",
+    "storage_bucket": "cowdiar-mobile.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:602640086425:android:a215dabe33215f58d70f08",
+        "mobilesdk_app_id": "1:413744857306:android:7676b3cf32befbed2625e3",
         "android_client_info": {
-          "package_name": "gigtodo.teamtweaks.com.gigtodo"
+          "package_name": "com.cowdiar.mobileapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "602640086425-frb8l0gr9llslerqnhrb5uvfhidc7ifp.apps.googleusercontent.com",
+          "client_id": "413744857306-ev30kg5976lh2drq663vdlud2ajd7p5c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCD69QGnVcl4-5CGLd3dwbIqTleEdS6w3s"
+          "current_key": "AIzaSyCkvIUVKxBC2Vy4OBFAs45kEe38_DnSV_A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "602640086425-frb8l0gr9llslerqnhrb5uvfhidc7ifp.apps.googleusercontent.com",
+              "client_id": "413744857306-ev30kg5976lh2drq663vdlud2ajd7p5c.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "602640086425-li8oe2lqqskg60ue12dljqcgq8sugbai.apps.googleusercontent.com",
+              "client_id": "413744857306-0kcj719vgk6hm9vmu63jup3j6brnmafa.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.gtg.flutterApps"
+                "bundle_id": "gigtodo.teamtweaks.com.gigtodo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413744857306:android:a5d5e4b1567823982625e3",
+        "android_client_info": {
+          "package_name": "gigtodo.teamtweaks.com.gigtodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413744857306-ev30kg5976lh2drq663vdlud2ajd7p5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkvIUVKxBC2Vy4OBFAs45kEe38_DnSV_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413744857306-ev30kg5976lh2drq663vdlud2ajd7p5c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "413744857306-0kcj719vgk6hm9vmu63jup3j6brnmafa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "gigtodo.teamtweaks.com.gigtodo"
               }
             }
           ]

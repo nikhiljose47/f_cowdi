@@ -12,23 +12,22 @@ import 'package:flutter_app/screen/register/register.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/screen/forgetpassword/forget.dart';
+
 class Login extends StatefulWidget {
   final String logintxt;
 
-  Login(this.logintxt, {Key key}): super(key: key);
+  Login(this.logintxt, {Key key}) : super(key: key);
   @override
   _LoginState createState() => _LoginState();
 }
 
 enum LoginStatus { notSignIn, signIn }
 
-
-
 class _LoginState extends State<Login> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final _key = new GlobalKey<FormState>();
   LoginStatus _loginStatus = LoginStatus.notSignIn;
-  String username, password;
+  String username, email, userId, password;
   FocusNode passwordFocusNode = new FocusNode();
   bool _secureText = true;
   FocusNode emailFocusNode = new FocusNode();
@@ -39,38 +38,50 @@ class _LoginState extends State<Login> {
 
   var loading = false;
   void firebaseCloudMessaging_Listeners() {
-    _firebaseMessaging.getToken().then((token){
+    _firebaseMessaging.getToken().then((token) {
       firebastoken = token;
     });
   }
+
   showHide() {
     setState(() {
       _secureText = !_secureText;
     });
   }
+
   check() {
     final form = _key.currentState;
     if (form.validate()) {
       form.save();
       login();
     }
-
   }
+
   login() async {
     setState(() {
       loading = true;
     });
-    print("firebastoken");
+    print("firebasetoken");
     print(firebastoken);
     if (Platform.isIOS) {
-      final response = await http
-          .post(baseurl + version + loginurl, body: {
-        "username": username,
-        "password": password,
-        "device_type":'ios',
-        "device_token": firebastoken,
+      var body;
+      if (validateEmail()) {
+        body = {
+          "email": userId,
+          "password": password,
+          "device_type": 'ios',
+          "device_token": firebastoken,
+        };
+      } else {
+        body = {
+          "username": userId,
+          "password": password,
+          "device_type": 'ios',
+          "device_token": firebastoken,
+        };
       }
-      );
+      final response =
+          await http.post(baseurl + version + loginurl, body: body);
 
       final data = jsonDecode(response.body);
       String value = data['status'];
@@ -81,26 +92,33 @@ class _LoginState extends State<Login> {
           _loginStatus = LoginStatus.signIn;
           savePref(token);
         });
-        loginToast(message);
       } else {
-        _controller = new TextEditingController(text: username);
-        _controller2 = new TextEditingController(text: username);
+        _controller = new TextEditingController(text: userId);
+        _controller2 = new TextEditingController(text: password);
 
         setState(() {
           loading = false;
         });
-
-        loginToast('invalid login credentials');
       }
-    }else{
-      final response = await http
-          .post(baseurl + version + loginurl, body: {
-        "username": username,
-        "password": password,
-        "device_type":'android',
-        "device_token": firebastoken,
+    } else {
+      var body;
+      if (validateEmail()) {
+        body = {
+          "email": userId,
+          "password": password,
+          "device_type": 'android',
+          "device_token": firebastoken,
+        };
+      } else {
+        body = {
+          "username": userId,
+          "password": password,
+          "device_type": 'android',
+          "device_token": firebastoken,
+        };
       }
-      );
+      final response =
+          await http.post(baseurl + version + loginurl, body: body);
 
       final data = jsonDecode(response.body);
       String value = data['status'];
@@ -112,24 +130,62 @@ class _LoginState extends State<Login> {
           _loginStatus = LoginStatus.signIn;
           savePref(token);
         });
-        loginToast(message);
       } else {
-        _controller = new TextEditingController(text: username);
-        _controller2 = new TextEditingController(text: username);
+        _controller = new TextEditingController(text: userId);
+        _controller2 = new TextEditingController(text: password);
         setState(() {
           loading = false;
         });
-        loginToast('invalid login credentials');
       }
+      showAlertDialog(context, value);
     }
   }
-  loginToast(String toast) {
-    return FlutterToast.showToast(
-        msg: toast,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        backgroundColor: secondercolor,
-        textColor: Colors.white);
+
+  bool validateEmail() {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    return regex.hasMatch(userId);
+    // if (!regex.hasMatch(email)) {
+    //   loginToast("Incorrect Email");
+    // }
+  }
+
+  showAlertDialog(BuildContext context, String value) {
+    String title;
+    String content;
+    List<Widget> actions;
+
+    Widget okButton = ElevatedButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    if (value == '1') {
+      title = "Success!";
+      content = "Welcome Back";
+      actions = [];
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => MyHomePage(0)));
+      });
+    } else {
+      title = "Oops!";
+      content = "Password or username is incorrect. Please try again!";
+      actions = [okButton];
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+        title: Text(title), content: Text(content), actions: actions);
+      },
+    );
   }
 
   savePref(String token) async {
@@ -139,6 +195,7 @@ class _LoginState extends State<Login> {
       preferences.commit();
     });
   }
+
   var value;
 
   getPref() async {
@@ -150,17 +207,18 @@ class _LoginState extends State<Login> {
   }
 
   Future<Null> getData() async {
-      final responseDataappinfo = await http.post( baseurl + version + sitedetails,body: {'mobile_type':Platform.isAndroid?'android':'ios'});
-      if (responseDataappinfo.statusCode == 200) {
-        final dataapinfo = responseDataappinfo.body;
-        var datalist = jsonDecode(dataapinfo)['content']['app_info']  as List;
-        setState(() {
-          for (Map i in datalist) {
-            apiinforlist.add(AppInfo.fromMap(i));
-          }
-          loading = false;
-        });
-      }
+    final responseDataappinfo = await http.post(baseurl + version + sitedetails,
+        body: {'mobile_type': Platform.isAndroid ? 'android' : 'ios'});
+    if (responseDataappinfo.statusCode == 200) {
+      final dataapinfo = responseDataappinfo.body;
+      var datalist = jsonDecode(dataapinfo)['content']['app_info'] as List;
+      setState(() {
+        for (Map i in datalist) {
+          apiinforlist.add(AppInfo.fromMap(i));
+        }
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -170,261 +228,332 @@ class _LoginState extends State<Login> {
     firebaseCloudMessaging_Listeners();
     getData();
   }
+
   @override
   Widget build(BuildContext context) {
     switch (_loginStatus) {
       case LoginStatus.notSignIn:
         return Scaffold(
-          backgroundColor: Colors.white,
-          body: ListView(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  ClipPath(
-                    clipper: WaveClipper2(),
-                    child: Container(
-                      child: Column(),
-                      width: double.infinity,
-                      height: 300,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [wavefirst,wavefirst])),
+            backgroundColor: Colors.white,
+            body: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                ClipRect(
+                    child: Align(
+                        alignment: Alignment.center,
+                        heightFactor: 0.5,
+                        child: Transform.scale(
+                            scale: 0.8,
+                            child:
+                                Image.asset('assets/logo/cowdiar_logo.png')))),
+                Text(
+                  "Welcome back",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 45,
+                    width: 300,
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 6, 6, 6),
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Center(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.apple_sharp,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "Login with Apple",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 45,
+                    width: 300,
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    decoration: BoxDecoration(
+                        color: Color(0xff5890FF),
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Center(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.facebook_sharp,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "Login with Facebook",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    "- OR -",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  ClipPath(
-                    clipper: WaveClipper3(),
-                    child: Container(
-                      child: Column(),
-                      width: double.infinity,
-                      height: 300,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [wavesecond, wavesecond])),
-                    ),
-                  ),
-                  ClipPath(
-                    clipper: WaveClipper1(),
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 100,
-                          ),
-                          apiinforlist.length != 0 ? Image.network(apiinforlist[0].appLogo,color: Colors.white,):Text(
-                            "GigToDo",
+                ),
+                Form(
+                  key: _key,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        child: Material(
+                          elevation: 0.0,
+                          child: TextFormField(
+                            controller: _controller,
+                            validator: (e) => e.isEmpty
+                                ? "Please enter user id/email id"
+                                : null,
+                            onSaved: (e) => userId = e,
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 30),
+                              color: primarycolor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 10.0),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: primarycolor),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primarycolor),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primarycolor),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(left: 20, right: 15),
+                                child: Icon(Icons.person, color: primarycolor),
+                              ),
+                              // contentPadding: EdgeInsets.all(18),
+                              labelText: "username/email id",
+                              labelStyle: TextStyle(
+                                  color: emailFocusNode.hasFocus
+                                      ? Colors.black
+                                      : primarycolor),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        child: Material(
+                          elevation: 0.0,
+                          child: TextFormField(
+                            controller: _controller2,
+                            validator: (e) =>
+                                e.isEmpty ? "Please enter the password" : null,
+                            obscureText: _secureText,
+                            onSaved: (e) => password = e,
+                            style: TextStyle(
+                              color: primarycolor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 10.0),
+
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: primarycolor),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primarycolor),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primarycolor),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              labelText: "password",
+                              labelStyle: TextStyle(
+                                  color: passwordFocusNode.hasFocus
+                                      ? Colors.black
+                                      : primarycolor),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(left: 20, right: 15),
+                                child: Icon(Icons.phonelink_lock,
+                                    color: primarycolor),
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: showHide,
+                                icon: Icon(
+                                    _secureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: primarycolor),
+                              ),
+
+                              // contentPadding: EdgeInsets.all(18),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      loading
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      primarycolor)))
+                          : Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 32),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: primarycolor),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: FlatButton(
+                                      child: Text(
+                                        "Login",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16),
+                                      ),
+                                      onPressed: () {
+                                        check();
+                                      },
+                                    ),
+                                  ))),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: 300,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  "FORGOT PASSWORD ?",
+                                  style: TextStyle(
+                                      color: primarycolor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => forgetpass()),
+                                  );
+                                },
+                              ),
+                              TextButton(
+                                child: Text(
+                                  "Skip >>",
+                                  style: TextStyle(
+                                      color: primarycolor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyHomePage(0)),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Don't have an Account ? ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          TextButton(
+                            child: Text("Sign Up ",
+                                style: TextStyle(
+                                    color: primarycolor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15)),
+                            onPressed: () {
+                              {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Register()),
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),
-                      width: double.infinity,
-                      height: 300,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [primarycolor, primarycolor])),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-               Form(
-    key: _key,
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                child: Material(
-                  elevation: 0.0,
-                  child: TextFormField(
-                    controller: _controller,
-                    validator: (e) {
-                      if (e.isEmpty) {
-
-                        return "Please Enter The username";
-                      }
-                    },
-                    onSaved: (e) => username = e,
-                    style: TextStyle(
-                      color: primarycolor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: primarycolor),
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: primarycolor),
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: primarycolor),
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-
-                        prefixIcon: Padding(
-                          padding:
-                          EdgeInsets.only(left: 20, right: 15),
-                          child:
-                          Icon(Icons.person, color: primarycolor),
-                        ),
-                        // contentPadding: EdgeInsets.all(18),
-                        labelText: "username" ,
-                        labelStyle: TextStyle(
-                            color: emailFocusNode.hasFocus ? Colors
-                                .black : primarycolor
-                        ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                child: Material(
-                  elevation: 0.0,
-
-                  child: TextFormField(
-                    controller: _controller2,
-                    validator: (e) {
-                      if (e.isEmpty) {
-                        return "Please Enter The Password";
-                      }
-                    },
-                    obscureText: _secureText,
-                    onSaved: (e) => password = e,
-                    style: TextStyle(
-                      color: primarycolor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-    borderSide: BorderSide(color: primarycolor),
-    borderRadius: BorderRadius.circular(30.0),
-    ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: primarycolor),
-                        borderRadius: BorderRadius.circular(30.0),
-
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: primarycolor),
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      labelText: "Password",
-                      labelStyle: TextStyle(
-                          color: passwordFocusNode.hasFocus ? Colors
-                              .black : primarycolor
-                      ),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(left: 20, right: 15),
-                        child: Icon(Icons.phonelink_lock,
-                            color: primarycolor),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: showHide,
-                        icon: Icon(_secureText
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                            color: primarycolor),
-                      ),
-
-                      // contentPadding: EdgeInsets.all(18),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              loading
-                  ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(primarycolor)))
-                  : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        color: primarycolor),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child:FlatButton(
-
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18),
-                      ),
-                      onPressed: () {check();},
-                    ),
-                  ))),
-              SizedBox(height: 20,),
-              Center(
-                child: SizedBox(
-                  width: 250,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-    InkWell (      child:  Text("FORGOT PASSWORD ?", style: TextStyle(color:primarycolor,fontSize: 12 ,fontWeight: FontWeight.w700 ),),
-      onTap: () { Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => forgetpass()),
-      ); },
-    ),
-                      InkWell (      child: Text("Skip >>", style: TextStyle(color:primarycolor,fontSize: 12 ,fontWeight: FontWeight.w700),),
-                        onTap: () { Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MyHomePage(0)),
-                        ); },
+                      SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              Row(
-
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("Don't have an Account ? ", style: TextStyle(color:Colors.black,fontSize: 12 ,fontWeight: FontWeight.normal),),
-    InkWell( child:Text("Sign Up ", style: TextStyle(color:primarycolor, fontWeight: FontWeight.w500,fontSize: 12 )),
-        onTap: () {{
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Register()),
-          );
-        }; },
-    ),
-
-                ],
-              )
-            ],
-          ),
-        )],
-    )
-    );
+                )
+              ],
+            ));
         break;
       case LoginStatus.signIn:
         print(widget.logintxt);
-        if(widget.logintxt == "loginfull") {
+        if (widget.logintxt == "loginfull") {
           return MyHomePage(0);
-        }else if(widget.logintxt == "inbox") {
+        } else if (widget.logintxt == "inbox") {
           return Inboxpage();
-        }else if(widget.logintxt == "nottification") {
+        } else if (widget.logintxt == "nottification") {
           return Notifications();
         }
 //        return ProfilePage(signOut);
@@ -432,7 +561,6 @@ class _LoginState extends State<Login> {
     }
   }
 }
-
 
 class WaveClipper1 extends CustomClipper<Path> {
   @override

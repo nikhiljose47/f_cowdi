@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-final baseurl = "https://www.gigtodo.com/"; // https://www.example.com
+final baseurl = "https://www.cowdiar.com/"; // https://www.example.com
 final version = "api/v1";
 final url ="/home";
 final register ="/register-user";
@@ -34,12 +34,12 @@ final coupon= '/apply-coupon';
 final updateonlinestatus= '/update-online-status';
 final postrequest= '/post-request';
 final privacypolicy='/page/privacy-policy';
-final termslink='/page/terms';
+final termslink='/terms_and_conditions';
 final getenquirytypes='/get-enquiry-types';
 final getnotifaction='/seller-push-notification-setting';
 final postnotifaction='/push-notification-setting';
 final deliverapidate='/delivery-times';
-final primarycolor = Colors.red;
+final primarycolor = Colors.blue;
 final secondercolor = Colors.black54;
 // login and reginer screen wave color
 final wavefirst = Colors.red[100];

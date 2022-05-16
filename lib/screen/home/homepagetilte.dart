@@ -4,7 +4,7 @@ import 'package:flutter_app/services/api.dart';
 Widget pagetilesec() {
   return Container(
     padding: EdgeInsets.only(left: 0.00),
-    child: Center(child: Text("GigToDo")),
+    child: Center(child: Text("Cowdiar")),
   );
 }
 // title right

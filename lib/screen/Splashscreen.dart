@@ -65,8 +65,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Image.asset(
-                'assets/logo1.png',
-                color: primarycolor,
+                'assets/logo/cowdiar_logo.png',
                 width: animation.value * 250,
                 height: animation.value * 250,
               ),

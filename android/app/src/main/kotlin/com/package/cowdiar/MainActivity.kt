@@ -1,4 +1,4 @@
-package gigtodo.teamtweaks.com.gigtodo
+package com.cowdiar.mobileapp
 
 import io.flutter.embedding.android.FlutterActivity
 

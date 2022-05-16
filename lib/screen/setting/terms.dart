@@ -25,7 +25,7 @@ class termsState extends State<terms> {
         centerTitle: true,
       ),
       body: WebView(
-        initialUrl: baseurl+version+ termslink,
+        initialUrl: baseurl+termslink,
         javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (WebViewController webViewController) {
           _controller.complete(webViewController);

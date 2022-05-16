@@ -87,7 +87,7 @@ class _categoryState extends State<category> {
                     : ListView.builder(
                   scrollDirection: Axis.vertical,
                   primary: false,
-                  itemCount: 9,
+                  itemCount: listService.length,
                   itemBuilder: (context, i) {
 
                     final nDataList = listService[i];
