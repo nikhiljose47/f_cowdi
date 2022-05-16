@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screen/others/other.dart';
 import 'package:flutter_app/services/api.dart';
-import 'dart:convert';
-import 'package:http/http.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class privacy extends StatefulWidget {

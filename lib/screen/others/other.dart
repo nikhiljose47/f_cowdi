@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/screen/Payment/Payment.dart';
 import 'package:flutter_app/screen/login/login.dart';
 import 'package:flutter_app/screen/managarequest/managarequest.dart';
 import 'package:flutter_app/screen/manage/manage.dart';
@@ -8,8 +7,6 @@ import 'package:flutter_app/screen/manage/selling_order.dart';
 import 'package:flutter_app/screen/onlistatus/onlinestatus.dart';
 import 'package:flutter_app/screen/postarequest/postarequest.dart';
 import 'package:flutter_app/screen/register/register.dart';
-import 'package:flutter_app/screen/setting/privacy.dart';
-import 'package:flutter_app/screen/setting/seting.dart';
 import 'package:flutter_app/screen/setting/terms.dart';
 import 'package:flutter_app/screen/support/support.dart';
 import 'package:flutter_app/util/appinfo.dart';
@@ -21,6 +18,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_app/util/profile.dart';
+import '../setting/logout.dart';
+import '../setting/pushNotification.dart';
+import '../setting/setting.dart';
 
 class Others extends StatefulWidget {
   @override
@@ -104,10 +104,128 @@ class _OthersState extends State<Others> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getPref();
     getDatalist();
+  }
+
+  List<Widget> sharedSettings() {
+    return [
+      Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.language,
+            ),
+            title: Text('Language'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {},
+          )),
+      Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.currency_exchange,
+            ),
+            title: Text('Currency'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {},
+          )),
+      Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.policy,
+            ),
+            title: Text('About'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {},
+          )),
+      Container(
+        decoration: new BoxDecoration(
+          color: Colors.white10,
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.grey,
+              width: 0.5,
+            ),
+          ),
+        ),
+        child: ListTile(
+          leading: Icon(
+            Icons.format_indent_decrease,
+          ),
+          title: Text('Terms of services'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => terms()),
+            );
+          },
+        ),
+      ),
+      Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.business,
+            ),
+            title: Text('Become a Seller'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {},
+          )),
+      Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.display_settings,
+            ),
+            title: Text('Appearence'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {},
+          ))
+    ];
   }
 
   Widget othersec(context) {
@@ -122,7 +240,7 @@ class _OthersState extends State<Others> {
                   decoration: new BoxDecoration(
                     color: Color.fromARGB(255, 136, 135, 135),
                   ),
-                  padding: EdgeInsets.only(top:20),
+                  padding: EdgeInsets.only(top: 20),
                   child: Row(children: <Widget>[
                     Column(
                       children: <Widget>[
@@ -234,55 +352,7 @@ class _OthersState extends State<Others> {
               ),
             ),
           ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.format_indent_decrease,
-              ),
-              title: Text('Terms of services '),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => terms()),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.lock,
-              ),
-              title: Text('Privacy Policy'),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => privacy()),
-                );
-              },
-            ),
-          ),
-        ],
+        ]..addAll(sharedSettings()),
       );
     } else {
       return ListView(
@@ -312,7 +382,7 @@ class _OthersState extends State<Others> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
-                                      GestureDetector(
+                                      InkWell(
                                         child: Icon(
                                           Icons.settings,
                                           size: 30.0,
@@ -322,7 +392,7 @@ class _OthersState extends State<Others> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => seting(),
+                                              builder: (context) => Seting(),
                                             ),
                                           );
                                         },
@@ -356,7 +426,7 @@ class _OthersState extends State<Others> {
             ],
           ),
           Container(
-            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
+            padding: EdgeInsets.only(top: 15, bottom: 16, left: 20),
             decoration: new BoxDecoration(
               color: Colors.white10,
               border: Border(
@@ -369,8 +439,9 @@ class _OthersState extends State<Others> {
             child: Text(
               "Buying",
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Color.fromARGB(255, 113, 113, 113),
               ),
             ),
           ),
@@ -459,7 +530,7 @@ class _OthersState extends State<Others> {
             height: 10,
           ),
           Container(
-            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
+            padding: EdgeInsets.only(top: 6, bottom: 16, left: 20),
             decoration: new BoxDecoration(
               color: Colors.white10,
               border: Border(
@@ -472,8 +543,9 @@ class _OthersState extends State<Others> {
             child: Text(
               "Selling",
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+                                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Color.fromARGB(255, 113, 113, 113),
               ),
             ),
           ),
@@ -506,8 +578,8 @@ class _OthersState extends State<Others> {
           SizedBox(
             height: 10,
           ),
-          Container(
-            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
+            Container(
+            padding: EdgeInsets.only(top: 6, bottom: 16, left: 20),
             decoration: new BoxDecoration(
               color: Colors.white10,
               border: Border(
@@ -520,9 +592,36 @@ class _OthersState extends State<Others> {
             child: Text(
               "General",
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+                                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Color.fromARGB(255, 113, 113, 113),
               ),
+            ),
+          ),
+          Container(
+            decoration: new BoxDecoration(
+              color: Colors.white10,
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 0.5,
+                ),
+              ),
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.notifications,
+              ),
+              title: Text(
+                'Push Notification',
+              ),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PushNotification()),
+                );
+              },
             ),
           ),
           Container(
@@ -599,7 +698,34 @@ class _OthersState extends State<Others> {
               },
             ),
           ),
-        ],
+        ]
+          ..addAll(sharedSettings())
+          ..add(Container(
+            decoration: new BoxDecoration(
+              color: Colors.white10,
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 0.5,
+                ),
+              ),
+            ),
+            child: ListTile(
+              title: Text(
+                'Logout',
+              ),
+              leading: Icon(
+                Icons.logout,
+              ),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => logout()),
+                );
+              },
+            ),
+          )),
       );
     }
   }

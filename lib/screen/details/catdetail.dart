@@ -33,7 +33,7 @@ class _catdetailState extends State<catdetail> {
 
       final data = responseData.body;
       var listplists = jsonDecode(data)['content']['pList'] as List;
-      print(listplists);
+   //   print(listplists);
 
       setState(() {
         for (Map i in listplists) {
@@ -42,12 +42,6 @@ class _catdetailState extends State<catdetail> {
         loading = false;
       });
     }
-  }
-  @override
-  void initState() {
-    super.initState();
-    getData();
-
   }
 
   myBoxDecorationfirst() {
@@ -67,12 +61,18 @@ class _catdetailState extends State<catdetail> {
     );
   }
 
+    @override
+    void initState() {
+    super.initState();
+    getData();
+
+  }
+
 
   Widget build(BuildContext context) {
-    print(widget.pretitle + widget.prelink);
+   // print(widget.pretitle + widget.prelink);
     return Scaffold(
       appBar: AppBar(
-
         elevation: 0.0,
         leading: widget.prelink == "home" ? IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -94,8 +94,6 @@ class _catdetailState extends State<catdetail> {
         itemCount: listplist.length,
         itemBuilder: (context, int index) {
           final nplacesList = listplist[index];
-          print("sd");
-          print(nplacesList.title.length);
           return GestureDetector(
             child: Padding(
               padding: const EdgeInsets.only(left: 5.0, top: 5.0, right: 5.0),
@@ -223,9 +221,9 @@ class _catdetailState extends State<catdetail> {
               ),
             ),
             onTap: () {
-              print(nplacesList.link);
-              print(widget.subcatlink);
-              print(widget.title);
+              // print(nplacesList.link);
+              // print(widget.subcatlink);
+              // print(widget.title);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context){

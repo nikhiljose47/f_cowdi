@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/mainscreen.dart';
-import 'package:flutter_app/screen/setting/seting.dart';
+import 'package:flutter_app/screen/setting/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/services/api.dart';
 
@@ -78,10 +78,7 @@ class logoutState extends State<logout>
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5.0)),
                             color: primarycolor[200],
-                            onPressed: (){  Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>seting()),
-                            );},
+                            onPressed: (){  Navigator.pop(context);},
                             child: Text(
                               'No',
                               textAlign: TextAlign.center,
