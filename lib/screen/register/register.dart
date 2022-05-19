@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:io' show Platform;
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/util/methods.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/screen/login/login.dart';
 import 'package:flutter_app/services/api.dart';
-import 'package:flutter_app/screen/mainscreen.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/util/appinfo.dart';
 
 import '../../util/const.dart';
 
@@ -55,13 +52,10 @@ class _RegisterState extends State<Register> {
   check() {
     final form = _key.currentState;
     if (form.validate()) {
-      Pattern pattern =
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-      RegExp regex = new RegExp(pattern);
       form.save();
       if (password != confirm_password) {
         registerToast("Passwords not match");
-      } else if (!regex.hasMatch(email)) {
+      } else if (!Util.emailValidate(email)) {
         registerToast("Incorrect Email");
       } else {
         print(name);
@@ -131,9 +125,9 @@ class _RegisterState extends State<Register> {
   showAlertDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
         content: ListView.builder(
-      itemCount: Constants.dropDownItems.length,
+      itemCount: Constants.dialCodes.length,
       itemBuilder: (BuildContext context, int index) {
-        return CountryCodeItem(index, Constants.dropDownItems[index], callBackFn);
+        return CountryCodeItem(index, Constants.dialCodes[index], callBackFn);
       },
     ));
 

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Widget/catvariable.dart';
 import 'package:flutter_app/services/api.dart';
+
+class Cat {
+  String name;
+  String img;
+
+  Cat(
+      {this.name, this.img});
+}
 
 class catDetailPage extends StatelessWidget {
   final Cat cat;

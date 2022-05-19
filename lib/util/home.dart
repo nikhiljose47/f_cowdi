@@ -99,6 +99,7 @@ class FProposal {
   String sellerLevel;
   Rating rating;
   String link;
+  int isFavourite;
 
   FProposal({
     this.title,
@@ -110,6 +111,7 @@ class FProposal {
     this.sellerLevel,
     this.rating,
     this.link,
+    this.isFavourite,
   });
 
   factory FProposal.fromMap(Map<String, dynamic> json) => FProposal(
@@ -122,6 +124,7 @@ class FProposal {
     sellerLevel: json["seller_level"],
     rating: Rating.fromMap(json["rating"]),
     link: json["link"],
+     isFavourite: json["isFavourite"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -134,6 +137,7 @@ class FProposal {
     "seller_level": sellerLevel,
     "rating": rating.toMap(),
     "link": link,
+    "isFavourite":isFavourite
   };
 }
 class MPlace {
@@ -198,6 +202,7 @@ class RView {
   String sellerLevel;
   Rating rating;
   String link;
+  int isFavourite;
 
   RView({
     this.title,
@@ -209,6 +214,7 @@ class RView {
     this.sellerLevel,
     this.rating,
     this.link,
+    this.isFavourite,
   });
 
   factory RView.fromMap(Map<String, dynamic> json) => RView(
@@ -221,6 +227,7 @@ class RView {
     sellerLevel: json["seller_level"],
     rating: Rating.fromMap(json["rating"]),
     link: json["link"],
+    isFavourite: json["isFavourite"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -233,6 +240,7 @@ class RView {
     "seller_level": sellerLevel,
     "rating": rating.toMap(),
     "link": link,
+    "isFavourite":isFavourite
   };
 }
 

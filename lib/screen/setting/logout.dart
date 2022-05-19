@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/mainscreen.dart';
-import 'package:flutter_app/screen/setting/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/services/api.dart';
 

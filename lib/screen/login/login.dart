@@ -335,7 +335,7 @@ class _LoginState extends State<Login> {
                           child: TextFormField(
                             controller: _controller,
                             validator: (e) => e.isEmpty
-                                ? "Please enter user id/email id"
+                                ? "Please enter username/email"
                                 : null,
                             onSaved: (e) => userId = e,
                             style: TextStyle(
@@ -364,7 +364,7 @@ class _LoginState extends State<Login> {
                                 child: Icon(Icons.person, color: primarycolor),
                               ),
                               // contentPadding: EdgeInsets.all(18),
-                              labelText: "username/email id",
+                              labelText: "username/email",
                               labelStyle: TextStyle(
                                   color: emailFocusNode.hasFocus
                                       ? Colors.black

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/details/catdetail.dart';
 import 'package:flutter_app/screen/inbox/inboxdetail.dart';
@@ -16,7 +15,7 @@ import 'dart:io';
 import 'package:flutter_app/util/home.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:flutter_app/screen/category/category.dart';
-import 'package:flutter_app/ui/invitafriend.dart';
+import 'package:flutter_app/shared_widgets/invitafriend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/screen/category/detailsubcat.dart';
 import 'package:flutter/services.dart';
@@ -204,6 +203,13 @@ class _HomeState extends State<Home> {
     }
   }
 
+  _setFavourite(List list, int index){
+    setState(() {
+      list[index].isFavourite = list[index].isFavourite==1?0:1;
+    });
+
+  }
+
 
 //Panggil Data / Call Data
   @override
@@ -286,57 +292,78 @@ class _HomeState extends State<Home> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      new Container(
-                                          width: 50.0,
-                                          height: 50.0,
-                                          decoration: new BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: new DecorationImage(
-                                                  fit: BoxFit.fill,
-                                                  image: new NetworkImage(
-                                                      nplacesList.sellerImage))),
-                                          child: new Stack(
-                                            children: <Widget>[
-                                              if (statusin == 'online')
-                                                new Positioned(
-                                                  right: 0.0,
-                                                  bottom: 0.0,
-                                                  child: new  Icon(
-                                                    Icons.fiber_manual_record,
-                                                    size: 15.0,
-                                                    color: primarycolor,
-                                                  ),
-                                                ),
-
-                                              if (statusin == 'offline')
-                                                new Positioned(
-                                                  right: 0.0,
-                                                  bottom: 0.0,
-                                                  child: new   Icon(
-                                                    Icons.fiber_manual_record,
-                                                    size: 15.0,
-                                                    color: Colors.grey,
-                                                  ),
-                                                ),
-                                            ],
-                                          )
-                                      ),
-                                      new Container(
-                                          padding: EdgeInsets.only(left: 5.00),
-                                          child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        new Container(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            decoration: new BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: new DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: new NetworkImage(
+                                                        nplacesList.sellerImage))),
+                                            child: new Stack(
                                               children: <Widget>[
-                                                Text(nplacesList.sellerName),
-                                                Text(nplacesList.sellerLevel),
-                                              ]
-                                          )
-                                      ),
-
-                                    ],
+                                                if (statusin == 'online')
+                                                  new Positioned(
+                                                    right: 0.0,
+                                                    bottom: 0.0,
+                                                    child: new  Icon(
+                                                      Icons.fiber_manual_record,
+                                                      size: 15.0,
+                                                      color: primarycolor,
+                                                    ),
+                                                  ),
+                                  
+                                                if (statusin == 'offline')
+                                                  new Positioned(
+                                                    right: 0.0,
+                                                    bottom: 0.0,
+                                                    child: new   Icon(
+                                                      Icons.fiber_manual_record,
+                                                      size: 15.0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                        
+                                              ],
+                                            )
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                              padding: EdgeInsets.only(left: 5.00),
+                                              child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Text(nplacesList.sellerName),
+                                                    Text(nplacesList.sellerLevel),
+                                                  ]
+                                              )
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: IconButton(
+                                                    onPressed: () => _setFavourite(listreview,i),
+                                                    icon: Icon(
+                                                      Icons.favorite,
+                                                      size: 18.0,
+                                                      color:
+                                                          nplacesList.isFavourite==1
+                                                              ? Color.fromARGB(255, 255, 166, 0)
+                                                              : Colors.grey,
+                                                    ),
+                                                  ),
+                                          ),
+                                        ),
+                                  
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -352,7 +379,7 @@ class _HomeState extends State<Home> {
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10.0, top: 5),
-                                            child: Text(nplacesList.title.length > 30 ? nplacesList.title.substring(0,30)+"...":nplacesList.title),
+                                            child: Text(nplacesList.title.length > 25 ? nplacesList.title.substring(0,25)+"...":nplacesList.title),
                                           ),
 
                                         ),
@@ -375,6 +402,7 @@ class _HomeState extends State<Home> {
                                       new Container(
                                           padding: EdgeInsets.only(left: 10),
                                           child: Row(children: <Widget>[
+                                      
                                             Text(
                                               "From ",
                                               style: TextStyle(
@@ -393,6 +421,7 @@ class _HomeState extends State<Home> {
                                               maxLines: 2,
                                               textAlign: TextAlign.left,
                                             ),
+                                            
                                           ]
                                           )
                                       ),
@@ -757,57 +786,78 @@ class _HomeState extends State<Home> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    new Container(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        decoration: new BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: new DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: new NetworkImage(
-                                                    nplacesList.sellerImage))),
-                                        child: new Stack(
-                                          children: <Widget>[
-                                            if (statusin == 'online')
-                                              new Positioned(
-                                                right: 0.0,
-                                                bottom: 0.0,
-                                                child: new  Icon(
-                                                  Icons.fiber_manual_record,
-                                                  size: 15.0,
-                                                  color: primarycolor,
-                                                ),
-                                              ),
-
-                                            if (statusin == 'offline')
-                                              new Positioned(
-                                                right: 0.0,
-                                                bottom: 0.0,
-                                                child: new   Icon(
-                                                  Icons.fiber_manual_record,
-                                                  size: 15.0,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
-                                          ],
-                                        )
-                                    ),
-                                    new Container(
-                                        padding: EdgeInsets.only(left: 5.00),
-                                        child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      new Container(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          decoration: new BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: new DecorationImage(
+                                                  fit: BoxFit.fill,
+                                                  image: new NetworkImage(
+                                                      nplacesList.sellerImage))),
+                                          child: new Stack(
                                             children: <Widget>[
-                                              Text(nplacesList.sellerName),
-                                              Text(nplacesList.sellerLevel),
-                                            ]
-                                        )
-                                    ),
-
-                                  ],
+                                              if (statusin == 'online')
+                                                new Positioned(
+                                                  right: 0.0,
+                                                  bottom: 0.0,
+                                                  child: new  Icon(
+                                                    Icons.fiber_manual_record,
+                                                    size: 15.0,
+                                                    color: primarycolor,
+                                                  ),
+                                                ),
+                                
+                                              if (statusin == 'offline')
+                                                new Positioned(
+                                                  right: 0.0,
+                                                  bottom: 0.0,
+                                                  child: new   Icon(
+                                                    Icons.fiber_manual_record,
+                                                    size: 15.0,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                            ],
+                                          )
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                            padding: EdgeInsets.only(left: 5.00),
+                                            child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(nplacesList.sellerName),
+                                                  Text(nplacesList.sellerLevel),
+                                                ]
+                                            )
+                                        ),
+                                      ),
+                                       Expanded(
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: IconButton(
+                                                      onPressed: () => _setFavourite(firtlist,i),
+                                                    icon: Icon(
+                                                      Icons.favorite,
+                                                      size: 18.0,
+                                                      color:
+                                                          nplacesList.isFavourite==1
+                                                              ? Color.fromARGB(255, 255, 166, 0)
+                                                              : Colors.grey,
+                                                    ),
+                                                  ),
+                                            ),
+                                          ),
+                                    
+                                
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -823,7 +873,7 @@ class _HomeState extends State<Home> {
                                         child: Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10.0, top: 5),
-                                          child: Text(nplacesList.title.length > 30 ? nplacesList.title.substring(0,30)+"...":nplacesList.title),
+                                          child: Text(nplacesList.title.length > 25 ? nplacesList.title.substring(0,25)+"...":nplacesList.title),
                                         ),
 
                                       ),

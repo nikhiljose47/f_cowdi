@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/setting/account_settings.dart';
 import 'package:flutter_app/screen/setting/profile_settings.dart';
 
-class Seting extends StatefulWidget {
-  _SetingState createState() => _SetingState();
+class Setting extends StatefulWidget {
+  _SettingState createState() => _SettingState();
 }
 
-class _SetingState extends State<Seting> {
+class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

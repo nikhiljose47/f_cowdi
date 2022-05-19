@@ -35,6 +35,7 @@ class _OthersState extends State<Others> {
   List<MProfile> listService = [];
   String listservicesstus;
   List<AppInfo> apiinforlist = [];
+  
   Future<Null> getDatalist() async {
     final responseDataappinfo = await http.post(baseurl + version + sitedetails,
         body: {'mobile_type': Platform.isAndroid ? 'android' : 'ios'});
@@ -361,7 +362,7 @@ class _OthersState extends State<Others> {
             children: <Widget>[
               Container(
                   width: double.maxFinite,
-                  height: 200,
+                  height: 180,
                   decoration: new BoxDecoration(
                     color: primarycolor,
                   ),
@@ -379,39 +380,32 @@ class _OthersState extends State<Others> {
                             return Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      InkWell(
-                                        child: Icon(
-                                          Icons.settings,
-                                          size: 30.0,
-                                          color: Colors.white,
-                                        ),
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Seting(),
-                                            ),
-                                          );
-                                        },
+                                  Align(
+                                    alignment: AlignmentDirectional.topEnd,
+                                    child: InkWell(
+                                      child: Icon(
+                                        Icons.settings,
+                                        size: 30.0,
+                                        color: Colors.white,
                                       ),
-                                    ],
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Setting(),
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
-                                  Column(
-                                    children: <Widget>[
-                                      Container(
-                                        padding:
-                                            const EdgeInsets.only(top: 35.0),
-                                        child: CircleAvatar(
-                                          radius: 30.0,
-                                          backgroundImage: NetworkImage(
-                                              datacard.sellerImage),
-                                        ),
-                                      )
-                                    ],
+                                  Container(
+                                    child: CircleAvatar(
+                                      radius: 35.0,
+                                      backgroundImage:
+                                          NetworkImage(datacard.sellerImage),
+                                    ),
                                   ),
+                                  SizedBox(height: 7),
                                   Center(
                                     child: Text(
                                       datacard.sellerName,
@@ -543,7 +537,7 @@ class _OthersState extends State<Others> {
             child: Text(
               "Selling",
               style: TextStyle(
-                                fontSize: 18,
+                fontSize: 18,
                 fontWeight: FontWeight.w400,
                 color: Color.fromARGB(255, 113, 113, 113),
               ),
@@ -578,7 +572,7 @@ class _OthersState extends State<Others> {
           SizedBox(
             height: 10,
           ),
-            Container(
+          Container(
             padding: EdgeInsets.only(top: 6, bottom: 16, left: 20),
             decoration: new BoxDecoration(
               color: Colors.white10,
@@ -592,7 +586,7 @@ class _OthersState extends State<Others> {
             child: Text(
               "General",
               style: TextStyle(
-                                fontSize: 18,
+                fontSize: 18,
                 fontWeight: FontWeight.w400,
                 color: Color.fromARGB(255, 113, 113, 113),
               ),

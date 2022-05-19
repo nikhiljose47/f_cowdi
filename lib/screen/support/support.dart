@@ -37,10 +37,8 @@ class _supportState extends State<support>{
   final rollHolder = TextEditingController();
 
   void _openFileExplorer() async {
-
-
     try {
-     // _path = await FilePicker.getFilePath(type: _pickingType, fileExtension: _extension);
+      _path = await FilePicker.getFilePath(type: _pickingType, fileExtension: _extension);
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     }
@@ -213,8 +211,6 @@ class _supportState extends State<support>{
 
     final responseData = await http.get(
        baseurl+version+getenquirytypes, headers: {'Auth': token});
-    print("file");
-    print(_mySelection);
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var listservices = jsonDecode(data)['content']['typesArr'] as List;
@@ -228,27 +224,14 @@ class _supportState extends State<support>{
 
 
   }
-  int _index = 0;
+
   void initState(){
     super.initState();
     getData();
     setState(() {
-      _index = widget.index;
     });
   }
 
-  // final List<Widget> _children = [
-  // Home(),
-  //Inboxpage(),
-  //explore(),
-  //notification(),
-  //];
-
-  //void _onItemTapped(int index) {
-  // setState(() {
-  //   currentIndex = index;
-  // });
-  //}
   @override
   Widget build(BuildContext context) {
     return Scaffold(

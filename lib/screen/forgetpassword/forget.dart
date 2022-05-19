@@ -144,7 +144,7 @@ class _forgetpassState extends State<forgetpass> {
                     child: TextFormField(
                       validator: (e) {
                         if (e.isEmpty || !validateEmail(e)) {
-                          return "Please enter email id";
+                          return "Please enter email";
                         }
                         return null;
                       },
@@ -173,7 +173,7 @@ class _forgetpassState extends State<forgetpass> {
                             child: Icon(Icons.person, color: primarycolor),
                           ),
                           // contentPadding: EdgeInsets.all(18),
-                          labelText: "Email id",
+                          labelText: "Email",
                           labelStyle: TextStyle(
                               color: emailFocusNode.hasFocus
                                   ? Colors.black
