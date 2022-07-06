@@ -2,15 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/login/login.dart';
-import 'package:flutter_app/screen/notifications/Notificationstitle.dart';
 import 'package:flutter_app/screen/notifications/notificationfilter.dart';
-import 'package:flutter_app/screen/setting/notification.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:flutter_app/util/mail.dart';
-import 'package:flutter_app/util/mail.dart' as prefix0;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+
 class Notifications extends StatefulWidget {
   Notifications({Key? key, this.title}) : super(key: key);
   final String? title;
@@ -19,7 +17,6 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationspageState extends State<Notifications> {
-  int _selectedIndex = 0;
   String? token = "";
   List<NotificationsArr> listSCArr = [];
   String? choice;
@@ -125,14 +122,13 @@ class _NotificationspageState extends State<Notifications> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData(choice);
 
   }
   Widget slideRightBackground() {
     return Container(
-      color: primarycolor,
+      color: Colors.grey,
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -156,7 +152,7 @@ class _NotificationspageState extends State<Notifications> {
   }
   Widget slideLeftBackground() {
     return Container(
-      color: primarycolor,
+      color: Colors.red,
       child: Align(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -242,7 +238,7 @@ class _NotificationspageState extends State<Notifications> {
                                           child: new  Icon(
                                             Icons.fiber_manual_record,
                                             size: 15.0,
-                                            color: primarycolor,
+                                            color: Colors.green,
                                           ),
                                         ),
 
@@ -315,7 +311,9 @@ class _NotificationspageState extends State<Notifications> {
                         ),
                         Divider(),
                       ]
-                      )
+                      ),
+                      //N-notification onTap
+                      onTap: ()=>{},
                   ),
                   background: slideRightBackground(),
                   secondaryBackground: slideLeftBackground(),

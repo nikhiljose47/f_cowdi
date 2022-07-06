@@ -357,7 +357,7 @@ class _contactdetailpageState extends State<contactdetailpage> {
       case LoginStatus.messagesend:
         if(friendsList != null) {
           return Inboxdetailpage(
-              friendsList, widget.sellname);
+              friendsList, widget.sellname,"");
         }
         break;
     }

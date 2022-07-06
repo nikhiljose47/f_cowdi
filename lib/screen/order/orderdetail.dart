@@ -2,22 +2,19 @@ import 'dart:io';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screen/details/catdetail.dart';
 import 'package:flutter_app/util/orderdetails.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter_app/services/api.dart';
-import 'package:flutter_app/util/subcat.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class orderpage extends StatefulWidget {
-  final String? orderid; //if you have multiple values add here
-  orderpage(this.orderid, {Key? key}) : super(key: key);
+  final String? orderid;
+  final String? postTitle;
+   //if you have multiple values add here
+  orderpage(this.orderid,this.postTitle, {Key? key}) : super(key: key);
 
   @override
   _orderpageState createState() => _orderpageState();
@@ -25,14 +22,8 @@ class orderpage extends StatefulWidget {
 
 class _orderpageState extends State<orderpage> {
   File? _file;
-  bool _showBottom = false;
-  String _fileName = '...';
   ScrollController _scrollController = ScrollController();
-  String _path = '...';
-  String? _extension;
-  FileType? _pickingType;
   final _key = new GlobalKey<FormState>();
-  TextEditingController _controller = new TextEditingController();
   Color myGreen = Color(0xff4bb17b);
 
   var textvalue;
@@ -167,10 +158,10 @@ class _orderpageState extends State<orderpage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-    getData();
+       getData();
     _scrollController = ScrollController();
+    super.initState();
+
   }
 
   @override
@@ -179,11 +170,16 @@ class _orderpageState extends State<orderpage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          //toolbarHeight: 38,
+          elevation: 6.0,
+          foregroundColor: Colors.black,
+          backgroundColor:  Colors.white,
           bottom: TabBar(
-            unselectedLabelColor: Colors.white,
-            labelColor: Colors.white,
+            unselectedLabelColor: Colors.black,
+            
+            labelColor: Color.fromARGB(255, 87, 87, 87),
             indicatorWeight: 3,
-            indicatorColor: Colors.white,
+            indicatorColor: Color.fromARGB(255, 169, 169, 169),
             labelStyle: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -193,15 +189,7 @@ class _orderpageState extends State<orderpage> {
               Tab(text: "Chat"),
             ],
           ),
-          title: loading
-              ? Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(bottom: 70, top: 8.00),
-                  //alignment: FractionalOffset(1.0, 1.0),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 1.1,
-                  child: Center(child: CircularProgressIndicator()))
-              : Container(child: Center(child: Text(listorder[0].postTitle!))),
+          title:  Container(child: Center(child: Text(widget.postTitle.toString()))),
         ),
         body: loading
             ? Center(

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/inbox/Inbox.dart';
 import 'package:flutter_app/screen/notifications/Notifications.dart';
 import 'package:flutter_app/util/appinfo.dart';
-import 'package:flutter_app/util/methods.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/screen/mainscreen.dart';
 import 'package:flutter_app/screen/register/register.dart';
@@ -65,24 +64,13 @@ class _LoginState extends State<Login> {
     print("firebasetoken");
     print(firebastoken);
     if (Platform.isIOS) {
-      var body;
-      if (Util.emailValidate(userId)) {
-        body = {
-          "email": userId,
-          "password": password,
-          "device_type": 'ios',
-          "device_token": firebastoken,
-        };
-      } else {
-        body = {
+      final response =
+          await http.post(Uri.parse(baseurl + version + loginurl), body: {
           "username": userId,
           "password": password,
           "device_type": 'ios',
           "device_token": firebastoken,
-        };
-      }
-      final response =
-          await http.post(Uri.parse(baseurl + version + loginurl), body: body);
+        });
 
       final data = jsonDecode(response.body);
       String? value = data['status'];
@@ -90,24 +78,13 @@ class _LoginState extends State<Login> {
       String? message = data['message'];
      _setStateOnResponse(value, data);
     } else {
-      var body;
-      if (Util.emailValidate(userId)) {
-        body = {
-          "email": userId,
-          "password": password,
-          "device_type": 'android',
-          "device_token": firebastoken,
-        };
-      } else {
-        body = {
+      final response =
+          await http.post(Uri.parse(baseurl + version + loginurl), body: {
           "username": userId,
           "password": password,
           "device_type": 'android',
           "device_token": firebastoken,
-        };
-      }
-      final response =
-          await http.post(Uri.parse(baseurl + version + loginurl), body: body);
+        });
 
       final data = jsonDecode(response.body);
       String? value = data['status'];

@@ -1,16 +1,11 @@
-import 'dart:math';
-import 'package:flutter/gestures.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/screen/details/catdetail.dart';
-import 'package:flutter_app/screen/home/home.dart';
 import 'package:flutter_app/screen/inbox/inboxdetail.dart';
 import 'package:flutter_app/screen/login/login.dart';
 import 'package:flutter_app/screen/profiledetails/cart.dart';
 import 'package:flutter_app/screen/profiledetails/contactus.dart';
-import 'package:flutter_app/screen/search/search.dart';
 import 'package:flutter_app/util/home.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -18,7 +13,6 @@ import 'dart:convert';
 import 'package:flutter_app/util/propusal.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
 import 'package:flutter_app/screen/custom_expansion_tile.dart' as custom;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -71,15 +65,17 @@ class _profiledetailpageState extends State<profiledetailpage> {
       loading = true;
     });
 
-    final response = await http.post(Uri.parse(baseurl + version + addcartpage), body: {
-      "proposal_id": package,
-      "package_id": product,
-      "proposal_qty": quenty
-    }, headers: {
-      'Auth': token!
-    });
+    final response = await http.post(Uri.parse(baseurl + version + addcartpage),
+        body: {
+          "proposal_id": package,
+          "package_id": product,
+          "proposal_qty": quenty
+        },
+        headers: {
+          'Auth': token!
+        });
     print(baseurl + version + addcartpage);
-print(response);
+    print(response);
     print(package);
     print(product);
     print(quenty);
@@ -89,7 +85,7 @@ print(response);
     print(data);
     String? value = data['status'];
     print(value);
-    String? message = data['message'];
+    String? message = data['long_message'];
     if (value == '1') {
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -126,8 +122,8 @@ print(response);
 
     if (token == null) {
     } else {
-      final responseData =
-          await http.get(Uri.parse(baseurl + version + url), headers: {'Auth': token!});
+      final responseData = await http
+          .get(Uri.parse(baseurl + version + url), headers: {'Auth': token!});
       if (responseData.statusCode == 200) {
         final data = responseData.body;
         final recents = jsonDecode(data)['content']['rViews'];
@@ -153,8 +149,9 @@ print(response);
 
     if (token != null) {
       final linkdata = '/' + widget.links!;
-      final responseData = await http
-          .get(Uri.parse(baseurl + version + linkdata), headers: {'Auth': token!});
+      final responseData = await http.get(
+          Uri.parse(baseurl + version + linkdata),
+          headers: {'Auth': token!});
       if (responseData.statusCode == 200) {
         final data = responseData.body;
         print(baseurl + version + linkdata);
@@ -170,7 +167,8 @@ print(response);
       }
     } else {
       final linkdata = '/' + widget.links!;
-      final responseData = await http.get(Uri.parse(baseurl + version + linkdata));
+      final responseData =
+          await http.get(Uri.parse(baseurl + version + linkdata));
       if (responseData.statusCode == 200) {
         final data = responseData.body;
         final listsCArr = jsonDecode(data)['content']['pDetails'];
@@ -189,11 +187,10 @@ print(response);
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     reviewgetData();
     _showPersBottomSheetCallBack = _showBottomSheet;
     getData();
+    super.initState();
   }
 
   void _showBottomSheet() {
@@ -201,546 +198,579 @@ print(response);
       _showPersBottomSheetCallBack = null;
     });
     _scaffoldKey.currentState!
-        .showBottomSheet((context) {
-          return SingleChildScrollView(
-            child: new Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    alignment: Alignment(-1.0, -1.0),
-                    padding: EdgeInsets.only(
-                        left: 10.00, right: 10.00, top: 10.00, bottom: 5.00),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                new Container(
-                                    width: 40.0,
-                                    height: 40.0,
-                                    decoration: new BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: new DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: new NetworkImage(listdata[0]
-                                                .seller!
-                                                .sellerImage!))),
-                                    child: new Stack(
-                                      children: <Widget>[
-                                        if (listdata[0].seller!.onlineStatus ==
-                                            'online')
-                                          new Positioned(
-                                            right: 0.0,
-                                            bottom: 0.0,
-                                            child: new Icon(
-                                              Icons.fiber_manual_record,
-                                              size: 15.0,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                        if (listdata[0].seller!.onlineStatus ==
-                                            'offline')
-                                          new Positioned(
-                                            right: 0.0,
-                                            bottom: 0.0,
-                                            child: new Icon(
-                                              Icons.fiber_manual_record,
-                                              size: 15.0,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                      ],
-                                    )),
-                                new Container(
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.3,
-                                  padding: EdgeInsets.only(left: 10.00),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+        .showBottomSheet(
+          (context) {
+            return SingleChildScrollView(
+              child: Container(
+
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(103, 212, 224, 236),),
+                child: Column(
+                  children: <Widget>[
+                    Center(
+                        child: Container(
+                      height: 5,
+                      width: 40,
+                      color: Colors.grey,
+                      margin: EdgeInsets.only(bottom: 20, top: 10),
+                    )),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      alignment: Alignment(-1.0, -1.0),
+                      padding: EdgeInsets.only(
+                          left: 10.00, right: 10.00, top: 10.00, bottom: 5.00),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  new Container(
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: new NetworkImage(
+                                                  listdata[0]
+                                                      .seller!
+                                                      .sellerImage!))),
+                                      child: new Stack(
                                         children: <Widget>[
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Container(
-                                                  padding:
-                                                      EdgeInsets.only(left: 0),
-                                                  child: new Text(
-                                                    listdata[0]
-                                                        .seller!
-                                                        .sellerName!,
-                                                    style: TextStyle(),
-                                                    textAlign: TextAlign.left,
-                                                  )),
-                                              Container(
-                                                  width: 100.0,
-                                                  padding:
-                                                      EdgeInsets.only(top: 5),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.orange,
-                                                        size: 16.0,
-                                                      ),
-                                                      new Text(
-                                                        listdata[0]
-                                                            .rating!
-                                                            .averageRatting!,
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.orange,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                      ),
-                                                      new Text(
-                                                        " (" +
-                                                            listdata[0]
-                                                                .rating!
-                                                                .totalReviews! +
-                                                            ")",
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                      ),
-                                                    ],
-                                                  )),
-                                            ],
-                                          ),
+                                          if (listdata[0]
+                                                  .seller!
+                                                  .onlineStatus ==
+                                              'online')
+                                            new Positioned(
+                                              right: 0.0,
+                                              bottom: 0.0,
+                                              child: new Icon(
+                                                Icons.fiber_manual_record,
+                                                size: 15.0,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                          if (listdata[0]
+                                                  .seller!
+                                                  .onlineStatus ==
+                                              'offline')
+                                            new Positioned(
+                                              right: 0.0,
+                                              bottom: 0.0,
+                                              child: new Icon(
+                                                Icons.fiber_manual_record,
+                                                size: 15.0,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
                                         ],
-                                      ),
-                                    ],
+                                      )),
+                                  new Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.3,
+                                    padding: EdgeInsets.only(left: 10.00),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Container(
+                                                    padding: EdgeInsets.only(
+                                                        left: 0),
+                                                    child: new Text(
+                                                      listdata[0]
+                                                          .seller!
+                                                          .sellerName!,
+                                                      style: TextStyle(),
+                                                      textAlign: TextAlign.left,
+                                                    )),
+                                                Container(
+                                                    width: 100.0,
+                                                    padding:
+                                                        EdgeInsets.only(top: 5),
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Icon(
+                                                          Icons.star,
+                                                          color: Colors.orange,
+                                                          size: 16.0,
+                                                        ),
+                                                        new Text(
+                                                          listdata[0]
+                                                              .rating!
+                                                              .averageRatting!,
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.orange,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                        new Text(
+                                                          " (" +
+                                                              listdata[0]
+                                                                  .rating!
+                                                                  .totalReviews! +
+                                                              ")",
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      height: 1,
+                      thickness: 1,
+                      indent: 0,
+                      endIndent: 0,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 10, top: 10),
+                          width: MediaQuery.of(context).size.width,
+                          child: Text("User Information"),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                width: 40.0,
+                                height: 40.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
-                              ],
+                                child: Icon(
+                                  Icons.account_circle,
+                                  color: Colors.grey,
+                                  size: 30.0,
+                                ),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(left: 10.00),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(left: 0),
+                                                child: new Text(
+                                                  "Seller Level",
+                                                  style: TextStyle(),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 5),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    new Text(
+                                                      listdata[0]
+                                                          .seller!
+                                                          .sellerLevel!,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                width: 40.0,
+                                height: 40.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: Colors.grey,
+                                  size: 30.0,
+                                ),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(left: 10.00),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(left: 0),
+                                                child: new Text(
+                                                  "Location",
+                                                  style: TextStyle(),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 5),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    new Text(
+                                                      listdata[0]
+                                                          .seller!
+                                                          .sellerCountry!,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                width: 40.0,
+                                height: 40.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.folder_open,
+                                  color: Colors.grey,
+                                  size: 30.0,
+                                ),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(left: 10.00),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(left: 0),
+                                                child: new Text(
+                                                  "Recent Delivery",
+                                                  style: TextStyle(),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 5),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    new Text(
+                                                      listdata[0]
+                                                          .seller!
+                                                          .recentDelivery!,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                width: 40.0,
+                                height: 40.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.date_range,
+                                  color: Colors.grey,
+                                  size: 30.0,
+                                ),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(left: 10.00),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(left: 0),
+                                                child: new Text(
+                                                  "Seller Since",
+                                                  style: TextStyle(),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 5),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    new Text(
+                                                      listdata[0]
+                                                          .seller!
+                                                          .sellerSince!,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                width: 40.0,
+                                height: 40.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.check_circle,
+                                  color: Colors.grey,
+                                  size: 30.0,
+                                ),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(left: 10.00),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(left: 0),
+                                                child: new Text(
+                                                  "Seller Last Activity",
+                                                  style: TextStyle(),
+                                                  textAlign: TextAlign.left,
+                                                )),
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 5),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    new Text(
+                                                      listdata[0]
+                                                          .seller!
+                                                          .sellerLastActivity!,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      ),
+                                                      textAlign: TextAlign.left,
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Divider(
+                          color: Colors.grey,
+                          height: 1,
+                          thickness: 1,
+                          indent: 0,
+                          endIndent: 0,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        new Column(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.only(
+                                  left: 15.00,
+                                  right: 10.00,
+                                  top: 0.00,
+                                  bottom: 10.00),
+                              child: Text(
+                                "Description",
+                                style: new TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.only(
+                                  left: 15.00,
+                                  right: 10.00,
+                                  top: 0.00,
+                                  bottom: 10.00),
+                              child: listdata[0]
+                                          .seller!
+                                          .sellerDescription!
+                                          .length >=
+                                      200
+                                  ? Text(
+                                      listdata[0]
+                                          .seller!
+                                          .sellerDescription!
+                                          .substring(0, 200),
+                                    )
+                                  : Text(
+                                      listdata[0].seller!.sellerDescription!,
+                                    ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ),
-                  Divider(
-                    color: Colors.grey,
-                    height: 1,
-                    thickness: 1,
-                    indent: 0,
-                    endIndent: 0,
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(left: 10, top: 10),
-                        width: MediaQuery.of(context).size.width,
-                        child: Text("User Information"),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Container(
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.account_circle,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            ),
-                            new Container(
-                              padding: EdgeInsets.only(left: 10.00),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                              padding: EdgeInsets.only(left: 0),
-                                              child: new Text(
-                                                "Seller Level",
-                                                style: TextStyle(),
-                                                textAlign: TextAlign.left,
-                                              )),
-                                          Container(
-                                              padding: EdgeInsets.only(top: 5),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  new Text(
-                                                    listdata[0]
-                                                        .seller!
-                                                        .sellerLevel!,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                    ),
-                                                    textAlign: TextAlign.left,
-                                                  ),
-                                                ],
-                                              )),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Container(
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.location_on,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            ),
-                            new Container(
-                              padding: EdgeInsets.only(left: 10.00),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                              padding: EdgeInsets.only(left: 0),
-                                              child: new Text(
-                                                "Location",
-                                                style: TextStyle(),
-                                                textAlign: TextAlign.left,
-                                              )),
-                                          Container(
-                                              padding: EdgeInsets.only(top: 5),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  new Text(
-                                                    listdata[0]
-                                                        .seller!
-                                                        .sellerCountry!,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                    ),
-                                                    textAlign: TextAlign.left,
-                                                  ),
-                                                ],
-                                              )),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Container(
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.folder_open,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            ),
-                            new Container(
-                              padding: EdgeInsets.only(left: 10.00),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                              padding: EdgeInsets.only(left: 0),
-                                              child: new Text(
-                                                "Recent Delivery",
-                                                style: TextStyle(),
-                                                textAlign: TextAlign.left,
-                                              )),
-                                          Container(
-                                              padding: EdgeInsets.only(top: 5),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  new Text(
-                                                    listdata[0]
-                                                        .seller!
-                                                        .recentDelivery!,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                    ),
-                                                    textAlign: TextAlign.left,
-                                                  ),
-                                                ],
-                                              )),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Container(
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.date_range,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            ),
-                            new Container(
-                              padding: EdgeInsets.only(left: 10.00),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                              padding: EdgeInsets.only(left: 0),
-                                              child: new Text(
-                                                "Seller Since",
-                                                style: TextStyle(),
-                                                textAlign: TextAlign.left,
-                                              )),
-                                          Container(
-                                              padding: EdgeInsets.only(top: 5),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  new Text(
-                                                    listdata[0]
-                                                        .seller!
-                                                        .sellerSince!,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                    ),
-                                                    textAlign: TextAlign.left,
-                                                  ),
-                                                ],
-                                              )),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Container(
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.check_circle,
-                                color: Colors.grey,
-                                size: 30.0,
-                              ),
-                            ),
-                            new Container(
-                              padding: EdgeInsets.only(left: 10.00),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Container(
-                                              padding: EdgeInsets.only(left: 0),
-                                              child: new Text(
-                                                "Seller Last Activity",
-                                                style: TextStyle(),
-                                                textAlign: TextAlign.left,
-                                              )),
-                                          Container(
-                                              padding: EdgeInsets.only(top: 5),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  new Text(
-                                                    listdata[0]
-                                                        .seller!
-                                                        .sellerLastActivity!,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                    ),
-                                                    textAlign: TextAlign.left,
-                                                  ),
-                                                ],
-                                              )),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        height: 1,
-                        thickness: 1,
-                        indent: 0,
-                        endIndent: 0,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      new Column(
-                        children: <Widget>[
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.only(
-                                left: 15.00,
-                                right: 10.00,
-                                top: 0.00,
-                                bottom: 10.00),
-                            child: Text(
-                              "Description",
-                              style: new TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.only(
-                                left: 15.00,
-                                right: 10.00,
-                                top: 0.00,
-                                bottom: 10.00),
-                            child:
-                                listdata[0].seller!.sellerDescription!.length >=
-                                        200
-                                    ? Text(
-                                        listdata[0]
-                                            .seller!
-                                            .sellerDescription!
-                                            .substring(0, 200),
-                                      )
-                                    : Text(
-                                        listdata[0].seller!.sellerDescription!,
-                                      ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        })
+            );
+          },
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        )
         .closed
         .whenComplete(() {
           if (mounted) {
@@ -1170,7 +1200,7 @@ print(response);
                                               initialPage: 0,
                                               enableInfiniteScroll: true,
                                               reverse: false,
-                                              autoPlay: true,
+                                              autoPlay: false,
                                               autoPlayInterval:
                                                   Duration(seconds: 5),
                                               autoPlayAnimationDuration:
@@ -1178,8 +1208,7 @@ print(response);
                                               autoPlayCurve:
                                                   Curves.fastOutSlowIn,
                                               enlargeCenterPage: false,
-                                              scrollDirection:
-                                                  Axis.horizontal,
+                                              scrollDirection: Axis.horizontal,
                                             ))
                                         : datapass.images!.length != null
                                             ? Container(
@@ -1263,8 +1292,7 @@ print(response);
                                   ),
                                 ]),
                                 Container(
-                                  width:
-                                  MediaQuery.of(context).size.width / 1,
+                                  width: MediaQuery.of(context).size.width / 1,
                                   alignment: Alignment(-1.0, -1.0),
                                   padding: EdgeInsets.only(
                                       left: 10.00,
@@ -1273,11 +1301,11 @@ print(response);
                                       bottom: 5.00),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         children: <Widget>[
                                           new Container(
                                               width: 50.0,
@@ -1292,7 +1320,7 @@ print(response);
                                               child: new Stack(
                                                 children: <Widget>[
                                                   if (datapass.seller!
-                                                      .onlineStatus ==
+                                                          .onlineStatus ==
                                                       'online')
                                                     new Positioned(
                                                       right: 0.0,
@@ -1305,7 +1333,7 @@ print(response);
                                                       ),
                                                     ),
                                                   if (datapass.seller!
-                                                      .onlineStatus ==
+                                                          .onlineStatus ==
                                                       'offline')
                                                     new Positioned(
                                                       right: 0.0,
@@ -1321,12 +1349,12 @@ print(response);
                                               )),
                                           new Container(
                                             padding:
-                                            EdgeInsets.only(left: 10.00),
+                                                EdgeInsets.only(left: 10.00),
                                             child: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Container(
                                                     padding: EdgeInsets.only(
@@ -1335,8 +1363,7 @@ print(response);
                                                       datapass
                                                           .seller!.sellerName!,
                                                       style: TextStyle(),
-                                                      textAlign:
-                                                      TextAlign.left,
+                                                      textAlign: TextAlign.left,
                                                     )),
                                                 Container(
                                                     child: new Text(datapass
@@ -1348,8 +1375,7 @@ print(response);
                                       ),
                                       IconButton(
                                         icon: Icon(Icons.keyboard_arrow_down),
-                                        onPressed:
-                                        _showPersBottomSheetCallBack,
+                                        onPressed: _showPersBottomSheetCallBack,
                                       ),
                                     ],
                                   ),
@@ -1380,8 +1406,7 @@ print(response);
                                                     1.5,
                                                 padding:
                                                     EdgeInsets.only(left: 0),
-                                                child: datapass
-                                                            .title!.length >=
+                                                child: datapass.title!.length >=
                                                         30
                                                     ? Text(
                                                         datapass.title!
@@ -1420,11 +1445,10 @@ print(response);
                                                             ? datapass
                                                                     .description!
                                                                     .substring(
-                                                                        0,
-                                                                        62) +
+                                                                        0, 62) +
                                                                 '...'
                                                             : ''),
-                                                        GestureDetector(
+                                                        InkWell(
                                                           onTap: () {
                                                             setState(() {
                                                               readmore = false;
@@ -1439,12 +1463,13 @@ print(response);
                                                                 ? 'Read More'
                                                                 : datapass
                                                                     .description!,
-                            style: TextStyle(
-                                            color: readmore? Colors
-                                                .red:Colors.black),
-                                                            textAlign:
-                                                                TextAlign
-                                                                    .justify,
+                                                            style: TextStyle(
+                                                                color: readmore
+                                                                    ? Colors.red
+                                                                    : Colors
+                                                                        .black),
+                                                            textAlign: TextAlign
+                                                                .justify,
                                                           ),
                                                         ),
                                                       ],
@@ -1484,10 +1509,8 @@ print(response);
                                                     ),
                                             ),
                                             readmore
-                                                ? Container(
-                                                    height: 0,
-                                                  )
-                                                : GestureDetector(
+                                                ? Container()
+                                                : InkWell(
                                                     onTap: () {
                                                       print('dbf');
                                                       setState(() {
@@ -1495,9 +1518,8 @@ print(response);
                                                       });
                                                     },
                                                     child: Container(
-                                                      padding:
-                                                          EdgeInsets.only(
-                                                              left: 5),
+                                                      padding: EdgeInsets.only(
+                                                          left: 5),
                                                       child: Text(
                                                         'Read Less',
                                                         style: TextStyle(
@@ -2090,17 +2112,21 @@ print(response);
                 )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          listdata[0].seller!.messagegroupid.toString().isNotEmpty && token != null
+          listdata[0].seller!.messagegroupid.toString().isNotEmpty &&
+                  token != null
               ? Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return Inboxdetailpage(listdata[0].seller!.messagegroupid,
-                          listdata[0].seller!.sellerName);
+                      return Inboxdetailpage(
+                          listdata[0].seller!.messagegroupid,
+                          listdata[0].seller!.sellerName,
+                          listdata[0].seller!.sellerImage);
                     },
                   ),
                 )
-              : token != null && listdata[0].seller!.messagegroupid.toString().isEmpty
+              : token != null &&
+                      listdata[0].seller!.messagegroupid.toString().isEmpty
                   ? Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -2140,7 +2166,8 @@ print(response);
                                         listdata[0].seller!.sellerImage!))),
                             child: new Stack(
                               children: <Widget>[
-                                if (listdata[0].seller!.onlineStatus == 'online')
+                                if (listdata[0].seller!.onlineStatus ==
+                                    'online')
                                   new Positioned(
                                     right: 0.0,
                                     bottom: 0.0,

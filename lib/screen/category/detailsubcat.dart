@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screen/category/category.dart';
 import 'package:flutter_app/screen/details/catdetail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -27,8 +26,8 @@ class _subcatDetailsState extends State<subcatDetails> {
     final linkdata = '/'+ widget.subcatlink!;
     print(baseurl + version  + linkdata);
     final responseData = await http.get(Uri.parse( baseurl + version  + linkdata));
+    print("NC-lnk saad"+linkdata);
     if (responseData.statusCode == 200) {
-
       final data = responseData.body;
       final listsCArr = jsonDecode(data)['content']['sCArr'];
       setState(() {
@@ -74,12 +73,7 @@ class _subcatDetailsState extends State<subcatDetails> {
 
     return new Scaffold(
         appBar: AppBar(
-          elevation: 0.0,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () =>  Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (BuildContext context) => category())),
-            ),
+
           title: Text(widget.title!),
           centerTitle: true,
 

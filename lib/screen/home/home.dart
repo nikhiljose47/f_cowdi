@@ -1,15 +1,18 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screen/cart_screen.dart';
 import 'package:flutter_app/screen/details/catdetail.dart';
 import 'package:flutter_app/screen/inbox/inboxdetail.dart';
 import 'package:flutter_app/screen/login/login.dart';
 import 'package:flutter_app/screen/mainscreen.dart';
 import 'package:flutter_app/screen/managarequest/managarequest.dart';
 import 'package:flutter_app/screen/manage/manage.dart';
+import 'package:flutter_app/screen/manage/selling_order.dart';
+import 'package:flutter_app/screen/profiledetails/cart.dart';
 import 'package:flutter_app/screen/profiledetails/checkout.dart';
 import 'package:flutter_app/screen/profiledetails/contactus.dart';
 import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
 import 'package:flutter_app/util/appinfo.dart';
+import 'package:flutter_app/util/methods.dart';
 import 'package:flutter_app/util/propusal.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -55,6 +58,9 @@ class _HomeState extends State<Home> {
   String helper = "helper";
   List<Message>? messagesList;
   List<PDetail> listdata = [];
+  String cartBadgeVal = "0";
+  String buyerBadgeVal = "";
+  String sellerBadgeVal = "";
 
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
@@ -125,6 +131,14 @@ class _HomeState extends State<Home> {
     _firebaseMessaging.requestPermission(sound: true, badge: true, alert: true);
   }
 
+  void getBadges(String token) async {
+    setState(() async {
+      sellerBadgeVal = await Util.getSellerOrderCount(token);
+      buyerBadgeVal = await Util.getBuyerOrderCount(token);
+      cartBadgeVal = await Util.getCartCount(token);
+    });
+  }
+
   getData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     bool _seen = await preferences.setBool('seen', true);
@@ -132,6 +146,7 @@ class _HomeState extends State<Home> {
       token = preferences.getString("token");
       loading = true;
     });
+
     if (token == null) {
       print("token absent");
       final responseDataappinfo = await http.post(
@@ -167,6 +182,7 @@ class _HomeState extends State<Home> {
       }
     } else {
       print("token present");
+      getBadges(token.toString());
       final responseDataappinfo = await http.post(
           Uri.parse(baseurl + version + sitedetails),
           body: {'mobile_type': Platform.isAndroid ? 'android' : 'ios'});
@@ -243,14 +259,15 @@ class _HomeState extends State<Home> {
     //  _configureFirebaseListeners();
   }
 
-    Future<List<PDetail>> getChatData(String link) async {
+  Future<List<PDetail>> getChatData(String link) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     token = preferences.getString("token");
 
     if (token != null) {
       final linkdata = '/' + link;
-      final responseData = await http
-          .get(Uri.parse(baseurl + version + linkdata), headers: {'Auth': token!});
+      final responseData = await http.get(
+          Uri.parse(baseurl + version + linkdata),
+          headers: {'Auth': token!});
       if (responseData.statusCode == 200) {
         final data = responseData.body;
         print(baseurl + version + linkdata);
@@ -266,7 +283,8 @@ class _HomeState extends State<Home> {
       }
     } else {
       final linkdata = '/' + link;
-      final responseData = await http.get(Uri.parse(baseurl + version + linkdata));
+      final responseData =
+          await http.get(Uri.parse(baseurl + version + linkdata));
       if (responseData.statusCode == 200) {
         final data = responseData.body;
         final listsCArr = jsonDecode(data)['content']['pDetails'];
@@ -285,36 +303,37 @@ class _HomeState extends State<Home> {
   }
 
   onChatClicked(String link) async {
-    print("NIK-onchat");
     final data = await getChatData(link);
     final nplacesList = data[0];
 
     nplacesList.seller!.messagegroupid.toString().isNotEmpty && token != null
-              ? Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return Inboxdetailpage(listdata[0].seller!.messagegroupid,
-                          listdata[0].seller!.sellerName);
-                    },
-                  ),
-                )
-              : token != null && listdata[0].seller!.messagegroupid.toString().isEmpty
-                  ? Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return contactdetailpage(listdata[0].seller!.sellerId,
-                              listdata[0].seller!.sellerName);
-                        },
-                      ),
-                    )
-                  : Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Login("loginfull"),
-                      ),
-                    );
+        ? Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return Inboxdetailpage(
+                    listdata[0].seller!.messagegroupid,
+                    listdata[0].seller!.sellerName,
+                    listdata[0].seller!.sellerImage);
+              },
+            ),
+          )
+        : token != null && listdata[0].seller!.messagegroupid.toString().isEmpty
+            ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return contactdetailpage(listdata[0].seller!.sellerId,
+                        listdata[0].seller!.sellerName);
+                  },
+                ),
+              )
+            : Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Login("loginfull"),
+                ),
+              );
   }
 
   Widget review(context) {
@@ -361,53 +380,53 @@ class _HomeState extends State<Home> {
                             decoration: myBoxDecorationfirst(),
                             child: Column(children: <Widget>[
                               Container(
-                                    height: 150,
-                                    //chat button integrate with top Image
-                                    child: Stack(
-                                      alignment: Alignment.topRight,
-                                      children: <Widget>[
-                                        //Image
-                                        Container(
-                                          //height: 150,
-                                          width: double.infinity,
-                                          child: Image.network(
-                                            nplacesList.postImage!,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                        //chat button
-                                        Container(
-                                          width: 90,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(2)),
-                                              color: Colors.white),
-                                          child: SizedBox.expand(
-                                            child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  primary: Colors.white,
-                                                  onPrimary: Colors.white,
-                                                  surfaceTintColor:
-                                                      Colors.white,
-                                                  onSurface: Colors.white,
-                                                  elevation: 100),
-                                              onPressed: () => onChatClicked(nplacesList.link.toString()),
-                                              child: Container(
-                                                  child: Text(
-                                                'Chat',
-                                                style: TextStyle(
-                                                  color: primarycolor,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              )),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                height: 150,
+                                //chat button integrate with top Image
+                                child: Stack(
+                                  alignment: Alignment.topRight,
+                                  children: <Widget>[
+                                    //Image
+                                    Container(
+                                      //height: 150,
+                                      width: double.infinity,
+                                      child: Image.network(
+                                        nplacesList.postImage!,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                  ),
+                                    //chat button
+                                    Container(
+                                      width: 90,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(2)),
+                                          color: Colors.white),
+                                      child: SizedBox.expand(
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.white,
+                                              onPrimary: Colors.white,
+                                              surfaceTintColor: Colors.white,
+                                              onSurface: Colors.white,
+                                              elevation: 100),
+                                          onPressed: () => onChatClicked(
+                                              nplacesList.link.toString()),
+                                          child: Container(
+                                              child: Text(
+                                            'Chat',
+                                            style: TextStyle(
+                                              color: primarycolor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          )),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Container(
                                 padding: EdgeInsets.only(
                                     left: 10.00,
@@ -849,7 +868,9 @@ class _HomeState extends State<Home> {
                                                                       nplacesList
                                                                           .messagegroupid,
                                                                       nplacesList
-                                                                          .sellerName);
+                                                                          .sellerName,
+                                                                      nplacesList
+                                                                          .sellerImage);
                                                                 },
                                                               ),
                                                             );
@@ -985,7 +1006,8 @@ class _HomeState extends State<Home> {
                                                       Colors.white,
                                                   onSurface: Colors.white,
                                                   elevation: 100),
-                                              onPressed: () => onChatClicked(nplacesList.link.toString()),
+                                              onPressed: () => onChatClicked(
+                                                  nplacesList.link.toString()),
                                               child: Container(
                                                   child: Text(
                                                 'Chat',
@@ -1221,9 +1243,12 @@ class _HomeState extends State<Home> {
         leading: IconButton(
             onPressed: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CartScreen()),
+                  MaterialPageRoute(builder: (context) => cart()),
                 ),
-            icon: Icon(Icons.shopping_cart)),
+            icon: Badge(
+                badgeColor: Color.fromARGB(255, 224, 224, 224),
+                badgeContent: Text(cartBadgeVal),
+                child: Icon(Icons.shopping_cart))),
         title: apiinforlist.length != 0
             ? Image.network(
                 apiinforlist[0].appLogo!,
@@ -1233,21 +1258,51 @@ class _HomeState extends State<Home> {
             : Text(""),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-            icon: new Image.asset('assets/icons/cat.png',
-                width: 20, height: 20, fit: BoxFit.fill),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => category()),
-              );
-            },
-          ),
+          token == null
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Login("loginfull")),
+                    );
+                  },
+                  icon: Icon(Icons.login))
+              : (token != null && sellerBadgeVal != "0")
+                  ? IconButton(
+                      icon: Badge(
+                          badgeColor: Color.fromARGB(255, 224, 224, 224),
+                          badgeContent: Text(sellerBadgeVal),
+                          child: Icon(Icons.sell)),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SellingOrder()),
+                        );
+                      },
+                    )
+                  : Container(),
+          (token != null && buyerBadgeVal != "0")
+              ? IconButton(
+                  padding: EdgeInsets.all(8),
+                  icon: Badge(
+                      badgeColor: Color.fromARGB(255, 224, 224, 224),
+                      badgeContent: Text(buyerBadgeVal),
+                      child: Icon(Icons.shop_2)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => manageorder()),
+                    );
+                  },
+                )
+              : Container(),
         ],
       ),
       body: WillPopScope(
         //Wrap out body with a `WillPopScope` widget that handles when a user is cosing current route
-        onWillPop: () => Future.value(false)
+        onWillPop: () => Future.value(true)
         //return a `Future` with false value so this route cant be popped or closed.
         ,
         child: ListView(children: [

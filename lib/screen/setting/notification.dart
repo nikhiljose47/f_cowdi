@@ -9,7 +9,6 @@ class _notificaitionState extends State<notification>{
   int _index=0;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back_ios, size: 28,color: Colors.black87 ),

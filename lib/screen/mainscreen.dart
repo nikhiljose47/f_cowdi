@@ -1,14 +1,12 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/home/home.dart';
 import 'package:flutter_app/screen/inbox/inbox.dart';
 import 'package:flutter_app/screen/notifications/notifications.dart';
-import 'package:flutter_app/screen/explore/explore.dart';
 import 'package:flutter_app/screen/others/other.dart';
-import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
+import 'package:flutter_app/util/methods.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/screen/search/search.dart';
-import 'package:flutter_app/screen/manage/manage.dart';
 import 'package:flutter_app/services/api.dart';
 
 void main() async {
@@ -27,6 +25,8 @@ enum LoginStatus { notSignIn, signIn }
 
 class _MyHomePageState extends State<MyHomePage> {
   LoginStatus _loginStatus = LoginStatus.notSignIn;
+  String notifBadgeVal = "";
+
   signOut() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
@@ -35,7 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
       preferences.setString("email", "");
       preferences.setString("id", "");
 
-      preferences.commit();
       _loginStatus = LoginStatus.notSignIn;
     });
   }
@@ -43,9 +42,19 @@ class _MyHomePageState extends State<MyHomePage> {
   late int menuvalue;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     menuvalue = widget.menulink;
+    getBadges();
+  }
+
+  getBadges() async {
+    await SharedPreferences.getInstance().then((value) async {
+      String? token = value.getString("token");
+      setState(() async {
+        this.notifBadgeVal =
+            await Util.getNotificationCount(token);        
+      });
+    });
   }
 
   @override
@@ -89,9 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 items: [
                   //N-Replaced by activeIcon
                   BottomNavigationBarItem(
-                    icon: new Image.asset('assets/icons/home.png',
+                    icon: Image.asset('assets/icons/home.png',
                         width: 22, height: 22, fit: BoxFit.fill),
-                        activeIcon: new Image.asset('assets/icons/home.png',
+                    activeIcon: new Image.asset('assets/icons/home.png',
                         width: 22,
                         height: 22,
                         color: iconcolor,
@@ -101,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   BottomNavigationBarItem(
                     icon: new Image.asset('assets/icons/inbox.png',
                         width: 22, height: 22, fit: BoxFit.fill),
-                        activeIcon: new Image.asset('assets/icons/inbox.png',
+                    activeIcon: new Image.asset('assets/icons/inbox.png',
                         width: 22,
                         height: 22,
                         color: iconcolor,
@@ -119,8 +128,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: "",
                   ),
                   BottomNavigationBarItem(
-                    icon: new Image.asset('assets/icons/note.png',
-                        width: 20, height: 20, fit: BoxFit.fill),
+                    icon: Badge(
+                      showBadge: this.notifBadgeVal != "",
+                      badgeContent: Text(notifBadgeVal),
+                      badgeColor: primarycolor,
+                      child: new Image.asset('assets/icons/note.png',
+                          width: 20, height: 20, fit: BoxFit.fill),
+                    ),
                     activeIcon: new Image.asset('assets/icons/note.png',
                         width: 20,
                         height: 20,

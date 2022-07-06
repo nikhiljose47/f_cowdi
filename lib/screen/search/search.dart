@@ -4,7 +4,6 @@ import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/services/api.dart';
 import 'package:flutter_app/util/searchcall.dart';
-import 'package:flutter_app/Widget/recentvariable.dart';
 
 class search extends StatefulWidget {
   @override
@@ -21,7 +20,8 @@ class _searchState extends State<search> {
     String text = editingController.text;
     print(text);
 
-    final responseData = await http.post(Uri.parse(baseurl + version + searchurl), body: {
+    final responseData =
+        await http.post(Uri.parse(baseurl + version + searchurl), body: {
       "search_string": text,
     });
     if (responseData.statusCode == 200) {
@@ -38,7 +38,8 @@ class _searchState extends State<search> {
 
   Future _printLatestValue() async {
     String text = editingController.text;
-    final responseData = await http.post(Uri.parse(baseurl + version + searchurl), body: {
+    final responseData =
+        await http.post(Uri.parse(baseurl + version + searchurl), body: {
       "search_string": text,
     });
     if (responseData.statusCode == 200) {
@@ -51,6 +52,13 @@ class _searchState extends State<search> {
         }
       });
     }
+  }
+
+  setFavourite(int index) {
+    setState(() {
+      // listplaces[index].isFavourite = listplist[index].isFavourite == 1 ? 0 : 1;
+    });
+    //N-todo set favourite
   }
 
   @override
@@ -145,300 +153,6 @@ class _searchState extends State<search> {
     ),
   );
 
-  Widget grid() {
-    return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 1.1),
-      ),
-      delegate: SliverChildBuilderDelegate(
-        (context, i) {
-          final nplacesList = listplaces[i];
-          return GestureDetector(
-            child: Card(
-              elevation: 0.0,
-              child: Container(
-                // margin: EdgeInsets.only(left: 5.00, top: 5.00, right: 5.00),
-                decoration: myBoxDecorationfirst(),
-
-                child: Column(children: <Widget>[
-                  Container(
-                    height: 150,
-                    width: double.infinity,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(0),
-                      child: Image.network(
-                        nplacesList.postImage!,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        left: 10.00, right: 10.00, top: 5.00, bottom: 5.00),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Container(
-                                width: 30.0,
-                                height: 30.0,
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: new NetworkImage(
-                                            nplacesList.sellerImage!)))),
-                            new Container(
-                                padding: EdgeInsets.only(left: 5.00),
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(nplacesList.sellerName!),
-                                      Text(nplacesList.sellerLevel!),
-                                    ])),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(right: 10.00, left: 10.00),
-                    child: Column(children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Flexible(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, top: 5),
-                              child: Text(nplacesList.title!.length > 30
-                                  ? nplacesList.title!.substring(0, 30) + "..."
-                                  : nplacesList.title!),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ]),
-                  ),
-                  Container(
-                    padding:
-                        EdgeInsets.only(right: 10.00, top: 10.00),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            new Container(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Row(children: <Widget>[
-                                  Text(
-                                    "From ",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: primarycolor,
-                                    ),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    "${nplacesList.price}",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: primarycolor,
-                                    ),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ])),
-                          ],
-                        ),
-                        Row(children: <Widget>[
-                          new Container(
-                              child: Row(children: <Widget>[
-                            Icon(
-                              Icons.star,
-                              size: 14,
-                              color: Colors.orangeAccent,
-                            ),
-                            Text(
-                              "${nplacesList.rating!.totalReviews} ",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.orangeAccent,
-                              ),
-                              maxLines: 2,
-                              textAlign: TextAlign.left,
-                            ),
-                            Text(
-                              "(${nplacesList.rating!.averageRatting})",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black38,
-                              ),
-                              maxLines: 2,
-                              textAlign: TextAlign.left,
-                            ),
-                          ])),
-                        ]),
-                      ],
-                    ),
-                  ),
-                ]),
-              ),
-            ),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return profiledetailpage(nplacesList.link, "search",
-                        "search", "search", "search");
-                  },
-                ),
-              );
-            },
-          );
-        },
-        childCount: listplaces.length,
-      ),
-    );
-  }
-
-  Card customersec(Recent recent) => Card(
-        child: Container(
-          // margin: EdgeInsets.only(left: 5.00, top: 5.00, right: 5.00),
-
-          // height: 1000,
-          width: 250,
-          decoration: myBoxDecorationfirst(),
-
-          child: Column(children: <Widget>[
-            Container(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(0),
-                child: Image.asset(
-                  "${recent.coverimg}",
-                  height: 167,
-                  width: 250,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                  left: 10.00, right: 10.00, top: 10.00, bottom: 5.00),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      new Container(
-                          width: 30.0,
-                          height: 30.0,
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: new AssetImage(recent.profileimg!)))),
-                      new Container(
-                        padding: EdgeInsets.only(left: 5.00),
-                        child: new Text(recent.name!),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(right: 10.00, left: 10.00),
-              child: Column(children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 5),
-                        child: Text(recent.description!),
-                      ),
-                    ),
-                  ],
-                ),
-              ]),
-            ),
-            Container(
-              padding: EdgeInsets.only(right: 10.00, left: 10.00, top: 10.00),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      new Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Row(children: <Widget>[
-                            Text(
-                              "From ",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: primarycolor,
-                              ),
-                              maxLines: 2,
-                              textAlign: TextAlign.left,
-                            ),
-                            Text(
-                              "${recent.price}",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: primarycolor,
-                              ),
-                              maxLines: 2,
-                              textAlign: TextAlign.left,
-                            ),
-                          ])),
-                    ],
-                  ),
-                  Row(children: <Widget>[
-                    new Container(
-                        child: Row(children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        size: 14,
-                        color: Colors.orangeAccent,
-                      ),
-                      Text(
-                        "${recent.rating} ",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.orangeAccent,
-                        ),
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        "(${recent.ratingcount})",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black38,
-                        ),
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
-                      ),
-                    ])),
-                  ]),
-                ],
-              ),
-            ),
-          ]),
-        ),
-      );
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -490,9 +204,321 @@ class _searchState extends State<search> {
           ],
         ),
       ),
-      body: CustomScrollView(controller: _scrollController, slivers: <Widget>[
-        grid(),
-      ]),
+      body: ListView.builder(
+        itemCount: listplaces.length,
+        itemBuilder: (context, int index) {
+          final nplacesList = listplaces[index];
+          return InkWell(
+            child: Container(
+              margin: const EdgeInsets.only(left: 5.0, top: 5.0, right: 5.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7.0),
+                ),
+                child: Container(
+                  height: 120,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.all(8),
+                          height: 120.0,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(7.0)),
+                            color: Colors.grey,
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                nplacesList.postImage!,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 4,
+                                      child: Row(children: [
+                                        Icon(
+                                          Icons.star,
+                                          size: 12.0,
+                                          color: Colors.amber,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 4.0),
+                                          child: Text(
+                                            nplacesList.rating!.averageRatting!,
+                                            style: TextStyle(
+                                              color: Colors.amber,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 4.0),
+                                          child: Text(
+                                            "(${nplacesList.rating!.totalReviews})",
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
+                                    ),
+                                    Expanded(
+                                      child: IconButton(
+                                        onPressed: () => setFavourite(index),
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          size: 18.0,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.35,
+                                  child: nplacesList.title!.length >= 50
+                                      ? Text(
+                                          nplacesList.title!.substring(0, 30) +
+                                              "...",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                          ),
+                                        )
+                                      : Text(
+                                          nplacesList.title!,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Text(
+                                    "From " + nplacesList.price.toString(),
+                                    style: TextStyle(
+                                      color: primarycolor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return profiledetailpage(nplacesList.link, "search",
+                        "search", "search", "search");
+                  },
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
+
+//2 grid list
+// CustomScrollView(controller: _scrollController, slivers: <Widget>[
+//         grid(),]);
+// Widget grid() {
+//     return SliverGrid(
+//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//         crossAxisCount: 1,
+//         childAspectRatio: 2.3 *
+//             MediaQuery.of(context).size.width /
+//             (MediaQuery.of(context).size.height),
+//       ),
+//       delegate: SliverChildBuilderDelegate(
+//         (context, i) {
+//           final nplacesList = listplaces[i];
+//           return InkWell(
+//             child: Card(
+//               elevation: 0.0,
+//               child: Container(
+//                 // margin: EdgeInsets.only(left: 5.00, top: 5.00, right: 5.00),
+//                 decoration: myBoxDecorationfirst(),
+
+//                 child: Column(children: <Widget>[
+//                   Container(
+//                     height: 150,
+//                     width: double.infinity,
+//                     child: ClipRRect(
+//                       borderRadius: BorderRadius.circular(0),
+//                       child: Image.network(
+//                         nplacesList.postImage!,
+//                         fit: BoxFit.contain,
+//                       ),
+//                     ),
+//                   ),
+//                   Container(
+//                     padding: EdgeInsets.only(
+//                         left: 10.00, right: 10.00, top: 5.00, bottom: 5.00),
+//                     child: Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: <Widget>[
+//                         Row(
+//                           mainAxisAlignment: MainAxisAlignment.start,
+//                           children: <Widget>[
+//                             new Container(
+//                                 width: 30.0,
+//                                 height: 30.0,
+//                                 decoration: new BoxDecoration(
+//                                     shape: BoxShape.circle,
+//                                     image: new DecorationImage(
+//                                         fit: BoxFit.fill,
+//                                         image: new NetworkImage(
+//                                             nplacesList.sellerImage!)))),
+//                             new Container(
+//                                 padding: EdgeInsets.only(left: 5.00),
+//                                 child: Column(
+//                                     mainAxisAlignment: MainAxisAlignment.start,
+//                                     crossAxisAlignment:
+//                                         CrossAxisAlignment.start,
+//                                     children: <Widget>[
+//                                       Text(nplacesList.sellerName!),
+//                                       Text(nplacesList.sellerLevel!),
+//                                     ])),
+//                           ],
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                   Container(
+//                     padding: EdgeInsets.only(right: 10.00, left: 10.00),
+//                     child: Column(children: <Widget>[
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.start,
+//                         children: <Widget>[
+//                           Flexible(
+//                             child: Padding(
+//                               padding:
+//                                   const EdgeInsets.only(left: 10.0, top: 5),
+//                               child: Text(nplacesList.title!.length > 30
+//                                   ? nplacesList.title!.substring(0, 30) + "..."
+//                                   : nplacesList.title!),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ]),
+//                   ),
+//                   Container(
+//                     padding: EdgeInsets.only(right: 10.00, top: 10.00),
+//                     child: Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: <Widget>[
+//                         Row(
+//                           mainAxisAlignment: MainAxisAlignment.start,
+//                           children: <Widget>[
+//                             new Container(
+//                                 padding: EdgeInsets.only(left: 10),
+//                                 child: Row(children: <Widget>[
+//                                   Text(
+//                                     "From ",
+//                                     style: TextStyle(
+//                                       fontSize: 15,
+//                                       color: primarycolor,
+//                                     ),
+//                                     maxLines: 2,
+//                                     textAlign: TextAlign.left,
+//                                   ),
+//                                   Text(
+//                                     "${nplacesList.price}",
+//                                     style: TextStyle(
+//                                       fontSize: 18,
+//                                       color: primarycolor,
+//                                     ),
+//                                     maxLines: 2,
+//                                     textAlign: TextAlign.left,
+//                                   ),
+//                                 ])),
+//                           ],
+//                         ),
+//                         Row(children: <Widget>[
+//                           new Container(
+//                               child: Row(children: <Widget>[
+//                             Icon(
+//                               Icons.star,
+//                               size: 14,
+//                               color: Colors.orangeAccent,
+//                             ),
+//                             Text(
+//                               "${nplacesList.rating!.totalReviews} ",
+//                               style: TextStyle(
+//                                 fontSize: 15,
+//                                 color: Colors.orangeAccent,
+//                               ),
+//                               maxLines: 2,
+//                               textAlign: TextAlign.left,
+//                             ),
+//                             Text(
+//                               "(${nplacesList.rating!.averageRatting})",
+//                               style: TextStyle(
+//                                 fontSize: 15,
+//                                 color: Colors.black38,
+//                               ),
+//                               maxLines: 2,
+//                               textAlign: TextAlign.left,
+//                             ),
+//                           ])),
+//                         ]),
+//                       ],
+//                     ),
+//                   ),
+//                 ]),
+//               ),
+//             ),
+//             onTap: () {
+//               Navigator.of(context).push(
+//                 MaterialPageRoute(
+//                   builder: (BuildContext context) {
+//                     return profiledetailpage(nplacesList.link, "search",
+//                         "search", "search", "search");
+//                   },
+//                 ),
+//               );
+//             },
+//           );
+//         },
+//         childCount: listplaces.length,
+//       ),
+//     );
+//   }

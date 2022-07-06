@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app/screen/order/orderdetail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -26,6 +22,7 @@ class _SellingOrderState extends State<SellingOrder> {
   String items="all";
   var loading = false;
   var loading2= false;
+  
   Future<Null> getListViewItems(String? items) async{
     listvalues.clear();
     setState(() {
@@ -88,7 +85,6 @@ class _SellingOrderState extends State<SellingOrder> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
     getListViewItems(items);
@@ -121,9 +117,11 @@ class _SellingOrderState extends State<SellingOrder> {
                   itemCount: 5,
                   itemBuilder: (context, i) {
                     final nDataList = listSCArr[i];
-                    return GestureDetector(
+                    return InkWell(
                       child: Container(
                         decoration: BoxDecoration(
+                                                    color: _selectedIndex == i ? Color.fromARGB(255, 232, 232, 232):null,
+
                           border: Border(
                             bottom: BorderSide(
                               color: _selectedIndex != null && _selectedIndex == i
@@ -428,7 +426,8 @@ class _SellingOrderState extends State<SellingOrder> {
                           }
                       )
                   ),
-                  Container(          color: Colors.white,
+                  Container(
+                    color: Colors.white,
                       padding: EdgeInsets.only(bottom: 70, top: 8.00),
                       //alignment: FractionalOffset(1.0, 1.0),
                       width: MediaQuery.of(context).size.width,

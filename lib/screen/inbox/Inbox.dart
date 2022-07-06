@@ -17,7 +17,6 @@ class Inboxpage extends StatefulWidget {
 }
 
 class _InboxpageState extends State<Inboxpage> {
-  int _selectedIndex = 0;
   String? token = "";
   List<InboxArr> listSCArr = [];
   String? choice;
@@ -241,7 +240,7 @@ class _InboxpageState extends State<Inboxpage> {
                                               child: new  Icon(
                                                 Icons.fiber_manual_record,
                                                 size: 15.0,
-                                                color: primarycolor,
+                                                color: Colors.green,
                                               ),
                                             ),
 
@@ -360,7 +359,7 @@ class _InboxpageState extends State<Inboxpage> {
                           MaterialPageRoute(
                             builder: (BuildContext context) {
                               return Inboxdetailpage(
-                                  nDataList.messageGroupId, nDataList.senderName);
+                                  nDataList.messageGroupId, nDataList.senderName, nDataList.senderImage);
                             },
                           ),
                         );

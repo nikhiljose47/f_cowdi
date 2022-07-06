@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screen/category/detailsubcat.dart';
-import 'package:flutter_app/screen/mainscreen.dart';
 import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/services/api.dart';
 import 'package:flutter_app/util/catpost.dart';
-import 'package:flutter_app/Widget/recentvariable.dart';
 
 class catdetail extends StatefulWidget {
   final String? subcatlink, title, prelink, pretitle ;//if you have multiple values add here
@@ -66,19 +63,8 @@ class _catdetailState extends State<catdetail> {
   }
 
   Widget build(BuildContext context) {
-   // print(widget.pretitle + widget.prelink);
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        leading: widget.prelink == "home" ? IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () =>  Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext context) => MyHomePage(0))),
-        ):widget.pretitle != "home" ? IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () =>  Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (BuildContext context) => subcatDetails(widget.prelink,widget.pretitle))),
-        ):true as Widget?,
         title: Text(widget.title!),
         centerTitle: true,
 
