@@ -662,7 +662,7 @@ class _RegisterState extends State<Register> {
                                       color: checkBoxVal?primarycolor:Colors.grey),
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child: FlatButton(
+                                    child: TextButton(
                                       child: Text(
                                         "Sign Up",
                                         style: TextStyle(

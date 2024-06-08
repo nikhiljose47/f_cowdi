@@ -1639,7 +1639,7 @@ print(response);
                                                         top: 10,
                                                         right: 20,
                                                         left: 20),
-                                                    child: FlatButton(
+                                                    child: TextButton(
                                                       child: Text('Log In '),
                                                       color: primarycolor,
                                                       textColor: Colors.white,
@@ -1665,7 +1665,7 @@ print(response);
                                                         top: 10,
                                                         right: 20,
                                                         left: 20),
-                                                    child: FlatButton(
+                                                    child: TextButton(
                                                       child: Text(
                                                           'Add To Cart ' +
                                                               listdata[0]
@@ -1801,7 +1801,7 @@ print(response);
                                                         top: 10,
                                                         right: 20,
                                                         left: 20),
-                                                    child: FlatButton(
+                                                    child: TextButton(
                                                       child: Text('Log In '),
                                                       color: primarycolor,
                                                       textColor: Colors.white,
@@ -1827,7 +1827,7 @@ print(response);
                                                         top: 10,
                                                         right: 20,
                                                         left: 20),
-                                                    child: FlatButton(
+                                                    child: TextButton(
                                                       child: Text(
                                                           'Add To Cart ' +
                                                               listdata[0]
@@ -1959,7 +1959,7 @@ print(response);
                                                         top: 10,
                                                         right: 20,
                                                         left: 20),
-                                                    child: FlatButton(
+                                                    child: TextButton(
                                                       child: Text('Log In '),
                                                       color: primarycolor,
                                                       textColor: Colors.white,
@@ -1985,7 +1985,7 @@ print(response);
                                                         top: 10,
                                                         right: 20,
                                                         left: 20),
-                                                    child: FlatButton(
+                                                    child: TextButton(
                                                       child: Text(
                                                           'Add To Cart ' +
                                                               listdata[0]

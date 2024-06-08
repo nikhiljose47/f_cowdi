@@ -721,7 +721,7 @@ class _orderpageState extends State<orderpage> {
                                                                   },
                                                                 ),
                                                               ),
-                                                              FlatButton(
+                                                              TextButton(
                                                                 child: Text(
                                                                   "send",
                                                                   style:

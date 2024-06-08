@@ -24,7 +24,7 @@ class _forgetpassState extends State<forgetpass> {
   var loading = false;
   check() {
     final form = _key.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       form.save();
       forgetpass();
     }
@@ -142,7 +142,7 @@ class _forgetpassState extends State<forgetpass> {
                     padding: EdgeInsets.symmetric(horizontal: 32),
                     child: TextFormField(
                       validator: (e) {
-                        if (e.isEmpty || !validateEmail(e)) {
+                        if (e!.isEmpty || !validateEmail(e)) {
                           return "Please enter email";
                         }
                         return null;
@@ -191,7 +191,7 @@ class _forgetpassState extends State<forgetpass> {
                               color: primarycolor),
                           child: SizedBox(
                             width: double.infinity,
-                            child: FlatButton(
+                            child: TextButton(
                               child: Text(
                                 "Reset Password",
                                 style: TextStyle(

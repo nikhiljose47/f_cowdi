@@ -364,7 +364,7 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
                                                       },
                                                     ),
                                                   ),
-                                                  FlatButton(
+                                                  TextButton(
                                                     child: Text(
                                                       "send",
                                                       style: TextStyle(

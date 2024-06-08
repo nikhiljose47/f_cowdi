@@ -551,7 +551,7 @@ class _postarequestState extends State<postarequest> {
                               color: primarycolor),
                               child: SizedBox(
                                 width: double.infinity,
-                                child: FlatButton(
+                                child: TextButton(
 
                                   child: Text(
                                     "SUBMIT YOUR REQUEST",

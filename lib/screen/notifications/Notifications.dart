@@ -303,7 +303,7 @@ class _NotificationspageState extends State<Notifications> {
                             content: Text(
                                 "Are you sure you want to unread ?"),
                             actions: <Widget>[
-                              FlatButton(
+                              TextButton(
                                 child: Text(
                                   "No",
                                   style: TextStyle(color: Colors.black),
@@ -312,7 +312,7 @@ class _NotificationspageState extends State<Notifications> {
                                   Navigator.of(context).pop();
                                 },
                               ),
-                              FlatButton(
+                              TextButton(
                                 child: Text(
                                   "Yes",
                                   style: TextStyle(color: Colors.red),
@@ -341,7 +341,7 @@ class _NotificationspageState extends State<Notifications> {
                             content: Text(
                                 "Are you sure you want to unread ?"),
                             actions: <Widget>[
-                              FlatButton(
+                              TextButton(
                                 child: Text(
                                   "No",
                                   style: TextStyle(color: Colors.black),
@@ -350,7 +350,7 @@ class _NotificationspageState extends State<Notifications> {
                                   Navigator.of(context).pop();
                                 },
                               ),
-                              FlatButton(
+                              TextButton(
                                 child: Text(
                                   "Yes",
                                   style: TextStyle(color: Colors.red),

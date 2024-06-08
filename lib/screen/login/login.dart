@@ -447,7 +447,7 @@ class _LoginState extends State<Login> {
                                       color: primarycolor),
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child: FlatButton(
+                                    child: TextButton(
                                       child: Text(
                                         "Login",
                                         style: TextStyle(

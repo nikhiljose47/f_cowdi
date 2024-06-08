@@ -321,7 +321,7 @@ class _contactdetailpageState extends State<contactdetailpage> {
                                                     },
                                                   ),
                                                 ),
-                                                FlatButton(
+                                                TextButton(
                                                   child: Text(
                                                     "send",
                                                     style: TextStyle(

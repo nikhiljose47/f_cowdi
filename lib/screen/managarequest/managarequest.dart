@@ -311,7 +311,7 @@ print(listdeafult);
                                                     children: <Widget>[
                                                       Container(
                                                         width: MediaQuery.of(context).size.width/1.1,
-                                                        child:  FlatButton(
+                                                        child:  TextButton(
                                                           child: Center (child: Text('NO OFFER YET')),
                                                           color: primarycolor[200],
                                                           textColor: Colors.white,
@@ -329,7 +329,7 @@ print(listdeafult);
                                                       Container(
                                                         margin: EdgeInsets.only(left: 2,right: 2),
                                                         width: MediaQuery.of(context).size.width/3.4,
-                                                        child: FlatButton(
+                                                        child: TextButton(
                                                           child: Center (
                                                               child: Text('Active')
                                                           ),
@@ -343,7 +343,7 @@ print(listdeafult);
                                                         ),),
                                                       Container(
                                                         width: MediaQuery.of(context).size.width/3.4,
-                                                        child: FlatButton(
+                                                        child: TextButton(
                                                           child: Center (child: Text('Dalete')),
                                                           color: primarycolor,
                                                           textColor: Colors.white,
@@ -359,7 +359,7 @@ print(listdeafult);
                                                     children: <Widget>[
                                                       Container(
                                                         width: MediaQuery.of(context).size.width/3.4,
-                                                        child: FlatButton(
+                                                        child: TextButton(
                                                           child: Center (child: Text('Dalete')),
                                                           color: primarycolor,
                                                           textColor: Colors.white,
@@ -375,7 +375,7 @@ print(listdeafult);
                                                     children: <Widget>[
                                                       Container(
                                                         width: MediaQuery.of(context).size.width/3.4,
-                                                        child: FlatButton(
+                                                        child: TextButton(
                                                           child: Center (child: Text('Dalete')),
                                                           color: primarycolor,
                                                           textColor: Colors.white,
@@ -501,7 +501,7 @@ print(listdeafult);
                                                     children: <Widget>[
                                                       Container(
                                                         width: MediaQuery.of(context).size.width/1.1,
-                                                        child:  FlatButton(
+                                                        child:  TextButton(
                                                           child: Center (child: Text('NO OFFER YET')),
                                                           color: primarycolor[200],
                                                           textColor: Colors.white,
@@ -518,7 +518,7 @@ print(listdeafult);
                                                       Container(
                                                         margin: EdgeInsets.only(left: 2,right: 2),
                                                         width: MediaQuery.of(context).size.width/1.1,
-                                                        child: FlatButton(
+                                                        child: TextButton(
                                                           child: Center (
                                                               child: Text('Active')
                                                           ),
@@ -537,7 +537,7 @@ print(listdeafult);
                                                       Container(
                                                         margin: EdgeInsets.only(left: 2,right: 2),
                                                         width: MediaQuery.of(context).size.width/1.1,
-                                                        child: FlatButton(
+                                                        child: TextButton(
                                                           child: Center (
                                                               child: Text('Active')
                                                           ),
@@ -555,7 +555,7 @@ print(listdeafult);
                                                     children: <Widget>[
                                                       Container(
                                                         width: MediaQuery.of(context).size.width/1.1,
-                                                        child: FlatButton(
+                                                        child: TextButton(
                                                           child: Center (child: Text('Dalete')),
                                                           color: primarycolor[200],
                                                           textColor: Colors.white,

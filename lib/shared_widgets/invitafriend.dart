@@ -73,7 +73,7 @@ margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 ListTile(
                   subtitle: Text('Introduce your friends to the fastest way to get things done.',textAlign: TextAlign.center,),
                 ),
-                FlatButton(
+                TextButton(
                   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(5.0)),
                   color: primarycolor,
                   textColor: Colors.white,

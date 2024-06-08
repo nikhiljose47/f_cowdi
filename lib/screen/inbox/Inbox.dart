@@ -309,7 +309,7 @@ class _InboxpageState extends State<Inboxpage> {
                               content: Text(
                                   "Are you sure you want to make unread it ?"),
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                   child: Text(
                                     "No",
                                     style: TextStyle(color: Colors.black),
@@ -318,7 +318,7 @@ class _InboxpageState extends State<Inboxpage> {
                                     Navigator.of(context).pop();
                                   },
                                 ),
-                                FlatButton(
+                                TextButton(
                                   child: Text(
                                     "Yes",
                                     style: TextStyle(color: Colors.red),
@@ -358,7 +358,7 @@ class _InboxpageState extends State<Inboxpage> {
                           content: Text(
                               "Are you sure you want to delete ?"),
                           actions: <Widget>[
-                            FlatButton(
+                            TextButton(
                               child: Text(
                                 "Cancel",
                                 style: TextStyle(color: Colors.black),
@@ -367,7 +367,7 @@ class _InboxpageState extends State<Inboxpage> {
                                 Navigator.of(context).pop();
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text(
                                 "Delete",
                                 style: TextStyle(color: Colors.red),
@@ -395,7 +395,7 @@ class _InboxpageState extends State<Inboxpage> {
                           content: Text(
                               "Are you sure you want to archive ?"),
                           actions: <Widget>[
-                            FlatButton(
+                            TextButton(
                               child: Text(
                                 "No",
                                 style: TextStyle(color: Colors.black),
@@ -404,7 +404,7 @@ class _InboxpageState extends State<Inboxpage> {
                                 Navigator.of(context).pop();
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text(
                                 "Yes",
                                 style: TextStyle(color: Colors.red),

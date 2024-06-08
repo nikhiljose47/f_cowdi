@@ -427,7 +427,7 @@ class _supportState extends State<support>{
                                           colors: [primarycolor[600], primarycolor])),
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child:FlatButton(
+                                    child:TextButton(
 
                                       child: Text(
                                         "Submit Request",
@@ -544,7 +544,7 @@ class _supportState extends State<support>{
                                           colors: [primarycolor[600], primarycolor])),
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child:FlatButton(
+                                    child:TextButton(
 
                                       child: Text(
                                         "Submit Request",
@@ -662,7 +662,7 @@ class _supportState extends State<support>{
                                           colors: [primarycolor[600], primarycolor])),
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child:FlatButton(
+                                    child:TextButton(
 
                                       child: Text(
                                         "Submit Request",
@@ -780,7 +780,7 @@ class _supportState extends State<support>{
                                           colors: [primarycolor[600], primarycolor])),
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child:FlatButton(
+                                    child:TextButton(
 
                                       child: Text(
                                         "Submit Request",

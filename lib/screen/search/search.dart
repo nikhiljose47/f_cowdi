@@ -90,7 +90,7 @@ class _searchState extends State<search> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(0.0),
-              child: FlatButton(
+              child: TextButton(
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.grey)),
@@ -108,7 +108,7 @@ class _searchState extends State<search> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 2, right: 2),
-              child: FlatButton(
+              child: TextButton(
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.grey)),
@@ -126,7 +126,7 @@ class _searchState extends State<search> {
             ),
             Padding(
               padding: const EdgeInsets.all(0.0),
-              child: FlatButton(
+              child: TextButton(
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.grey)),
