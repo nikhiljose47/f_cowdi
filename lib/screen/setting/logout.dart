@@ -11,7 +11,7 @@ class logout extends StatefulWidget {
 class logoutState extends State<logout>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
-  Animation<double> scaleAnimation;
+  Animation<double>? scaleAnimation;
 
   @override
   void initState() {

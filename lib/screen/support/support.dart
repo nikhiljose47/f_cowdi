@@ -19,18 +19,18 @@ class _supportState extends State<support>{
   FocusNode messageFocusNode = new FocusNode();
   FocusNode ordernumberFocusNode = new FocusNode();
   FocusNode rollFocusNode = new FocusNode();
-  String subject;
-  String Message;
-  String ordernumber;
-  String roll;
+  String? subject;
+  String? Message;
+  String? ordernumber;
+  String? roll;
   List<TypesArr> listService = [];
   var loading = false;
-  String _mySelection;
+  String? _mySelection;
   String token = "";
   String _path = '...';
   String _fileName = '...';
-  FileType _pickingType;
-  String _extension;
+  FileType? _pickingType;
+  String? _extension;
   final subjectHolder = TextEditingController();
   final MessageHolder = TextEditingController();
   final ordernumberHolder = TextEditingController();
@@ -293,6 +293,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => subject = e,
                               style: TextStyle(
@@ -325,6 +326,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => Message = e,
                               style: TextStyle(
@@ -354,6 +356,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => roll = e,
                               style: TextStyle(
@@ -384,6 +387,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => ordernumber = e,
                               style: TextStyle(
@@ -466,6 +470,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => subject = e,
                               style: TextStyle(
@@ -498,6 +503,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => Message = e,
                               style: TextStyle(
@@ -582,6 +588,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => subject = e,
                               style: TextStyle(
@@ -614,6 +621,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => Message = e,
                               style: TextStyle(
@@ -698,6 +706,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => subject = e,
                               style: TextStyle(
@@ -730,6 +739,7 @@ class _supportState extends State<support>{
                                 if (e.isEmpty) {
                                   return "Please Enter field";
                                 }
+                                return null;
                               },
                               onSaved: (e) => Message = e,
                               style: TextStyle(

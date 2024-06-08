@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/methods.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -320,6 +319,7 @@ class _RegisterState extends State<Register> {
                                   if (e.isEmpty) {
                                     return "Please Enter User Name";
                                   }
+                                  return null;
                                 },
                                 onSaved: (e) => username = e,
                                 style: TextStyle(
@@ -370,6 +370,7 @@ class _RegisterState extends State<Register> {
                                   if (e.isEmpty) {
                                     return "Please Enter Email";
                                   }
+                                  return null;
                                 },
                                 onSaved: (e) => email = e,
                                 style: TextStyle(
@@ -530,6 +531,7 @@ class _RegisterState extends State<Register> {
                                   if (e.isEmpty) {
                                     return "Please Enter Password";
                                   }
+                                  return null;
                                 },
                                 onSaved: (e) => password = e,
                                 style: TextStyle(
@@ -589,6 +591,7 @@ class _RegisterState extends State<Register> {
                                   if (e.isEmpty) {
                                     return "Please Enter Password";
                                   }
+                                  return null;
                                 },
                                 onSaved: (e) => confirm_password = e,
                                 style: TextStyle(

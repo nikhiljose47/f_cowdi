@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/util/appinfo.dart';
-import 'package:flutter_app/util/showalertdialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/screen/mainscreen.dart';
@@ -17,7 +16,7 @@ class forgetpass extends StatefulWidget {
 
 class _forgetpassState extends State<forgetpass> {
   final _key = new GlobalKey<FormState>();
-  String email;
+  String? email;
   FocusNode emailFocusNode = new FocusNode();
   List<AppInfo> apiinforlist = [];
   bool shouldShowDialog = false;

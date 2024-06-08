@@ -11,8 +11,6 @@ import 'package:flutter_app/services/api.dart';
 import 'dart:convert';
 import 'package:flutter_app/util/inboxdetails.dart';
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 
 class contactdetailpage extends StatefulWidget {
   final String messagegropid, sellname;//if you have multiple values add here
@@ -23,10 +21,10 @@ class contactdetailpage extends StatefulWidget {
 enum LoginStatus { newmessage, messagesend }
 class _contactdetailpageState extends State<contactdetailpage> {
   ScrollController _scrollController = ScrollController();
-  File _file;
+  File? _file;
   String _fileName = '...';
   String _path = '...';
-  String _extension;
+  String? _extension;
   FileType _pickingType;
   final _key = new GlobalKey<FormState>();
   TextEditingController _controller = new TextEditingController();
@@ -35,9 +33,9 @@ class _contactdetailpageState extends State<contactdetailpage> {
   var textvalue;
   List<ConversationArr> friendsLists = [];
   var loading = false;
-  String topimage;
+  String? topimage;
   String token = "";
-  String friendsList;
+  String? friendsList;
 
   Future getFile() async {
     File file = await FilePicker.getFile();
@@ -234,8 +232,7 @@ class _contactdetailpageState extends State<contactdetailpage> {
                                       color: Colors.black,
                                       fontSize: 16,
                                     ),),
-                                    listcat.filename != null &&
-                                        listcat.filetype == null
+                                    listcat.filetype == null
                                         ? Text(
                                       listcat.filename,
                                       style: TextStyle(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screen/Payment/currency.dart';
 import 'package:flutter_app/services/api.dart';
 
 class payment extends StatefulWidget{

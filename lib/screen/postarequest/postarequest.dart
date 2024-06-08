@@ -134,30 +134,17 @@ class _postarequestState extends State<postarequest> {
   }
   Future<Null> getDatas() async {
     listsubcat.clear();
-    if (_mySelection == null) {
-    final value = '1';
-      final responseDatas = await http.get(baseurl+version+ subcatlink +value );
-      final datas = responseDatas.body;
-      var subcat = jsonDecode(datas)['content']['sCArr'] as List;
-      print(subcat);
-      setState(() {
-        for (Map i in subcat) {
-          listsubcat.add(SCArr.fromMap(i));
-        }
-      });
-    }else{
-      final responseDatas = await http.get(
-           baseurl+version+subcatlink + _mySelection);
-      final datas = responseDatas.body;
-      var subcat = jsonDecode(datas)['content']['sCArr'] as List;
-      print(subcat);
-      setState(() {
-        for (Map i in subcat) {
-          listsubcat.add(SCArr.fromMap(i));
-        }
-      });
+    final responseDatas = await http.get(
+         baseurl+version+subcatlink + _mySelection);
+    final datas = responseDatas.body;
+    var subcat = jsonDecode(datas)['content']['sCArr'] as List;
+    print(subcat);
+    setState(() {
+      for (Map i in subcat) {
+        listsubcat.add(SCArr.fromMap(i));
+      }
+    });
     }
-  }
 
   //Panggil Data / Call Data
   @override
@@ -235,6 +222,7 @@ class _postarequestState extends State<postarequest> {
                                       var fullname = txt.data;
                                       return fullname;
                                     }
+                                    return null;
                                   },
                                   onSaved: (e) => title = e,
                                   style: TextStyle(
@@ -301,6 +289,7 @@ class _postarequestState extends State<postarequest> {
                                       var fullname = txt.data;
                                       return fullname;
                                     }
+                                    return null;
                                   },
                                   onSaved: (e) => description = e,
                                   style: TextStyle(
@@ -525,6 +514,7 @@ class _postarequestState extends State<postarequest> {
                                           var fullname = txt.data;
                                           return fullname;
                                         }
+                                        return null;
                                       },
                                       onSaved: (e) => budget = e,
                                       style: TextStyle(

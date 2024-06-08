@@ -1,16 +1,9 @@
-import 'dart:math';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/screen/details/catdetail.dart';
-import 'package:flutter_app/screen/home/home.dart';
 import 'package:flutter_app/screen/inbox/inboxdetail.dart';
 import 'package:flutter_app/screen/login/login.dart';
 import 'package:flutter_app/screen/profiledetails/cart.dart';
 import 'package:flutter_app/screen/profiledetails/contactus.dart';
-import 'package:flutter_app/screen/search/search.dart';
 import 'package:flutter_app/util/home.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -18,7 +11,6 @@ import 'dart:convert';
 import 'package:flutter_app/util/propusal.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
 import 'package:flutter_app/screen/custom_expansion_tile.dart' as custom;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -124,23 +116,20 @@ print(response);
       loading = true;
     });
 
-    if (token == null) {
-    } else {
-      final responseData =
-          await http.get(baseurl + version + url, headers: {'Auth': token});
-      if (responseData.statusCode == 200) {
-        final data = responseData.body;
-        var recents = jsonDecode(data)['content']['rViews'] as List;
-        setState(() {
-          for (Map i in recents) {
-            listreviews.add(RView.fromMap(i));
-          }
+    final responseData =
+        await http.get(baseurl + version + url, headers: {'Auth': token});
+    if (responseData.statusCode == 200) {
+      final data = responseData.body;
+      var recents = jsonDecode(data)['content']['rViews'] as List;
+      setState(() {
+        for (Map i in recents) {
+          listreviews.add(RView.fromMap(i));
+        }
 
-          loading = false;
-        });
-      }
+        loading = false;
+      });
     }
-  }
+    }
 
   Future<Null> getData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -151,41 +140,23 @@ print(response);
       loading = true;
     });
 
-    if (token != null) {
-      final linkdata = '/' + widget.links;
-      final responseData = await http
-          .get(baseurl + version + linkdata, headers: {'Auth': token});
-      if (responseData.statusCode == 200) {
-        final data = responseData.body;
-        print(baseurl + version + linkdata);
-        print(token);
-        print(data);
-        var listsCArr = jsonDecode(data)['content']['pDetails'] as List;
-        setState(() {
-          for (Map i in listsCArr) {
-            listdata.add(PDetail.fromMap(i));
-          }
-          loading = false;
-        });
-      }
-    } else {
-      final linkdata = '/' + widget.links;
-      final responseData = await http.get(baseurl + version + linkdata);
-      if (responseData.statusCode == 200) {
-        final data = responseData.body;
-        var listsCArr = jsonDecode(data)['content']['pDetails'] as List;
-        //var listfaqs = jsonDecode(data)['content']['pDetails']['faqs'] as List;
-
-        setState(() {
-          for (Map i in listsCArr) {
-            listdata.add(PDetail.fromMap(i));
-          }
-
-          loading = false;
-        });
-      }
+    final linkdata = '/' + widget.links;
+    final responseData = await http
+        .get(baseurl + version + linkdata, headers: {'Auth': token});
+    if (responseData.statusCode == 200) {
+      final data = responseData.body;
+      print(baseurl + version + linkdata);
+      print(token);
+      print(data);
+      var listsCArr = jsonDecode(data)['content']['pDetails'] as List;
+      setState(() {
+        for (Map i in listsCArr) {
+          listdata.add(PDetail.fromMap(i));
+        }
+        loading = false;
+      });
     }
-  }
+    }
 
   @override
   void initState() {
@@ -923,200 +894,196 @@ print(response);
   }
 
   Widget review(context) {
-    if (token == null) {
-      return SizedBox(height: 3.0);
-    } else {
-      return Column(
-        children: <Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 0.00),
-              child: Text('Recently Viewes & more',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontFamily: 'SophiaNubian',
-                  )),
-            ),
-          ]),
-          Column(children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(bottom: 5, top: 5),
-              // alignment: FractionalOffset(1.0, 1.0),
-              width: MediaQuery.of(context).size.width,
-              height: 300,
-              child: loading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                          valueColor:
-                              new AlwaysStoppedAnimation<Color>(primarycolor)))
-                  : ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      primary: false,
-                      itemCount: listreviews.length,
-                      itemBuilder: (context, i) {
-                        final nplacesList = listreviews[i];
-                        return GestureDetector(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                left: 5.00, top: 5.00, right: 5.00),
-                            width: 250,
-                            decoration: myBoxDecorationfirst(),
-                            child: Column(children: <Widget>[
-                              Container(
-                                height: 150,
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      //height: 150,
-                                      width: double.infinity,
-                                      child: Image.network(
-                                        nplacesList.postImage,
-                                        fit: BoxFit.contain,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(
-                                    left: 10.00,
-                                    right: 10.00,
-                                    top: 10.00,
-                                    bottom: 5.00),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        new Container(
-                                            width: 50.0,
-                                            height: 50.0,
-                                            decoration: new BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: new DecorationImage(
-                                                    fit: BoxFit.fill,
-                                                    image: new NetworkImage(
-                                                        nplacesList
-                                                            .sellerImage)))),
-                                        new Container(
-                                          padding: EdgeInsets.only(left: 5.00),
-                                          child:
-                                              new Text(nplacesList.sellerName),
-                                        ),
-                                      ],
+    return Column(
+      children: <Widget>[
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, top: 0.00),
+            child: Text('Recently Viewes & more',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontFamily: 'SophiaNubian',
+                )),
+          ),
+        ]),
+        Column(children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(bottom: 5, top: 5),
+            // alignment: FractionalOffset(1.0, 1.0),
+            width: MediaQuery.of(context).size.width,
+            height: 300,
+            child: loading
+                ? Center(
+                    child: CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(primarycolor)))
+                : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    primary: false,
+                    itemCount: listreviews.length,
+                    itemBuilder: (context, i) {
+                      final nplacesList = listreviews[i];
+                      return GestureDetector(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              left: 5.00, top: 5.00, right: 5.00),
+                          width: 250,
+                          decoration: myBoxDecorationfirst(),
+                          child: Column(children: <Widget>[
+                            Container(
+                              height: 150,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    //height: 150,
+                                    width: double.infinity,
+                                    child: Image.network(
+                                      nplacesList.postImage,
+                                      fit: BoxFit.contain,
                                     ),
-                                  ],
-                                ),
+                                  )
+                                ],
                               ),
-                              Container(
-                                padding:
-                                    EdgeInsets.only(right: 10.00, left: 10.00),
-                                child: Column(children: <Widget>[
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  left: 10.00,
+                                  right: 10.00,
+                                  top: 10.00,
+                                  bottom: 5.00),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Flexible(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10.0, top: 5),
-                                          child: Text(nplacesList.sellerLevel),
-                                        ),
+                                      new Container(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          decoration: new BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: new DecorationImage(
+                                                  fit: BoxFit.fill,
+                                                  image: new NetworkImage(
+                                                      nplacesList
+                                                          .sellerImage)))),
+                                      new Container(
+                                        padding: EdgeInsets.only(left: 5.00),
+                                        child:
+                                            new Text(nplacesList.sellerName),
                                       ),
                                     ],
                                   ),
-                                ]),
+                                ],
                               ),
-                              Container(
-                                padding: EdgeInsets.only(
-                                    right: 10.00, left: 10.00, top: 10.00),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                            ),
+                            Container(
+                              padding:
+                                  EdgeInsets.only(right: 10.00, left: 10.00),
+                              child: Column(children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        new Container(
-                                            padding: EdgeInsets.only(left: 10),
-                                            child: Row(children: <Widget>[
-                                              Text(
-                                                "From ",
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: primarycolor,
-                                                ),
-                                                maxLines: 2,
-                                                textAlign: TextAlign.left,
-                                              ),
-                                              Text(
-                                                "${nplacesList.price}",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: primarycolor,
-                                                ),
-                                                maxLines: 2,
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ])),
-                                      ],
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, top: 5),
+                                        child: Text(nplacesList.sellerLevel),
+                                      ),
                                     ),
-                                    Row(children: <Widget>[
-                                      new Container(
-                                          child: Row(children: <Widget>[
-                                        Icon(
-                                          Icons.star,
-                                          size: 14,
-                                          color: Colors.orangeAccent,
-                                        ),
-                                        Text(
-                                          "${nplacesList.rating.averageRatting}",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.orangeAccent,
-                                          ),
-                                          maxLines: 2,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                        Text(
-                                          "(${nplacesList.rating.totalReviews})",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black38,
-                                          ),
-                                          maxLines: 2,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ])),
-                                    ]),
                                   ],
                                 ),
+                              ]),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  right: 10.00, left: 10.00, top: 10.00),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      new Container(
+                                          padding: EdgeInsets.only(left: 10),
+                                          child: Row(children: <Widget>[
+                                            Text(
+                                              "From ",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: primarycolor,
+                                              ),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.left,
+                                            ),
+                                            Text(
+                                              "${nplacesList.price}",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: primarycolor,
+                                              ),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ])),
+                                    ],
+                                  ),
+                                  Row(children: <Widget>[
+                                    new Container(
+                                        child: Row(children: <Widget>[
+                                      Icon(
+                                        Icons.star,
+                                        size: 14,
+                                        color: Colors.orangeAccent,
+                                      ),
+                                      Text(
+                                        "${nplacesList.rating.averageRatting}",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.orangeAccent,
+                                        ),
+                                        maxLines: 2,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      Text(
+                                        "(${nplacesList.rating.totalReviews})",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black38,
+                                        ),
+                                        maxLines: 2,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ])),
+                                  ]),
+                                ],
                               ),
-                            ]),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return profiledetailpage(nplacesList.link,
-                                      "home", "home", "home", "home");
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-            )
-          ]),
-        ],
-      );
+                            ),
+                          ]),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return profiledetailpage(nplacesList.link,
+                                    "home", "home", "home", "home");
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+          )
+        ]),
+      ],
+    );
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -1150,8 +1117,7 @@ print(response);
                                         horizontal: 0.0, vertical: 0.0),
                                     color: Colors.white,
                                     height: 200,
-                                    child: datapass.images.length != 1 &&
-                                            datapass.images.length != null
+                                    child: datapass.images.length != 1
                                         ? CarouselSlider.builder(
                                             itemCount: datapass.images.length,
                                             itemBuilder: (context, index) {
@@ -2090,7 +2056,7 @@ print(response);
                 )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          listdata[0].seller.messagegroupid.toString().isNotEmpty && token != null
+          listdata[0].seller.messagegroupid.toString().isNotEmpty
               ? Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -2100,7 +2066,7 @@ print(response);
                     },
                   ),
                 )
-              : token != null && listdata[0].seller.messagegroupid.toString().isEmpty
+              : listdata[0].seller.messagegroupid.toString().isEmpty
                   ? Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

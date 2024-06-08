@@ -52,6 +52,15 @@ dependencies:
   #open_appstore: ^1.0.2 commented
 
 
+  firebase_core: any
+  forceupdate: any
+  firebase_messaging: any
+  path: any
+  flutter_inappwebview: any
+  webview_flutter: any
+  flappy_search_bar: any
+  flutter_local_notifications: any
+  flutter_switch: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

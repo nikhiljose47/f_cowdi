@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/screen/login/login.dart';
 import 'package:flutter_app/screen/managarequest/managarequest.dart';
 import 'package:flutter_app/screen/manage/manage.dart';
 import 'package:flutter_app/screen/manage/selling_order.dart';
 import 'package:flutter_app/screen/onlistatus/onlinestatus.dart';
 import 'package:flutter_app/screen/postarequest/postarequest.dart';
-import 'package:flutter_app/screen/register/register.dart';
 import 'package:flutter_app/screen/setting/terms.dart';
 import 'package:flutter_app/screen/support/support.dart';
 import 'package:flutter_app/util/appinfo.dart';
@@ -61,25 +59,21 @@ class _OthersState extends State<Others> {
       loading = true;
     });
     print(token);
-    if (token == null) {
-      print("not");
-    } else {
-      final responseData =
-          await http.get(baseurl + version + profile, headers: {'Auth': token});
-      if (responseData.statusCode == 200) {
-        final data = responseData.body;
-        var listservices = jsonDecode(data)['content']['mProfile'] as List;
+    final responseData =
+        await http.get(baseurl + version + profile, headers: {'Auth': token});
+    if (responseData.statusCode == 200) {
+      final data = responseData.body;
+      var listservices = jsonDecode(data)['content']['mProfile'] as List;
 
-        print(listservices);
-        setState(() {
-          for (Map i in listservices) {
-            listService.add(MProfile.fromMap(i));
-          }
-          loading = false;
-        });
-      }
+      print(listservices);
+      setState(() {
+        for (Map i in listservices) {
+          listService.add(MProfile.fromMap(i));
+        }
+        loading = false;
+      });
     }
-  }
+    }
 
   getstatus() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -230,499 +224,372 @@ class _OthersState extends State<Others> {
   }
 
   Widget othersec(context) {
-    if (token == null) {
-      return ListView(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                  width: double.maxFinite,
-                  height: 150,
-                  decoration: new BoxDecoration(
-                    color: Color.fromARGB(255, 136, 135, 135),
-                  ),
-                  padding: EdgeInsets.only(top: 20),
-                  child: Row(children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        ClipRRect(
-                            borderRadius: BorderRadius.circular(80),
-                            child: Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: Icon(
-                                Icons.person,
-                                size: 60,
-                                color: Colors.white,
-                              ),
-                            )),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Guest",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          ),
-                          Text(
-                            "Welcome to Cowdiar!",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ])),
-            ],
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
+    return ListView(
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Container(
+                width: double.maxFinite,
+                height: 180,
+                decoration: new BoxDecoration(
+                  color: primarycolor,
                 ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.vpn_key,
-              ),
-              title: Text("Join Cowdiar"),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Register(),
-                  ),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.account_circle,
-              ),
-              title: Text('Sign In'),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Login("loginfull"),
-                  ),
-                );
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: Text(
-              "General",
-              style: TextStyle(
-                fontSize: 16,
+                padding: EdgeInsets.all(20.0),
+                child: loading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(
+                                primarycolor)))
+                    : ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: listService.length,
+                        itemBuilder: (context, i) {
+                          final datacard = listService[i];
+                          return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Align(
+                                  alignment: AlignmentDirectional.topEnd,
+                                  child: InkWell(
+                                    child: Icon(
+                                      Icons.settings,
+                                      size: 30.0,
+                                      color: Colors.white,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Setting(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  child: CircleAvatar(
+                                    radius: 35.0,
+                                    backgroundImage:
+                                        NetworkImage(datacard.sellerImage),
+                                  ),
+                                ),
+                                SizedBox(height: 7),
+                                Center(
+                                  child: Text(
+                                    datacard.sellerName,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              ]);
+                        })),
+          ],
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 15, bottom: 16, left: 20),
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
                 color: Colors.grey,
+                width: 0.5,
               ),
             ),
           ),
-        ]..addAll(sharedSettings()),
-      );
-    } else {
-      return ListView(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                  width: double.maxFinite,
-                  height: 180,
-                  decoration: new BoxDecoration(
-                    color: primarycolor,
+          child: Text(
+            "Buying",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: Color.fromARGB(255, 113, 113, 113),
+            ),
+          ),
+        ),
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.reorder,
+            ),
+            title: Text('Manage Orders'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => manageorder(),
+                ),
+              );
+            },
+          ),
+        ),
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.list,
+            ),
+            title: Text('Manage Requests'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => manageeq(),
+                ),
+              );
+            },
+          ),
+        ),
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: listService.length == 0
+              ? Text("")
+              : ListTile(
+                  leading: Icon(
+                    Icons.open_in_new,
                   ),
-                  padding: EdgeInsets.all(20.0),
-                  child: loading
-                      ? Center(
-                          child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(
-                                  primarycolor)))
-                      : ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: listService.length,
-                          itemBuilder: (context, i) {
-                            final datacard = listService[i];
-                            return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Align(
-                                    alignment: AlignmentDirectional.topEnd,
-                                    child: InkWell(
-                                      child: Icon(
-                                        Icons.settings,
-                                        size: 30.0,
-                                        color: Colors.white,
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Setting(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Container(
-                                    child: CircleAvatar(
-                                      radius: 35.0,
-                                      backgroundImage:
-                                          NetworkImage(datacard.sellerImage),
-                                    ),
-                                  ),
-                                  SizedBox(height: 7),
-                                  Center(
-                                    child: Text(
-                                      datacard.sellerName,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ]);
-                          })),
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 15, bottom: 16, left: 20),
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: Text(
-              "Buying",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: Color.fromARGB(255, 113, 113, 113),
-              ),
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.reorder,
-              ),
-              title: Text('Manage Orders'),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => manageorder(),
-                  ),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.list,
-              ),
-              title: Text('Manage Requests'),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => manageeq(),
-                  ),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: listService.length == 0
-                ? Text("")
-                : ListTile(
-                    leading: Icon(
-                      Icons.open_in_new,
-                    ),
-                    title: Text('Post a Request '),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => postarequest(
-                              listService[0].sellerVerificationStatus),
-                        ),
-                      );
-                    },
-                  ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 6, bottom: 16, left: 20),
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: Text(
-              "Selling",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: Color.fromARGB(255, 113, 113, 113),
-              ),
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.reorder,
-              ),
-              title: Text('Manage Orders'),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SellingOrder(),
-                  ),
-                );
-              },
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 6, bottom: 16, left: 20),
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: Text(
-              "General",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: Color.fromARGB(255, 113, 113, 113),
-              ),
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.notifications,
-              ),
-              title: Text(
-                'Push Notification',
-              ),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PushNotification()),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.cached,
-              ),
-              title: Text('Online Status'),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                getstatus();
-                print(listservicesstus);
-              },
-            ),
-          ),
-          linkdata != ""
-              ? Container(
-                  decoration: new BoxDecoration(
-                    color: Colors.white10,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.grey,
-                        width: 0.5,
+                  title: Text('Post a Request '),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => postarequest(
+                            listService[0].sellerVerificationStatus),
                       ),
-                    ),
-                  ),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.rotate_left,
-                    ),
-                    title: Text('Invite Friends'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      final RenderBox box = context.findRenderObject();
-                      Share.share(linkdata,
-                          sharePositionOrigin:
-                              box.localToGlobal(Offset.zero) & box.size);
-                    },
-                  ),
-                )
-              : Container(
-                  height: 0,
+                    );
+                  },
                 ),
-          Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 6, bottom: 16, left: 20),
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
               ),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.call,
-              ),
-              title: Text('Support'),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => support(0)),
-                );
-              },
             ),
           ),
-        ]
-          ..addAll(sharedSettings())
-          ..add(Container(
-            decoration: new BoxDecoration(
-              color: Colors.white10,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.5,
+          child: Text(
+            "Selling",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: Color.fromARGB(255, 113, 113, 113),
+            ),
+          ),
+        ),
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.reorder,
+            ),
+            title: Text('Manage Orders'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SellingOrder(),
                 ),
+              );
+            },
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 6, bottom: 16, left: 20),
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
               ),
             ),
-            child: ListTile(
-              title: Text(
-                'Logout',
-              ),
-              leading: Icon(
-                Icons.logout,
-              ),
-              trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => logout()),
-                );
-              },
+          ),
+          child: Text(
+            "General",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: Color.fromARGB(255, 113, 113, 113),
             ),
-          )),
-      );
+          ),
+        ),
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.notifications,
+            ),
+            title: Text(
+              'Push Notification',
+            ),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PushNotification()),
+              );
+            },
+          ),
+        ),
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.cached,
+            ),
+            title: Text('Online Status'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              getstatus();
+              print(listservicesstus);
+            },
+          ),
+        ),
+        linkdata != ""
+            ? Container(
+                decoration: new BoxDecoration(
+                  color: Colors.white10,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.grey,
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.rotate_left,
+                  ),
+                  title: Text('Invite Friends'),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: () {
+                    final RenderBox box = context.findRenderObject();
+                    Share.share(linkdata,
+                        sharePositionOrigin:
+                            box.localToGlobal(Offset.zero) & box.size);
+                  },
+                ),
+              )
+            : Container(
+                height: 0,
+              ),
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            leading: Icon(
+              Icons.call,
+            ),
+            title: Text('Support'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => support(0)),
+              );
+            },
+          ),
+        ),
+      ]
+        ..addAll(sharedSettings())
+        ..add(Container(
+          decoration: new BoxDecoration(
+            color: Colors.white10,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: ListTile(
+            title: Text(
+              'Logout',
+            ),
+            leading: Icon(
+              Icons.logout,
+            ),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => logout()),
+              );
+            },
+          ),
+        )),
+    );
     }
-  }
 
   Future<bool> onWillPop() {
     setState(() {

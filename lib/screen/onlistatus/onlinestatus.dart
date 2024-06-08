@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_app/services/api.dart';
-import 'package:flutter_app/util/online.dart';
 class onlinestatus extends StatefulWidget{
   final String listservicesstus;//if you have multiple values add here
   onlinestatus(this.listservicesstus, {Key key}): super(key: key);

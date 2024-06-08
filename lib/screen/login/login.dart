@@ -6,7 +6,6 @@ import 'package:flutter_app/screen/inbox/Inbox.dart';
 import 'package:flutter_app/screen/notifications/Notifications.dart';
 import 'package:flutter_app/util/appinfo.dart';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/screen/mainscreen.dart';
 import 'package:flutter_app/screen/register/register.dart';
 import 'package:flutter_app/services/api.dart';

@@ -5,9 +5,7 @@
 import 'dart:collection' show Queue;
 import 'dart:math' as math;
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 const double _kActiveFontSize = 14.0;
 const double _kInactiveFontSize = 12.0;
@@ -140,14 +138,12 @@ class MyBottomNavigationBar extends StatefulWidget {
     MyBottomNavigationBarType type,
     this.fixedColor,
     this.iconSize = 24.0,
-  }) : assert(items != null),
-        assert(items.length >= 2),
+  }) : assert(items.length >= 2),
         assert(
         items.every((BottomNavigationBarItem item) => item.activeIcon != null) == true,  //N-item.title
         'Every item must have a non-null title',
         ),
         assert(0 <= currentIndex && currentIndex < items.length),
-        assert(iconSize != null),
         type = type ?? (items.length <= 3 ? MyBottomNavigationBarType.fixed : MyBottomNavigationBarType.shifting),
         super(key: key);
 
@@ -200,7 +196,7 @@ class _BottomNavigationTile extends StatelessWidget {
         this.flex,
         this.selected = false,
         this.indexLabel,
-      }) : assert(selected != null);
+      });
 
   final MyBottomNavigationBarType type;
   final BottomNavigationBarItem item;
@@ -482,7 +478,6 @@ class _BottomNavigationBarState extends State<MyBottomNavigationBar> with Ticker
 
   List<Widget> _createTiles() {
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
-    assert(localizations != null);
     final List<Widget> children = <Widget>[];
     switch (widget.type) {
       case MyBottomNavigationBarType.fixed:
@@ -494,11 +489,11 @@ class _BottomNavigationBarState extends State<MyBottomNavigationBar> with Ticker
             themeColor = themeData.primaryColor;
             break;
           case Brightness.dark:
-            themeColor = themeData.accentColor;
+            themeColor = themeData.colorScheme.secondary;
             break;
         }
         final ColorTween colorTween = ColorTween(
-          begin: textTheme.caption.color,
+          begin: textTheme.bodySmall.color,
           end: widget.fixedColor ?? themeColor,
         );
         for (int i = 0; i < widget.items.length; i += 1) {
@@ -509,8 +504,7 @@ class _BottomNavigationBarState extends State<MyBottomNavigationBar> with Ticker
               _animations[i],
               widget.iconSize,
               onTap: () {
-                if (widget.onTap != null)
-                  widget.onTap(i);
+                widget.onTap(i);
               },
               colorTween: colorTween,
               selected: i == widget.currentIndex,
@@ -528,8 +522,7 @@ class _BottomNavigationBarState extends State<MyBottomNavigationBar> with Ticker
               _animations[i],
               widget.iconSize,
               onTap: () {
-                if (widget.onTap != null)
-                  widget.onTap(i);
+                widget.onTap(i);
               },
               flex: _evaluateFlex(_animations[i]),
               selected: i == widget.currentIndex,
@@ -617,9 +610,7 @@ class _Circle {
     @required this.index,
     @required this.color,
     @required TickerProvider vsync,
-  }) : assert(state != null),
-        assert(index != null),
-        assert(color != null) {
+  }) {
     controller = AnimationController(
       duration: kThemeAnimationDuration,
       vsync: vsync,
@@ -662,8 +653,7 @@ class _RadialPainter extends CustomPainter {
   _RadialPainter({
     @required this.circles,
     @required this.textDirection,
-  }) : assert(circles != null),
-        assert(textDirection != null);
+  });
 
   final List<_Circle> circles;
   final TextDirection textDirection;

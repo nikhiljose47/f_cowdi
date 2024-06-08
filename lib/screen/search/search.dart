@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
-import 'package:flutter_app/util/home.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/services/api.dart';
 import 'package:flutter_app/util/searchcall.dart';

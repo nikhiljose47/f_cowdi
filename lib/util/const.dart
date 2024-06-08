@@ -13,40 +13,44 @@ class Constants {
   static Color badgeColor = Colors.red;
 
   static ThemeData lightTheme = ThemeData(
-    backgroundColor: lightBG,
     primaryColor: lightPrimary,
-    accentColor: lightAccent,
-    cursorColor: lightAccent,
     scaffoldBackgroundColor: lightBG,
     appBarTheme: AppBarTheme(
-      elevation: 0,
-      textTheme: TextTheme(
-        subtitle1: TextStyle(
+      elevation: 0, toolbarTextStyle: TextTheme(
+        titleMedium: TextStyle(
           color: darkBG,
           fontSize: 18.0,
           fontWeight: FontWeight.w800,
         ),
-      ),
-    ),
+      ).bodyMedium, titleTextStyle: TextTheme(
+        titleMedium: TextStyle(
+          color: darkBG,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w800,
+        ),
+      ).titleLarge,
+    ), textSelectionTheme: TextSelectionThemeData(cursorColor: lightAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: lightAccent), colorScheme: ColorScheme(surface: lightBG),
   );
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    backgroundColor: darkBG,
     primaryColor: darkPrimary,
-    accentColor: darkAccent,
     scaffoldBackgroundColor: darkBG,
-    cursorColor: darkAccent,
     appBarTheme: AppBarTheme(
-      elevation: 0,
-      textTheme: TextTheme(
-        subtitle1: TextStyle(
+      elevation: 0, toolbarTextStyle: TextTheme(
+        titleMedium: TextStyle(
           color: lightBG,
           fontSize: 18.0,
           fontWeight: FontWeight.w800,
         ),
-      ),
-    ),
+      ).bodyMedium, titleTextStyle: TextTheme(
+        titleMedium: TextStyle(
+          color: lightBG,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w800,
+        ),
+      ).titleLarge,
+    ), textSelectionTheme: TextSelectionThemeData(cursorColor: darkAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: darkAccent), colorScheme: ColorScheme(surface: darkBG),
   );
 
   static List<String> countryNames = [

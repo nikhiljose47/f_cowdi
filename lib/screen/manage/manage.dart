@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/screen/order/orderdetail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -126,7 +123,7 @@ class _manageorderState extends State<manageorder> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: _selectedIndex != null && _selectedIndex == i
+                              color: _selectedIndex == i
                                   ? primarycolor
                                   : Colors.white,
                               width: 3,
@@ -147,7 +144,7 @@ class _manageorderState extends State<manageorder> {
                             child: Text(
                               nDataList.status.substring(0,1).toUpperCase() +nDataList.status.substring(1) + " ("+nDataList.count+")",
                               style: TextStyle(
-                                color: _selectedIndex != null && _selectedIndex == i
+                                color: _selectedIndex == i
                                     ? primarycolor
                                     : Colors.black,
                                 fontWeight: FontWeight.bold,

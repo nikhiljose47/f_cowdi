@@ -9,9 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_app/services/api.dart';
 import 'dart:convert';
 import 'package:flutter_app/util/inboxdetails.dart';
-import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Inboxdetailpage extends StatefulWidget {
@@ -278,8 +275,7 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
                                           fontSize: 16,
                                         ),
                                       ),
-                                      listcat.filename != null &&
-                                              listcat.filetype == null
+                                      listcat.filetype == null
                                           ? Text(
                                               listcat.filename,
                                               style: TextStyle(

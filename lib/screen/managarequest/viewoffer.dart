@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app/screen/order/orderdetail.dart';
 import 'package:flutter_app/util/viewoffer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_app/util/managreq.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -23,8 +23,7 @@ class ReadMoreText extends StatefulWidget {
         this.locale,
         this.textScaleFactor,
         this.semanticsLabel,
-      })  : assert(data != null),
-        super(key: key);
+      })  : super(key: key);
 
   final String data;
   final String trimExpandedText;
@@ -59,7 +58,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
   Widget build(BuildContext context) {
     final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
     TextStyle effectiveTextStyle = widget.style;
-    if (widget.style == null || widget.style.inherit) {
+    if (widget.style.inherit) {
       effectiveTextStyle = defaultTextStyle.style.merge(widget.style);
     }
 
@@ -73,7 +72,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
         widget.locale ?? Localizations.localeOf(context);
 
     final colorClickableText =
-        widget.colorClickableText ?? Theme.of(context).accentColor;
+        widget.colorClickableText ?? Theme.of(context).colorScheme.secondary;
 
     TextSpan link = TextSpan(
       text: _readMore ? widget.trimCollapsedText : widget.trimExpandedText,
@@ -179,21 +178,17 @@ class ReadMoreTextState extends State<ReadMoreText> {
           softWrap: true,
           //softWrap,
           overflow: TextOverflow.clip,
-          //overflow,
-          textScaleFactor: textScaleFactor,
-          text: textSpan,
+          text: textSpan, textScaler: TextScaler.linear(textScaleFactor),
         );
       },
     );
-    if (widget.semanticsLabel != null) {
-      result = Semantics(
-        textDirection: widget.textDirection,
-        label: widget.semanticsLabel,
-        child: ExcludeSemantics(
-          child: result,
-        ),
-      );
-    }
-    return result;
+    result = Semantics(
+      textDirection: widget.textDirection,
+      label: widget.semanticsLabel,
+      child: ExcludeSemantics(
+        child: result,
+      ),
+    );
+      return result;
   }
 }

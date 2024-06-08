@@ -2,16 +2,11 @@ import 'dart:io';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screen/details/catdetail.dart';
 import 'package:flutter_app/util/orderdetails.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter_app/services/api.dart';
-import 'package:flutter_app/util/subcat.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,13 +19,13 @@ class orderpage extends StatefulWidget {
 }
 
 class _orderpageState extends State<orderpage> {
-  File _file;
+  File? _file;
   bool _showBottom = false;
   String _fileName = '...';
   ScrollController _scrollController = ScrollController();
   String _path = '...';
   String _extension;
-  FileType _pickingType;
+  FileType? _pickingType;
   final _key = new GlobalKey<FormState>();
   TextEditingController _controller = new TextEditingController();
   Color myGreen = Color(0xff4bb17b);
@@ -39,7 +34,7 @@ class _orderpageState extends State<orderpage> {
   List<ODetail> listorder = [];
   List<ConversationArr> friendsLists = [];
   var loading = false;
-  String topimage;
+  String? topimage;
   String token = "";
 
   Future getFile() async {
@@ -618,8 +613,7 @@ class _orderpageState extends State<orderpage> {
                                                       fontSize: 16,
                                                     ),
                                                   ),
-                                                  listcat.filename != null &&
-                                                          listcat.filetype ==
+                                                  listcat.filetype ==
                                                               null
                                                       ? Text(
                                                           listcat.filename,

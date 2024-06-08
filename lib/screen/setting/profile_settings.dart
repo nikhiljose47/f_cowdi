@@ -17,8 +17,7 @@ class ProfileSettings extends StatefulWidget {
 }
 
 class _ProfileSettingsState extends State<ProfileSettings> {
-  String token = "";
-  String name, username, email, phoneNumber;
+  String? name, username, email, phoneNumber, token. linkdata;
   FocusNode nameFocusNode = new FocusNode();
   FocusNode usernameFocusNode = new FocusNode();
   FocusNode emailFocusNode = new FocusNode();
@@ -30,7 +29,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   File profileImgFile;
 
   List<MProfile> listService = [];
-  String linkdata;
   List<AppInfo> apiinforlist = [];
   //dropdown values
   String timeZoneDropdownValue = 'Africa/Abidjan';
@@ -172,7 +170,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.only(top: 15.0, bottom: 45),
                       child: Stack(children: [
-                        (hasProfilePicPicked && profileImgFile != null)
+                        (hasProfilePicPicked)
                             ? ClipOval(
                                 child: SizedBox(
                                   width: 100,

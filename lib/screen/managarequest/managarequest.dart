@@ -1,10 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/jsonfile/read_more_text.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app/screen/managarequest/viewoffer.dart';
-import 'package:flutter_app/screen/order/orderdetail.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -162,7 +156,7 @@ print(listdeafult);
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: _selectedIndex != null && _selectedIndex == i
+                              color: _selectedIndex == i
                                   ? primarycolor
                                   : Colors.white,
                               width: 3,
@@ -181,7 +175,7 @@ print(listdeafult);
                             child: Text(
                               nDataList.requestStatus.substring(0,1).toUpperCase() +nDataList.requestStatus.substring(1) + " ("+nDataList.count+")",
                               style: TextStyle(
-                                color: _selectedIndex != null && _selectedIndex == i
+                                color: _selectedIndex == i
                                     ? primarycolor
                                     : Colors.black,
                                 fontWeight: FontWeight.bold,

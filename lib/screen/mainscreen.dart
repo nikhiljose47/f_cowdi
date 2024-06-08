@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/home/home.dart';
 import 'package:flutter_app/screen/inbox/inbox.dart';
 import 'package:flutter_app/screen/notifications/notifications.dart';
-import 'package:flutter_app/screen/explore/explore.dart';
 import 'package:flutter_app/screen/others/other.dart';
-import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/screen/search/search.dart';
-import 'package:flutter_app/screen/manage/manage.dart';
 import 'package:flutter_app/services/api.dart';
 
 void main() async {
@@ -80,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   primaryColor: Colors.red,
                   textTheme: Theme.of(context)
                       .textTheme
-                      .copyWith(caption: new TextStyle(color: Colors.black))),
+                      .copyWith(bodySmall: new TextStyle(color: Colors.black))),
               child: BottomNavigationBar(
                 onTap: (newIndex) => setState(() => menuvalue = newIndex),
                 currentIndex: menuvalue,
