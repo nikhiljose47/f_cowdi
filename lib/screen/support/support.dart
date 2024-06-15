@@ -19,35 +19,35 @@ class _supportState extends State<support>{
   FocusNode messageFocusNode = new FocusNode();
   FocusNode ordernumberFocusNode = new FocusNode();
   FocusNode rollFocusNode = new FocusNode();
-  String? subject;
-  String? Message;
-  String? ordernumber;
-  String? roll;
+  String subject;
+  String Message;
+  String ordernumber;
+  String roll;
   List<TypesArr> listService = [];
   var loading = false;
-  String? _mySelection;
+  String _mySelection;
   String token = "";
   String _path = '...';
   String _fileName = '...';
-  FileType? _pickingType;
-  String? _extension;
+  FileType _pickingType;
+  String _extension;
   final subjectHolder = TextEditingController();
   final MessageHolder = TextEditingController();
   final ordernumberHolder = TextEditingController();
   final rollHolder = TextEditingController();
 
   void _openFileExplorer() async {
-    try {
-      _path = await FilePicker.getFilePath(type: _pickingType, fileExtension: _extension);
-    } on PlatformException catch (e) {
-      print("Unsupported operation" + e.toString());
-    }
+    // try {
+    //   _path = await FilePicker.getFilePath(type: _pickingType, fileExtension: _extension);
+    // } on PlatformException catch (e) {
+    //   print("Unsupported operation" + e.toString());
+    // }
 
-    if (!mounted) return;
+    // if (!mounted) return;
 
-    setState(() {
-      _fileName = _path != null ? _path.split('/').last : '...';
-    });
+    // setState(() {
+    //   _fileName = _path != null ? _path.split('/').last : '...';
+    // });
 
   }
   check() {

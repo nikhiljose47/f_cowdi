@@ -85,16 +85,16 @@ class ConversationArr {
   MessageStatus messageStatus;
 
   ConversationArr({
-    this.messageId,
-    this.messageGroupId,
-    this.senderName,
-    this.senderImage,
-    this.message,
-    this.messageFile,
-    this.dateTime,
-    this.filetype,
-    this.filename,
-    this.messageStatus,
+     this.messageId,
+     this.messageGroupId,
+     this.senderName,
+     this.senderImage,
+     this.message,
+     this.messageFile,
+     this.dateTime,
+     this.filetype,
+     this.filename,
+     this.messageStatus,
   });
 
   factory ConversationArr.fromMap(Map<String, dynamic> json) => ConversationArr(
@@ -140,7 +140,7 @@ final senderNameValues = EnumValues({
 
 class EnumValues<T> {
   Map<String, T> map;
-  Map<T, String?> reverseMap;
+  Map<T, String> reverseMap;
 
   EnumValues(this.map);
 

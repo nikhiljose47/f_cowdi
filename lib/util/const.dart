@@ -29,7 +29,7 @@ class Constants {
           fontWeight: FontWeight.w800,
         ),
       ).titleLarge,
-    ), textSelectionTheme: TextSelectionThemeData(cursorColor: lightAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: lightAccent), colorScheme: ColorScheme(surface: lightBG),
+    ), textSelectionTheme: TextSelectionThemeData(cursorColor: lightAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: lightAccent),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -50,7 +50,7 @@ class Constants {
           fontWeight: FontWeight.w800,
         ),
       ).titleLarge,
-    ), textSelectionTheme: TextSelectionThemeData(cursorColor: darkAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: darkAccent), colorScheme: ColorScheme(surface: darkBG),
+    ), textSelectionTheme: TextSelectionThemeData(cursorColor: darkAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: darkAccent),
   );
 
   static List<String> countryNames = [

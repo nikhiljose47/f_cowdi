@@ -14,7 +14,7 @@ class PushNotification extends StatefulWidget{
   }
 }
 class _PushNotificationState extends State<PushNotification> {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
   var inboxMessages;
   var orderMessages;
   var orderUpdates;
@@ -359,7 +359,7 @@ class _PushNotificationState extends State<PushNotification> {
           inboxMessages == true ||  orderMessages == true || orderUpdates == true || buyerRequests == true || myProposals == true || myAccounts == true ? Expanded(
             child: Align(
               alignment: FractionalOffset.bottomCenter,
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: showNotification,
                 child: Text('TEST PUSH NOTIFICATION',style:TextStyle(fontSize: 15.0),),
                 color: Colors.purple,

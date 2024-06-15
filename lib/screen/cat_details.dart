@@ -6,12 +6,12 @@ class Cat {
   String img;
 
   Cat(
-      {this.name, this.img});
+      { this.name,  this.img});
 }
 
 class catDetailPage extends StatelessWidget {
   final Cat cat;
-  catDetailPage({Key key, this.cat}) : super(key: key);
+  catDetailPage({ Key key,  this.cat}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final topContentText = Column(

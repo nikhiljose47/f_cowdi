@@ -27,9 +27,12 @@ myBoxDecorationfirst() {
 class _invitePage extends State<invitePage> {
   List<AppInfo> apiinforlist = [];
   String linkdata;
+  Uri s;
 
   Future<Null> getData() async {
-    final responseDataappinfo = await http.post( baseurl + version + sitedetails,body:{'mobile_type':Platform.isAndroid?'android':'ios'});
+    //final responseDataappinfo = await http.post( baseurl + version + sitedetails, body:{'mobile_type':Platform.isAndroid?'android':'ios'});
+    final responseDataappinfo = await http.post(s, body:{'mobile_type':Platform.isAndroid?'android':'ios'});
+
     if (responseDataappinfo.statusCode == 200) {
       final dataapinfo = responseDataappinfo.body;
       var datalist = jsonDecode(dataapinfo)['content']['app_info']  as List;
@@ -73,14 +76,7 @@ margin: EdgeInsets.only(left: 5.0,right: 5.0),
                 ListTile(
                   subtitle: Text('Introduce your friends to the fastest way to get things done.',textAlign: TextAlign.center,),
                 ),
-                TextButton(
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(5.0)),
-                  color: primarycolor,
-                  textColor: Colors.white,
-                  disabledColor: Colors.grey,
-                  disabledTextColor: Colors.black,
-                  padding: EdgeInsets.all(10.0),
-                  splashColor: Colors.grey,
+                ElevatedButton(
                   onPressed: ()
                     {
                       final RenderBox box = context.findRenderObject();

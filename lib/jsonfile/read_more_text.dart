@@ -13,16 +13,16 @@ class ReadMoreText extends StatefulWidget {
         Key key,
         this.trimExpandedText = ' read less',
         this.trimCollapsedText = ' ...read more',
-        this.colorClickableText,
+         this.colorClickableText,
         this.trimLength = 240,
         this.trimLines = 2,
         this.trimMode = TrimMode.Length,
-        this.style,
-        this.textAlign,
-        this.textDirection,
-        this.locale,
-        this.textScaleFactor,
-        this.semanticsLabel,
+         this.style,
+         this.textAlign,
+         this.textDirection,
+         this.locale,
+         this.textScaleFactor,
+         this.semanticsLabel,
       })  : super(key: key);
 
   final String data;
@@ -178,7 +178,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
           softWrap: true,
           //softWrap,
           overflow: TextOverflow.clip,
-          text: textSpan, textScaler: TextScaler.linear(textScaleFactor),
+          text: textSpan,
         );
       },
     );

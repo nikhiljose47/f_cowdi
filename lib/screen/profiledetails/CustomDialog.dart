@@ -6,10 +6,10 @@ class CustomDialog extends StatelessWidget {
   final Icon image;
   final Color colors;
   CustomDialog({
-    @required this.title,
-    @required this.content,
-    @required this.image,
-    @required this.colors
+    required this.title,
+    required this.content,
+    required this.image,
+    required this.colors
   });
 
   @override

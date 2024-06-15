@@ -7,7 +7,6 @@ import 'package:flutter_app/screen/manage/manage.dart';
 import 'package:flutter_app/screen/profiledetails/checkout.dart';
 import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
 import 'package:flutter_app/util/appinfo.dart';
-import 'package:forceupdate/forceupdate.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -46,11 +45,11 @@ class _HomeState extends State<Home> {
   List<RView> listreview = [];
   List<FProposal> firtlist = [];
   List<ODetail> customlist = [];
-  List<Container>recent = new List();
+  List<Container> recent = [];
   var loading = false;
   String title = "Title";
   String helper = "helper";
-  List<Message> messagesList;
+  List<Message> messagesList=[];
 
   _setMessage(Map<String, dynamic> message) {
     final notification = message['notification'];
@@ -160,17 +159,18 @@ class _HomeState extends State<Home> {
     }
 
   updateApp() async {
-    final checkVersion = CheckVersion(context: context);
-    final appStatus = await checkVersion.getVersionStatus();
-    if (appStatus.canUpdate) {
-      checkVersion.showUpdateDialog("com.cowdiar.mobileapp", "id1533802270");
-      print("canUpdate ${appStatus.canUpdate}");
-      print("localVersion ${appStatus.localVersion}");
-      print("appStoreLink ${appStatus.appStoreUrl}");
-      print("storeVersion ${appStatus.storeVersion}");
-    } else {
-      print('Update version');
-    }
+    //commented
+    // final checkVersion = CheckVersion(context: context);
+    // final appStatus = await checkVersion.getVersionStatus();
+    // if (appStatus.canUpdate) {
+    //   checkVersion.showUpdateDialog("com.cowdiar.mobileapp", "id1533802270");
+    //   print("canUpdate ${appStatus.canUpdate}");
+    //   print("localVersion ${appStatus.localVersion}");
+    //   print("appStoreLink ${appStatus.appStoreUrl}");
+    //   print("storeVersion ${appStatus.storeVersion}");
+    // } else {
+    //   print('Update version');
+    // }
   }
 
   _setFavourite(List list, int index){
@@ -613,16 +613,8 @@ class _HomeState extends State<Home> {
                                             padding: EdgeInsets.only(
                                                 left: 15, right: 10),
                                             child: Column(children: <Widget>[
-                                              RaisedButton(
-                                                color: Colors.lightGreen,
-                                                textColor: Colors.white,
-                                                padding: EdgeInsets.fromLTRB(
-                                                    10, 10, 10, 10),
-                                                splashColor: Colors.grey,
-                                                shape: new RoundedRectangleBorder(
-                                                    borderRadius:
-                                                    new BorderRadius.circular(
-                                                        5.0)),
+                                              ElevatedButton(
+
                                                 onPressed: () {     Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                     builder: (BuildContext context) {
@@ -638,15 +630,7 @@ class _HomeState extends State<Home> {
                                                     )),
                                               ),
                                             ])),
-                                        RaisedButton(
-                                          color: primarycolor,
-                                          textColor: Colors.white,
-                                          padding:
-                                          EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                          splashColor: Colors.grey,
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                              new BorderRadius.circular(5.0)),
+                                        ElevatedButton(
                                           onPressed: () {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
@@ -964,12 +948,9 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body:  WillPopScope(
+      body:  PopScope(
         //Wrap out body with a `WillPopScope` widget that handles when a user is cosing current route
-        onWillPop: () async {
-          Future.value(false);
-          //return a `Future` with false value so this route cant be popped or closed.
-        },
+        onPopInvoked: (x) => false,
         child: ListView(children: [
           Column(
             children: <Widget>[
@@ -1143,7 +1124,7 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.only(bottom: 0, top: 5),
                 // alignment: FractionalOffset(1.0, 1.0),
                 width: MediaQuery.of(context).size.width,
-                height: Theme.of(context).textTheme.displayLarge.fontSize * 1.1 +  25,
+                height: Theme.of(context).textTheme.displayLarge!.fontSize! * 1.1 +  25,
                 child: loading
                     ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(primarycolor)))
                     : ListView.builder(

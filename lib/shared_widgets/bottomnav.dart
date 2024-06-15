@@ -132,7 +132,7 @@ class MyBottomNavigationBar extends StatefulWidget {
   /// [MyBottomNavigationBarType.shifting] then [fixedColor] is ignored.
   MyBottomNavigationBar({
     Key key,
-    @required this.items,
+    this.items,
     this.onTap,
     this.currentIndex = 0,
     MyBottomNavigationBarType type,
@@ -606,10 +606,10 @@ class _BottomNavigationBarState extends State<MyBottomNavigationBar> with Ticker
 // Describes an animating color splash circle.
 class _Circle {
   _Circle({
-    @required this.state,
-    @required this.index,
-    @required this.color,
-    @required TickerProvider vsync,
+     this.state,
+     this.index,
+     this.color,
+     TickerProvider vsync,
   }) {
     controller = AnimationController(
       duration: kThemeAnimationDuration,
@@ -651,8 +651,8 @@ class _Circle {
 // Paints the animating color splash circles.
 class _RadialPainter extends CustomPainter {
   _RadialPainter({
-    @required this.circles,
-    @required this.textDirection,
+     this.circles,
+     this.textDirection,
   });
 
   final List<_Circle> circles;

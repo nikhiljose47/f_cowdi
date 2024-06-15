@@ -5,7 +5,6 @@ import 'package:flutter_app/screen/profiledetails/cart.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class checkout extends StatefulWidget {
   final String checkoutlink ,token;//if you have multiple values add here

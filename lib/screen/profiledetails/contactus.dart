@@ -25,7 +25,7 @@ class _contactdetailpageState extends State<contactdetailpage> {
   String _fileName = '...';
   String _path = '...';
   String? _extension;
-  FileType _pickingType;
+  FileType? _pickingType;
   final _key = new GlobalKey<FormState>();
   TextEditingController _controller = new TextEditingController();
   Color myGreen = Color(0xff4bb17b);

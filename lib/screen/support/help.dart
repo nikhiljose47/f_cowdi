@@ -84,17 +84,13 @@ class _helpState extends State<help>{
               alignment:FractionalOffset.topCenter,
               child: Padding(
                 padding: EdgeInsets.only(top:16.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: (){ Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) =>buyer() ),
                   );
                   },
                   child: Text("BUYER HELP CENTER"),
-                  color: primarycolor,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(18.0),
-                  splashColor: Colors.grey,
                 ),
               ),
             ),

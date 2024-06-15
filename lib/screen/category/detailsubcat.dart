@@ -9,7 +9,7 @@ import 'package:flutter_app/util/subcat.dart';
 
 class subcatDetails extends StatefulWidget {
   final String subcatlink, title;//if you have multiple values add here
-  subcatDetails(this.subcatlink, this.title, {Key key}): super(key: key);
+  subcatDetails(this.subcatlink, this.title, {required Key key}): super(key: key);
 
   @override
   _subcatDetailsState createState() => _subcatDetailsState();

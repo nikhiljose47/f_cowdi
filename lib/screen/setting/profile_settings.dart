@@ -17,7 +17,7 @@ class ProfileSettings extends StatefulWidget {
 }
 
 class _ProfileSettingsState extends State<ProfileSettings> {
-  String? name, username, email, phoneNumber, token. linkdata;
+  String name, username, email, phoneNumber, token, linkdata;
   FocusNode nameFocusNode = new FocusNode();
   FocusNode usernameFocusNode = new FocusNode();
   FocusNode emailFocusNode = new FocusNode();

@@ -22,15 +22,15 @@ class ExpansionTile extends StatefulWidget {
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
   const ExpansionTile({
-    Key key,
+     Key key,
     this.headerBackgroundColor,
-    this.leading,
-    @required this.title,
+     this.leading,
+     this.title,
     this.backgroundColor,
-    this.iconColor,
-    this.onExpansionChanged,
+     this.iconColor,
+     this.onExpansionChanged,
     this.children = const <Widget>[],
-    this.trailing,
+     this.trailing,
     this.initiallyExpanded = false,
   })  : super(key: key);
 
@@ -90,12 +90,12 @@ class _ExpansionTileState extends State<ExpansionTile>
   final ColorTween _backgroundColorTween = ColorTween();
 
   AnimationController _controller;
-  Animation<double>? _iconTurns;
-  Animation<double>? _heightFactor;
-  Animation<Color>? _borderColor;
-  Animation<Color>? _headerColor;
-  Animation<Color>? _iconColor;
-  Animation<Color>? _backgroundColor;
+  Animation<double> _iconTurns;
+  Animation<double> _heightFactor;
+  Animation<Color> _borderColor;
+  Animation<Color> _headerColor;
+  Animation<Color> _iconColor;
+  Animation<Color> _backgroundColor;
 
   bool _isExpanded = false;
 

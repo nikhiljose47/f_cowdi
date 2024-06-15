@@ -11,7 +11,7 @@ class logout extends StatefulWidget {
 class logoutState extends State<logout>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
-  Animation<double>? scaleAnimation;
+  Animation<double> scaleAnimation;
 
   @override
   void initState() {
@@ -73,10 +73,7 @@ class logoutState extends State<logout>
                         child: ButtonTheme(
                           height: 35.0,
                           minWidth: 110.0,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            color: primarycolor[200],
+                          child: ElevatedButton(
                             onPressed: (){  Navigator.pop(context);},
                             child: Text(
                               'No',
@@ -94,10 +91,7 @@ class logoutState extends State<logout>
                         child:  ButtonTheme(
                           height: 35.0,
                           minWidth: 110.0,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            color: primarycolor,
+                          child: ElevatedButton(
                             onPressed: () async {
                               SharedPreferences prefs = await SharedPreferences.getInstance();
                               prefs.remove("token");

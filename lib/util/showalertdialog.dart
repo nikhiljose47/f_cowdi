@@ -5,7 +5,7 @@ class ShowAlertDialog extends StatelessWidget {
   final String title;
   final String content;
 
- ShowAlertDialog({Key key, this.context, @required this.title, this.content}) : super(key: key);
+ ShowAlertDialog({Key key, this.context, this.title, this.content}) : super(key: key);
 
   @override  
   Widget build(context) { 
