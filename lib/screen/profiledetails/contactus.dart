@@ -21,11 +21,11 @@ class contactdetailpage extends StatefulWidget {
 enum LoginStatus { newmessage, messagesend }
 class _contactdetailpageState extends State<contactdetailpage> {
   ScrollController _scrollController = ScrollController();
-  File? _file;
+  File _file;
   String _fileName = '...';
   String _path = '...';
-  String? _extension;
-  FileType? _pickingType;
+  String _extension;
+  FileType _pickingType;
   final _key = new GlobalKey<FormState>();
   TextEditingController _controller = new TextEditingController();
   Color myGreen = Color(0xff4bb17b);
@@ -33,12 +33,13 @@ class _contactdetailpageState extends State<contactdetailpage> {
   var textvalue;
   List<ConversationArr> friendsLists = [];
   var loading = false;
-  String? topimage;
+  String topimage;
   String token = "";
-  String? friendsList;
+  String friendsList;
 
   Future getFile() async {
-    File file = await FilePicker.getFile();
+        FilePickerResult result = await FilePicker.platform.pickFiles();
+    File file = File(result.files.single.path);
 
     setState(() {
       _file = file;
@@ -136,7 +137,7 @@ class _contactdetailpageState extends State<contactdetailpage> {
     });
     final linkdata = widget.messagegropid;
     print(baseurl + version + contactuspage);
-    final responseData = await http.post(baseurl + version + contactuspage,
+    final responseData = await http.post(Uri.parse(baseurl + version + contactuspage),
         body: {'receiver_id': widget.messagegropid},
         headers: {'Auth': token});
     print(responseData.statusCode);
@@ -333,7 +334,7 @@ class _contactdetailpageState extends State<contactdetailpage> {
                                                       'SophiaNubian',
                                                     ),
                                                   ),
-                                                  color: Colors.white,
+                                                 
                                                   onPressed: () {
                                                     _uploadFile(_file);
                                                   },

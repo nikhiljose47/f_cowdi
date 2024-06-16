@@ -30,7 +30,7 @@ class _invitePage extends State<invitePage> {
   Uri s;
 
   Future<Null> getData() async {
-    //final responseDataappinfo = await http.post( baseurl + version + sitedetails, body:{'mobile_type':Platform.isAndroid?'android':'ios'});
+    //final responseDataappinfo = await http.post( Uri.parse(baseurl + version + sitedetails), body:{'mobile_type':Platform.isAndroid?'android':'ios'});
     final responseDataappinfo = await http.post(s, body:{'mobile_type':Platform.isAndroid?'android':'ios'});
 
     if (responseDataappinfo.statusCode == 200) {

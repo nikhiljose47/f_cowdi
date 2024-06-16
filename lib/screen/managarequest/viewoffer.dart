@@ -27,7 +27,7 @@ class _viewofferState extends State<viewoffer> {
       loading = true;
     });
     print(baseurl + version  + manage);
-    final responseData = await http.post(baseurl + version  + viewofferlink ,
+    final responseData = await http.post(Uri.parse(baseurl + version  + viewofferlink ),
         body: {"request_id": widget.orderid},
         headers: {'Auth': token}
     );

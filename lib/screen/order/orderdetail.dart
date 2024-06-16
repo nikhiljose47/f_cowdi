@@ -19,13 +19,13 @@ class orderpage extends StatefulWidget {
 }
 
 class _orderpageState extends State<orderpage> {
-  File? _file;
+  File _file;
   bool _showBottom = false;
   String _fileName = '...';
   ScrollController _scrollController = ScrollController();
   String _path = '...';
   String _extension;
-  FileType? _pickingType;
+  FileType _pickingType;
   final _key = new GlobalKey<FormState>();
   TextEditingController _controller = new TextEditingController();
   Color myGreen = Color(0xff4bb17b);
@@ -34,11 +34,12 @@ class _orderpageState extends State<orderpage> {
   List<ODetail> listorder = [];
   List<ConversationArr> friendsLists = [];
   var loading = false;
-  String? topimage;
+  String topimage;
   String token = "";
 
   Future getFile() async {
-    File file = await FilePicker.getFile();
+        FilePickerResult result = await FilePicker.platform.pickFiles();
+    File file = File(result.files.single.path);
 
     setState(() {
       _file = file;
@@ -136,7 +137,7 @@ class _orderpageState extends State<orderpage> {
     final linkdata = widget.orderid;
     print(linkdata);
     print(baseurl + version + orderdetails);
-    final responseData = await http.post(baseurl + version + orderdetails,
+    final responseData = await http.post(Uri.parse(baseurl + version + orderdetails),
         body: {'order_id': widget.orderid}, headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final data = responseData.body;
@@ -737,8 +738,7 @@ class _orderpageState extends State<orderpage> {
                                                                         'SophiaNubian',
                                                                   ),
                                                                 ),
-                                                                color: Colors
-                                                                    .white,
+                                                                
                                                                 onPressed: () {
                                                                   _uploadFile(
                                                                       _file);

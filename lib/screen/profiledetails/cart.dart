@@ -30,7 +30,7 @@ class cartPage extends State<cart> {
     print(count);
     print(token);
     print(productid);
-    final response = await http.post(baseurl + version + changecart,
+    final response = await http.post(Uri.parse(baseurl + version + changecart),
         body: {"proposal_id": productid, "proposal_qty": count},
         headers: {'Auth': token});
 
@@ -59,7 +59,7 @@ class cartPage extends State<cart> {
     print("index");
     print(token);
     print(productid);
-    final response = await http.post(baseurl + version + removecart,
+    final response = await http.post(Uri.parse(baseurl + version + removecart),
         body: {"proposal_id": productid}, headers: {'Auth': token});
 
     final data = jsonDecode(response.body);
@@ -79,7 +79,7 @@ class cartPage extends State<cart> {
   }
 
   loginToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
@@ -99,7 +99,7 @@ class cartPage extends State<cart> {
     });
 
     final responseData = await http
-        .get(baseurl + version + cartpagelink, headers: {'Auth': token});
+        .get(Uri.parse(baseurl + version + cartpagelink), headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var listsCArr = jsonDecode(data)['content']['cartDetails'] as List;

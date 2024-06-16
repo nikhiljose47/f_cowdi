@@ -9,7 +9,26 @@ class terms extends StatefulWidget {
 }
 
 class termsState extends State<terms> {
-  Completer<WebViewController> _controller = Completer<WebViewController>();
+  var _controller = WebViewController()
+  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  ..setBackgroundColor(const Color(0x00000000))
+  ..setNavigationDelegate(
+    NavigationDelegate(
+      onProgress: (int progress) {
+        // Update loading bar.
+      },
+      onPageStarted: (String url) {},
+      onPageFinished: (String url) {},
+      onWebResourceError: (WebResourceError error) {},
+      onNavigationRequest: (NavigationRequest request) {
+        if (request.url.startsWith('')) {
+          return NavigationDecision.prevent;
+        }
+        return NavigationDecision.navigate;
+      },
+    ),
+  )
+  ..loadRequest(Uri.parse(baseurl+termslink));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +40,7 @@ class termsState extends State<terms> {
         ),),
         centerTitle: true,
       ),
-      body: WebView(
-        initialUrl: baseurl+termslink,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-        },
-      ),
+      body: WebViewWidget(controller: _controller),
     );
 
   }

@@ -9,7 +9,7 @@ import 'package:flutter_app/util/subcat.dart';
 
 class subcatDetails extends StatefulWidget {
   final String subcatlink, title;//if you have multiple values add here
-  subcatDetails(this.subcatlink, this.title, {required Key key}): super(key: key);
+  subcatDetails(this.subcatlink, this.title, {Key key}): super(key: key);
 
   @override
   _subcatDetailsState createState() => _subcatDetailsState();
@@ -26,7 +26,7 @@ class _subcatDetailsState extends State<subcatDetails> {
     });
     final linkdata = '/'+ widget.subcatlink;
     print(baseurl + version  + linkdata);
-    final responseData = await http.get( baseurl + version  + linkdata);
+    final responseData = await http.get(Uri.parse(baseurl + version  + linkdata));
     if (responseData.statusCode == 200) {
 
       final data = responseData.body;

@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:flutter_app/util/support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/services.dart';
+
 class support extends StatefulWidget{
   final int index;
   support(this.index);
@@ -63,7 +63,7 @@ class _supportState extends State<support>{
       token = preferences.getString("token");
     });
    final response = await http
-          .post(baseurl +version+ sendfeedback, body: {
+          .post(Uri.parse(baseurl +version+ sendfeedback), body: {
         "enquiry_type": _mySelection,
         "subject": subject,
         "message": Message,
@@ -101,7 +101,7 @@ class _supportState extends State<support>{
       token = preferences.getString("token");
     });
     final response = await http
-        .post(baseurl +version+ sendfeedback, body: {
+        .post(Uri.parse(baseurl +version+ sendfeedback), body: {
       "enquiry_type": _mySelection,
       "subject": subject,
       "message": Message,
@@ -136,7 +136,7 @@ class _supportState extends State<support>{
       token = preferences.getString("token");
     });
     final response = await http
-        .post(baseurl +version+ sendfeedback, body: {
+        .post(Uri.parse(baseurl +version+ sendfeedback), body: {
       "enquiry_type": _mySelection,
       "subject": subject,
       "message": Message,
@@ -171,7 +171,7 @@ class _supportState extends State<support>{
       token = preferences.getString("token");
     });
     final response = await http
-        .post(baseurl +version+ sendfeedback, body: {
+        .post(Uri.parse(baseurl +version+ sendfeedback), body: {
       "enquiry_type": _mySelection,
       "subject": subject,
       "message": Message,
@@ -193,7 +193,8 @@ class _supportState extends State<support>{
     }
   }
   registerToast(String toast) {
-    return FlutterToast.showToast(
+
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
@@ -209,8 +210,8 @@ class _supportState extends State<support>{
       loading = true;
     });
 
-    final responseData = await http.get(
-       baseurl+version+getenquirytypes, headers: {'Auth': token});
+    final responseData = await http.get(Uri.parse(baseurl+version+getenquirytypes)
+       , headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var listservices = jsonDecode(data)['content']['typesArr'] as List;
@@ -408,7 +409,7 @@ class _supportState extends State<support>{
                             ),
                           ),
                           SizedBox(height: 15),
-                          OutlineButton(
+                          OutlinedButton(
 
                             onPressed: () {
                               _openFileExplorer();
@@ -525,7 +526,7 @@ class _supportState extends State<support>{
                           ),
 
                           SizedBox(height: 15),
-                          OutlineButton(
+                          ElevatedButton(
 
                             onPressed: () {
                               _openFileExplorer();
@@ -643,7 +644,7 @@ class _supportState extends State<support>{
                           ),
 
                           SizedBox(height: 15),
-                          OutlineButton(
+                          OutlinedButton(
 
                             onPressed: () {
                               _openFileExplorer();
@@ -761,7 +762,7 @@ class _supportState extends State<support>{
                           ),
 
                           SizedBox(height: 15),
-                          OutlineButton(
+                          OutlinedButton(
 
                             onPressed: () {
                               _openFileExplorer();

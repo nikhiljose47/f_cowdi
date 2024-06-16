@@ -68,7 +68,8 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
   }
 
   Future getFile() async {
-    File file = await FilePicker.getFile();
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+    File file = File(result.files.single.path);
 
     setState(() {
       _file = file;
@@ -170,7 +171,7 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
     print(linkdata);
     print(baseurl + version + inboxdetails);
     final responseData =
-        await http.post(baseurl + version + inboxdetails, body: {
+        await http.post(Uri.parse(baseurl + version + inboxdetails), body: {
       'message_group_id': widget.messagegropid,
     }, headers: {
       'Auth': token
@@ -376,7 +377,7 @@ class _InboxdetailpageState extends State<Inboxdetailpage> {
                                                             'SophiaNubian',
                                                       ),
                                                     ),
-                                                    color: Colors.white,
+                                                    
                                                     onPressed: () {
                                                       _uploadFile(_file);
                                                     },

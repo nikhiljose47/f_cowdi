@@ -1,8 +1,5 @@
 import 'dart:convert';
-import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter_app/screen/profiledetails/profiledetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/services/api.dart';
@@ -24,7 +21,7 @@ class _searchState extends State<search> {
     String text = editingController.text;
     print(text);
 
-    final responseData = await http.post(baseurl + version + searchurl, body: {
+    final responseData = await http.post(Uri.parse(baseurl + version + searchurl), body: {
       "search_string": text,
     });
     if (responseData.statusCode == 200) {
@@ -41,7 +38,7 @@ class _searchState extends State<search> {
 
   Future _printLatestValue() async {
     String text = editingController.text;
-    final responseData = await http.post(baseurl + version + searchurl, body: {
+    final responseData = await http.post(Uri.parse(baseurl + version + searchurl), body: {
       "search_string": text,
     });
     if (responseData.statusCode == 200) {
@@ -91,12 +88,6 @@ class _searchState extends State<search> {
             Padding(
               padding: const EdgeInsets.all(0.0),
               child: TextButton(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.grey)),
-                color: Colors.white,
-                textColor: Colors.grey,
-                padding: EdgeInsets.all(8.0),
                 onPressed: () {},
                 child: Text(
                   "Style",
@@ -109,12 +100,6 @@ class _searchState extends State<search> {
             Padding(
               padding: const EdgeInsets.only(left: 2, right: 2),
               child: TextButton(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.grey)),
-                color: Colors.white,
-                textColor: Colors.grey,
-                padding: EdgeInsets.all(8.0),
                 onPressed: () {},
                 child: Text(
                   "Seller's Experience",
@@ -127,12 +112,6 @@ class _searchState extends State<search> {
             Padding(
               padding: const EdgeInsets.all(0.0),
               child: TextButton(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.grey)),
-                color: Colors.white,
-                textColor: Colors.grey,
-                padding: EdgeInsets.all(8.0),
                 onPressed: () {},
                 child: Text(
                   "Editiable",

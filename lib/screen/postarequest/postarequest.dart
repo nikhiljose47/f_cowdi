@@ -58,7 +58,7 @@ class _postarequestState extends State<postarequest> {
     print(dropdownValue);
     print(datacurrenct);
     final response = await http
-        .post(baseurl+version+postrequest, body: {
+        .post(Uri.parse(baseurl+version+postrequest), body: {
       "cat_id": _mySelection,
       "child_id": _mySelection2,
       "request_title": title,
@@ -89,7 +89,7 @@ class _postarequestState extends State<postarequest> {
   }
 
   postreToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
@@ -101,8 +101,8 @@ class _postarequestState extends State<postarequest> {
       loading = true;
     });
 
-    final responseData = await http.get(
-        baseurl+version+categorylink);
+    final responseData = await http.get(Uri.parse(baseurl+version+categorylink)
+        );
     print("file");
     print(_mySelection);
     if (responseData.statusCode == 200) {
@@ -120,8 +120,8 @@ class _postarequestState extends State<postarequest> {
 
   }
   Future<Null> getDatadate() async {
-      final responseDatas = await http.get(
-          baseurl + version + deliverapidate );
+      final responseDatas = await http.get(Uri.parse(baseurl + version + deliverapidate)
+           );
       final datas = responseDatas.body;
       var datedeli = jsonDecode(datas)['content']['deliveryArr'] as List;
       datacurrenct = jsonDecode(datas)['content']['currencyArr'][0]['symbol'];
@@ -134,8 +134,8 @@ class _postarequestState extends State<postarequest> {
   }
   Future<Null> getDatas() async {
     listsubcat.clear();
-    final responseDatas = await http.get(
-         baseurl+version+subcatlink + _mySelection);
+    final responseDatas = await http.get(Uri.parse(baseurl+version+subcatlink + _mySelection)
+         );
     final datas = responseDatas.body;
     var subcat = jsonDecode(datas)['content']['sCArr'] as List;
     print(subcat);

@@ -26,7 +26,7 @@ class _manageeqState extends State<manageeq> {
     setState(() {
       loading2 = true;
     });
-  final responseData = await http.post(baseurl + version + manrequestlink,
+  final responseData = await http.post(Uri.parse(baseurl + version + manrequestlink),
       body: {"status": items},
       headers: {'Auth': token});
   if (responseData.statusCode == 200) {
@@ -52,7 +52,7 @@ class _manageeqState extends State<manageeq> {
       loading = true;
     });
     print(baseurl + version  + manage);
-    final responseData = await http.post(baseurl + version  + manrequestlink,
+    final responseData = await http.post(Uri.parse(baseurl + version  + manrequestlink),
         headers: {'Auth': token}
         );
     if (responseData.statusCode == 200) {
@@ -83,7 +83,7 @@ print(listdeafult);
       token = preferences.getString("token");
     });
     print(baseurl + version  + manage);
-    final responseData = await http.post(baseurl + version  + requestlink,
+    final responseData = await http.post(Uri.parse(baseurl + version  + requestlink),
         body: {
           'request_id': requestId,
           'request_status': valuest,
@@ -106,7 +106,7 @@ print(listdeafult);
     }
   }
   postreToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
@@ -313,8 +313,6 @@ print(listdeafult);
                                                         width: MediaQuery.of(context).size.width/1.1,
                                                         child:  TextButton(
                                                           child: Center (child: Text('NO OFFER YET')),
-                                                          color: primarycolor[200],
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard2.requestId,"pause");
                                                             getData();
@@ -333,8 +331,6 @@ print(listdeafult);
                                                           child: Center (
                                                               child: Text('Active')
                                                           ),
-                                                          color: primarycolor,
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard2.requestId, "active");
                                                             getData();
@@ -345,8 +341,6 @@ print(listdeafult);
                                                         width: MediaQuery.of(context).size.width/3.4,
                                                         child: TextButton(
                                                           child: Center (child: Text('Dalete')),
-                                                          color: primarycolor,
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard2.requestId,"delete");
                                                             getData();
@@ -361,8 +355,6 @@ print(listdeafult);
                                                         width: MediaQuery.of(context).size.width/3.4,
                                                         child: TextButton(
                                                           child: Center (child: Text('Dalete')),
-                                                          color: primarycolor,
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard2.requestId,"delete");
                                                             getData();
@@ -377,8 +369,6 @@ print(listdeafult);
                                                         width: MediaQuery.of(context).size.width/3.4,
                                                         child: TextButton(
                                                           child: Center (child: Text('Dalete')),
-                                                          color: primarycolor,
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard2.requestId,"delete");
                                                             getData();
@@ -503,8 +493,6 @@ print(listdeafult);
                                                         width: MediaQuery.of(context).size.width/1.1,
                                                         child:  TextButton(
                                                           child: Center (child: Text('NO OFFER YET')),
-                                                          color: primarycolor[200],
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard.requestId,"pause");
                                                             getListViewItems("active");
@@ -520,10 +508,7 @@ print(listdeafult);
                                                         width: MediaQuery.of(context).size.width/1.1,
                                                         child: TextButton(
                                                           child: Center (
-                                                              child: Text('Active')
-                                                          ),
-                                                          color: primarycolor[200],
-                                                          textColor: Colors.white,
+                                                              child: Text('Active')),
                                                           onPressed: () {
                                                             active(datacard.requestId, "active");
                                                             getListViewItems("active");
@@ -541,8 +526,6 @@ print(listdeafult);
                                                           child: Center (
                                                               child: Text('Active')
                                                           ),
-                                                          color: primarycolor[200],
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard.requestId, "active");
                                                             getListViewItems("active");
@@ -557,8 +540,6 @@ print(listdeafult);
                                                         width: MediaQuery.of(context).size.width/1.1,
                                                         child: TextButton(
                                                           child: Center (child: Text('Dalete')),
-                                                          color: primarycolor[200],
-                                                          textColor: Colors.white,
                                                           onPressed: () {
                                                             active(datacard.requestId,"delete");
                                                             getListViewItems("active");

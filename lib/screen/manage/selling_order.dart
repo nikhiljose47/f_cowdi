@@ -29,7 +29,7 @@ class _SellingOrderState extends State<SellingOrder> {
     });
     print(items);
     print(token);
-    final responseData = await http.post( baseurl + version  + sellingorder,
+    final responseData = await http.post( Uri.parse(baseurl + version  + sellingorder),
         body: {"status": items},
         headers: {'Auth': token});
 
@@ -62,7 +62,7 @@ class _SellingOrderState extends State<SellingOrder> {
       loading = true;
     });
     print(baseurl + version  + manage);
-    final responseData = await http.get( baseurl + version  + sellingorder, headers: {'Auth': token});
+    final responseData = await http.get( Uri.parse(baseurl + version  + sellingorder), headers: {'Auth': token});
     if (responseData.statusCode == 200) {
 
       final data = responseData.body;

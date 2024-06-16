@@ -28,7 +28,7 @@ class _onlinestatusState extends State<onlinestatus> {
     });
     print(token);
 
-    final responseDatastatus = await http.get( baseurl + version + statuscheck, headers: {'Auth': token});
+    final responseDatastatus = await http.get( Uri.parse(baseurl + version + statuscheck), headers: {'Auth': token});
     if (responseDatastatus.statusCode == 200) {
       final data = responseDatastatus.body;
       var listservicesstus = jsonDecode(data)['content']['seller_status'] as String;
@@ -61,7 +61,7 @@ class _onlinestatusState extends State<onlinestatus> {
       print("innertrur");
       final response = await http
           .post(
-          baseurl+version+updateonlinestatus, body: {
+          Uri.parse(baseurl+version+updateonlinestatus), body: {
         "online_status": "online",
       }, headers: {'Auth': token});
       final data = response.body;
@@ -76,7 +76,7 @@ class _onlinestatusState extends State<onlinestatus> {
       print("innerfalse");
       final response = await http
           .post(
-         baseurl+version+updateonlinestatus, body: {
+         Uri.parse(baseurl+version+updateonlinestatus), body: {
         "online_status": "offline",
       }, headers: {'Auth': token});
       final data = response.body;
@@ -91,7 +91,7 @@ class _onlinestatusState extends State<onlinestatus> {
 
   }
   postreToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,

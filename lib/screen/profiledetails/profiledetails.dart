@@ -63,7 +63,7 @@ class _profiledetailpageState extends State<profiledetailpage> {
       loading = true;
     });
 
-    final response = await http.post(baseurl + version + addcartpage, body: {
+    final response = await http.post(Uri.parse(baseurl + version + addcartpage), body: {
       "proposal_id": package,
       "package_id": product,
       "proposal_qty": quenty
@@ -99,7 +99,7 @@ print(response);
   }
 
   loginToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
@@ -117,7 +117,7 @@ print(response);
     });
 
     final responseData =
-        await http.get(baseurl + version + url, headers: {'Auth': token});
+        await http.get(Uri.parse(baseurl + version + url), headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var recents = jsonDecode(data)['content']['rViews'] as List;
@@ -142,7 +142,7 @@ print(response);
 
     final linkdata = '/' + widget.links;
     final responseData = await http
-        .get(baseurl + version + linkdata, headers: {'Auth': token});
+        .get(Uri.parse(baseurl + version + linkdata), headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       print(baseurl + version + linkdata);
@@ -1120,7 +1120,7 @@ print(response);
                                     child: datapass.images.length != 1
                                         ? CarouselSlider.builder(
                                             itemCount: datapass.images.length,
-                                            itemBuilder: (context, index) {
+                                            itemBuilder: (context, index, int) {
                                               return Container(
                                                   child: Image.network(
                                                 datapass.images[index],
@@ -1641,8 +1641,6 @@ print(response);
                                                         left: 20),
                                                     child: TextButton(
                                                       child: Text('Log In '),
-                                                      color: primarycolor,
-                                                      textColor: Colors.white,
                                                       onPressed: () {
                                                         Navigator.push(
                                                           context,
@@ -1671,8 +1669,6 @@ print(response);
                                                               listdata[0]
                                                                   .pPackages[0]
                                                                   .price),
-                                                      color: primarycolor,
-                                                      textColor: Colors.white,
                                                       onPressed: () {
                                                         setState(() {
                                                           addcart(
@@ -1803,8 +1799,6 @@ print(response);
                                                         left: 20),
                                                     child: TextButton(
                                                       child: Text('Log In '),
-                                                      color: primarycolor,
-                                                      textColor: Colors.white,
                                                       onPressed: () {
                                                         Navigator.push(
                                                           context,
@@ -1833,8 +1827,6 @@ print(response);
                                                               listdata[0]
                                                                   .pPackages[1]
                                                                   .price),
-                                                      color: primarycolor,
-                                                      textColor: Colors.white,
                                                       onPressed: () {
                                                         setState(() {
                                                           addcart(
@@ -1961,8 +1953,6 @@ print(response);
                                                         left: 20),
                                                     child: TextButton(
                                                       child: Text('Log In '),
-                                                      color: primarycolor,
-                                                      textColor: Colors.white,
                                                       onPressed: () {
                                                         Navigator.push(
                                                           context,
@@ -1991,8 +1981,6 @@ print(response);
                                                               listdata[0]
                                                                   .pPackages[2]
                                                                   .price),
-                                                      color: primarycolor,
-                                                      textColor: Colors.white,
                                                       onPressed: () {
                                                         setState(() {
                                                           addcart(

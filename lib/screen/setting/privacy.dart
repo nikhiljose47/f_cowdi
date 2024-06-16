@@ -9,7 +9,26 @@ class privacy extends StatefulWidget {
 }
 
 class privacyState extends State<privacy> {
-  Completer<WebViewController> _controller = Completer<WebViewController>();
+ final _controller = WebViewController()
+  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  ..setBackgroundColor(const Color(0x00000000))
+  ..setNavigationDelegate(
+    NavigationDelegate(
+      onProgress: (int progress) {
+        // Update loading bar.
+      },
+      onPageStarted: (String url) {},
+      onPageFinished: (String url) {},
+      onWebResourceError: (WebResourceError error) {},
+      onNavigationRequest: (NavigationRequest request) {
+        if (request.url.startsWith('https://www.youtube.com/')) {
+          return NavigationDecision.prevent;
+        }
+        return NavigationDecision.navigate;
+      },
+    ),
+  )
+  ..loadRequest(Uri.parse(baseurl + version + privacypolicy));
   @override
   Widget build(BuildContext context) {
     print(baseurl + version + privacypolicy);
@@ -25,13 +44,7 @@ class privacyState extends State<privacy> {
         ),
         centerTitle: true,
       ),
-      body: WebView(
-        initialUrl: baseurl + version + privacypolicy,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-        },
-      ),
+      body: WebViewWidget(controller: _controller)
     );
   }
 }

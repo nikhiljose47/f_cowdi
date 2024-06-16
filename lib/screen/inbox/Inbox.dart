@@ -18,7 +18,7 @@ class _InboxpageState extends State<Inboxpage> {
   int _selectedIndex = 0;
   String token = "";
   List<InboxArr> listSCArr = [];
-  String? choice;
+  String choice;
   String items="all";
   var loading = false;
 
@@ -33,7 +33,7 @@ class _InboxpageState extends State<Inboxpage> {
       loading = true;
     });
     print(choice);
-    final responseData = await http.post(baseurl + version + inboxbox,
+    final responseData = await http.post(Uri.parse(baseurl + version + inboxbox),
         body: {"filter_status": choice}
         , headers: {'Auth': token});
     if (responseData.statusCode == 200) {
@@ -60,7 +60,7 @@ class _InboxpageState extends State<Inboxpage> {
       loading = true;
     });
 
-    final responseData = await http.post( baseurl + version  + actionlink ,
+    final responseData = await http.post( Uri.parse(baseurl + version  + actionlink ),
         body: {"message_group_ids": messageGroupId,
           "action_status":actionval},
         headers: {'Auth': token}
@@ -81,7 +81,7 @@ class _InboxpageState extends State<Inboxpage> {
 
   }
   loginToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,

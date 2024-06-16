@@ -88,27 +88,27 @@ class _HomeState extends State<Home> {
   }
 
   _configureFirebaseListeners() {
-    _firebaseMessaging.configure(
-      onResume: (Map<String, dynamic> message) async {
-        print('onResume: $message');
-        return _setMessage(message);
-      },
-      onMessage: (Map<String, dynamic> message) async {
-        print('onResume: $message');
-        return _setMessage(message);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print('onResume: $message');
-        return _setMessage(message);
-      },
+    // _firebaseMessaging.configure(
+    //   onResume: (Map<String, dynamic> message) async {
+    //     print('onResume: $message');
+    //     return _setMessage(message);
+    //   },
+    //   onMessage: (Map<String, dynamic> message) async {
+    //     print('onResume: $message');
+    //     return _setMessage(message);
+    //   },
+    //   onLaunch: (Map<String, dynamic> message) async {
+    //     print('onResume: $message');
+    //     return _setMessage(message);
+    //   },
 
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-      const IosNotificationSettings(sound: true, badge: true, alert: true),
-    );
+    // );
+    // _firebaseMessaging.requestNotificationPermissions(
+    //   const IosNotificationSettings(sound: true, badge: true, alert: true),
+    // );
   }
 
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FirebaseMessaging _firebaseMessaging;
 
   Future<Null> getData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -122,8 +122,8 @@ class _HomeState extends State<Home> {
     print(token);
     print(baseurl + version + url);
     print("log");
-    final responseDataappinfo = await http.post( baseurl + version + sitedetails,body: {'mobile_type':Platform.isAndroid?'android':'ios'});
-    final responseData = await http.get( baseurl + version + url, headers: {'Auth': token});
+    final responseDataappinfo = await http.post( Uri.parse(baseurl + version + sitedetails),body: {'mobile_type':Platform.isAndroid?'android':'ios'});
+    final responseData = await http.get( Uri.parse(baseurl + version + url), headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final dataapinfo = responseDataappinfo.body;
       final data = responseData.body;
@@ -948,9 +948,9 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body:  PopScope(
+      body:  WillPopScope(
         //Wrap out body with a `WillPopScope` widget that handles when a user is cosing current route
-        onPopInvoked: (x) => false,
+        onWillPop: () => Future.value(false),
         child: ListView(children: [
           Column(
             children: <Widget>[
@@ -1124,7 +1124,7 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.only(bottom: 0, top: 5),
                 // alignment: FractionalOffset(1.0, 1.0),
                 width: MediaQuery.of(context).size.width,
-                height: Theme.of(context).textTheme.displayLarge!.fontSize! * 1.1 +  25,
+                height: Theme.of(context).textTheme.displayLarge.fontSize * 1.1 +  25,
                 child: loading
                     ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(primarycolor)))
                     : ListView.builder(

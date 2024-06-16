@@ -16,7 +16,7 @@ class forgetpass extends StatefulWidget {
 
 class _forgetpassState extends State<forgetpass> {
   final _key = new GlobalKey<FormState>();
-  String? email;
+  String email;
   FocusNode emailFocusNode = new FocusNode();
   List<AppInfo> apiinforlist = [];
   bool shouldShowDialog = false;
@@ -24,7 +24,7 @@ class _forgetpassState extends State<forgetpass> {
   var loading = false;
   check() {
     final form = _key.currentState;
-    if (form!.validate()) {
+    if (form.validate()) {
       form.save();
       forgetpass();
     }
@@ -32,14 +32,14 @@ class _forgetpassState extends State<forgetpass> {
 
   forgetpass() async {
     final response = await http
-        .post(baseurl + version + forgetpasslink, body: {"email": email});
+        .post(Uri.parse(baseurl + version + forgetpasslink), body: {"email": email});
     final data = jsonDecode(response.body);
     String value = data['status'];
     showAlertDialog(context, value);
   }
 
   loginToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
@@ -48,7 +48,7 @@ class _forgetpassState extends State<forgetpass> {
   }
 
   Future<Null> getData() async {
-    final responseDataappinfo = await http.post(baseurl + version + sitedetails,
+    final responseDataappinfo = await http.post(Uri.parse(baseurl + version + sitedetails),
         body: {'mobile_type': Platform.isAndroid ? 'android' : 'ios'});
     if (responseDataappinfo.statusCode == 200) {
       final dataapinfo = responseDataappinfo.body;
@@ -142,7 +142,7 @@ class _forgetpassState extends State<forgetpass> {
                     padding: EdgeInsets.symmetric(horizontal: 32),
                     child: TextFormField(
                       validator: (e) {
-                        if (e!.isEmpty || !validateEmail(e)) {
+                        if (e.isEmpty || !validateEmail(e)) {
                           return "Please enter email";
                         }
                         return null;

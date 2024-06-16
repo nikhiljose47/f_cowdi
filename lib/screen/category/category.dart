@@ -21,7 +21,7 @@ class _categoryState extends State<category> {
     setState(() {
       loading = true;
     });
-    final responseData = await http.get(baseurl + version + categorylink);
+    final responseData = await http.get(Uri.parse(baseurl + version + categorylink));
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var listservices = jsonDecode(data)['content']['cArr'] as List;

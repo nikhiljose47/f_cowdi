@@ -27,7 +27,7 @@ class _catdetailState extends State<catdetail> {
     final linkdata = '/' + widget.subcatlink;
     final titlelink = '/' + widget.title;
     print(baseurl + version + linkdata);
-    final responseData = await http.get(baseurl + version + linkdata);
+    final responseData = await http.get(Uri.parse(baseurl + version + linkdata));
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var listplists = jsonDecode(data)['content']['pList'] as List;

@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
   }
 
   save() async {
-    final response = await http.post(baseurl + version + register, body: {
+    final response = await http.post(Uri.parse(baseurl + version + register), body: {
       "fullname": name,
       "username": username,
       "phone_number": phoneNumber.isEmpty?'':dropdownValue+phoneNumber,
@@ -107,7 +107,7 @@ class _RegisterState extends State<Register> {
   }
 
   registerToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,

@@ -35,7 +35,7 @@ class _OthersState extends State<Others> {
   List<AppInfo> apiinforlist = [];
   
   Future<Null> getDatalist() async {
-    final responseDataappinfo = await http.post(baseurl + version + sitedetails,
+    final responseDataappinfo = await http.post(Uri.parse(baseurl + version + sitedetails),
         body: {'mobile_type': Platform.isAndroid ? 'android' : 'ios'});
     if (responseDataappinfo.statusCode == 200) {
       final dataapinfo = responseDataappinfo.body;
@@ -60,7 +60,7 @@ class _OthersState extends State<Others> {
     });
     print(token);
     final responseData =
-        await http.get(baseurl + version + profile, headers: {'Auth': token});
+        await http.get(Uri.parse(baseurl + version + profile), headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var listservices = jsonDecode(data)['content']['mProfile'] as List;
@@ -83,7 +83,7 @@ class _OthersState extends State<Others> {
     print(token);
 
     final responseDatastatus = await http
-        .get(baseurl + version + statuscheck, headers: {'Auth': token});
+        .get(Uri.parse(baseurl + version + statuscheck), headers: {'Auth': token});
     if (responseDatastatus.statusCode == 200) {
       final data = responseDatastatus.body;
       var listservicesstus =

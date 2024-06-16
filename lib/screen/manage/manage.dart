@@ -28,7 +28,7 @@ class _manageorderState extends State<manageorder> {
     });
     print(items);
     print(token);
-    final responseData = await http.post( baseurl + version  + manage,
+    final responseData = await http.post( Uri.parse(baseurl + version  + manage),
         body: {"status": items},
         headers: {'Auth': token});
 
@@ -61,7 +61,7 @@ class _manageorderState extends State<manageorder> {
       loading = true;
     });
     print(baseurl + version  + manage);
-    final responseData = await http.get( baseurl + version  + manage, headers: {'Auth': token});
+    final responseData = await http.get( Uri.parse(baseurl + version  + manage), headers: {'Auth': token});
 
 
     if (responseData.statusCode == 200) {

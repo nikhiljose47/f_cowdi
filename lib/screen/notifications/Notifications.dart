@@ -18,7 +18,7 @@ class _NotificationspageState extends State<Notifications> {
   int _selectedIndex = 0;
   String token = "";
   List<NotificationsArr> listSCArr = [];
-  String? choice;
+  String choice;
   String items="all";
   var loading = false;
 
@@ -33,7 +33,7 @@ class _NotificationspageState extends State<Notifications> {
       loading = true;
     });
     final responseData = await http.get(
-        baseurl + version + notificationlink, headers: {'Auth': token});
+        Uri.parse(baseurl + version + notificationlink), headers: {'Auth': token});
     if (responseData.statusCode == 200) {
       final data = responseData.body;
       var listsCArr = jsonDecode(data)['content']['notificationsArr'] as List;
@@ -60,7 +60,7 @@ class _NotificationspageState extends State<Notifications> {
     });
     print(messageGroupId);
 
-    final responseData = await http.post( baseurl + version  + notificationactionlink ,
+    final responseData = await http.post( Uri.parse(baseurl + version  + notificationactionlink ),
         body: {"notification_ids": messageGroupId,
           "action_status":actionval},
         headers: {'Auth': token}
@@ -81,7 +81,7 @@ class _NotificationspageState extends State<Notifications> {
     });
   }
   loginToast(String toast) {
-    return FlutterToast.showToast(
+    return Fluttertoast.showToast(
         msg: toast,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,

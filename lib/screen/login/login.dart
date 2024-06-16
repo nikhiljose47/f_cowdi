@@ -23,7 +23,7 @@ class Login extends StatefulWidget {
 enum LoginStatus { notSignIn, signIn }
 
 class _LoginState extends State<Login> {
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FirebaseMessaging _firebaseMessaging;
   final _key = new GlobalKey<FormState>();
   LoginStatus _loginStatus = LoginStatus.notSignIn;
   String username, email, userId, password;
@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
         };
       }
       final response =
-          await http.post(baseurl + version + loginurl, body: body);
+          await http.post(Uri.parse(baseurl + version + loginurl), body: body);
 
       final data = jsonDecode(response.body);
       String value = data['status'];
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
         };
       }
       final response =
-          await http.post(baseurl + version + loginurl, body: body);
+          await http.post(Uri.parse(baseurl + version + loginurl), body: body);
 
       final data = jsonDecode(response.body);
       String value = data['status'];
@@ -206,7 +206,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<Null> getData() async {
-    final responseDataappinfo = await http.post(baseurl + version + sitedetails,
+    final responseDataappinfo = await http.post(Uri.parse(baseurl + version + sitedetails),
         body: {'mobile_type': Platform.isAndroid ? 'android' : 'ios'});
     if (responseDataappinfo.statusCode == 200) {
       final dataapinfo = responseDataappinfo.body;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/screen/manage/manage.dart';
 import 'package:flutter_app/screen/profiledetails/CustomDialog.dart';
 import 'package:flutter_app/screen/profiledetails/cart.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_app/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,13 +14,14 @@ class checkout extends StatefulWidget {
 }
 
 class _checkoutState extends State<checkout> {
-  InAppWebViewController webView;
   Future<SharedPreferences> preferences = SharedPreferences.getInstance();
+  WebViewController _controller = WebViewController();
 
   String url  ="";
   String tokens = "";
   double progress = 0;
   String checkoutpar ="";
+  
   void makeRequest() {
     setState(() {
       url = baseurl + version +'/';
@@ -28,62 +29,17 @@ class _checkoutState extends State<checkout> {
       tokens = widget.token;
     });
     print(url+checkoutpar+'&Auth='+tokens);
-  }
-
-
-
-  @override
-  void dispose() {
-    super.dispose();
-
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    makeRequest();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print("sdsdsdsd");
-    print(url+checkoutpar+'&Auth='+tokens);
-
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Checkout"),
-          centerTitle: true,
-        ),
-        body: Container(
-            child: Column(children: <Widget>[
-              Container(
-                  padding: EdgeInsets.all(10.0),
-                  child: progress < 1.0
-                      ? LinearProgressIndicator(value: progress, valueColor:
-                  new AlwaysStoppedAnimation<Color>(primarycolor))
-                      : Container()),
-              Expanded(
-                child: webvies(),
-              ),
-            ])));
-  }
-  Widget webvies(){
-    return Container(
-      child: InAppWebView(
-        initialUrl: url+checkoutpar+'&Auth='+tokens,
-        initialHeaders: {},
-        initialOptions: InAppWebViewGroupOptions(
-            crossPlatform: InAppWebViewOptions(
-              debuggingEnabled: false,
-            )),
-        onWebViewCreated: (InAppWebViewController controller) {
-          webView = controller;
-        },
-        onReceivedServerTrustAuthRequest: (InAppWebViewController controller, ServerTrustChallenge challenge) async {
-          return ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED);
-        },
-        onLoadStart: (InAppWebViewController controller, String url) {
-          setState(() {
+    _controller = WebViewController()
+  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  ..setBackgroundColor(const Color(0x00000000))
+  ..setNavigationDelegate(
+    NavigationDelegate(
+      onProgress: (int progress) {
+         setState(() {
+            this.progress = progress / 100;
+          });
+      },
+      onPageStarted: (String url) {setState(() {
             this.url = 'url';
             var valuetoredirect = this.url.substring(39, 45);
             print(valuetoredirect);
@@ -131,15 +87,60 @@ class _checkoutState extends State<checkout> {
                     );
                   });
             }
-          });
-        },
-        onProgressChanged:
-            (InAppWebViewController controller, int progress) {
-          setState(() {
-            this.progress = progress / 100;
-          });
-        },
-      ),
+          });},
+      onPageFinished: (String url) {},
+      onWebResourceError: (WebResourceError error) {},
+      onNavigationRequest: (NavigationRequest request) {
+        if (request.url.startsWith('https://www.youtube.com/')) {
+          return NavigationDecision.prevent;
+        }
+        return NavigationDecision.navigate;
+      },
+    ),
+  )
+  ..loadRequest(Uri.parse(url+checkoutpar+'&Auth='+tokens));
+  }
+
+
+
+  @override
+  void dispose() {
+    super.dispose();
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    makeRequest();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("sdsdsdsd");
+    print(url+checkoutpar+'&Auth='+tokens);
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Checkout"),
+          centerTitle: true,
+        ),
+        body: Container(
+            child: Column(children: <Widget>[
+              Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: progress < 1.0
+                      ? LinearProgressIndicator(value: progress, valueColor:
+                  new AlwaysStoppedAnimation<Color>(primarycolor))
+                      : Container()),
+              Expanded(
+                child: webvies(),
+              ),
+            ])));
+  }
+  Widget webvies(){
+    return Container(
+      child: WebViewWidget(controller: _controller)
     );
   }
 }
